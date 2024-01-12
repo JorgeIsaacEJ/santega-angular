@@ -48,7 +48,7 @@ export class AuthService {
                 }
 
                 this.localStorageService.saveData( 'access_token', response.access_token );
-                return response.access_token;
+                return response.access_token; 
             }),
         );
     }
