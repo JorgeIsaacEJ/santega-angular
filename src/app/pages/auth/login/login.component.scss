@@ -1,0 +1,181 @@
+@import 'src/app/app.component.scss';
+
+div.auth {
+    width: 900px;
+    margin: 0 auto;
+    margin-bottom: 55px;
+
+    h2.auth-title {
+        width: 100%;
+        margin: 25px auto;
+        text-align: center;
+        font-size: 30px;
+        font-weight: 900;
+        color: $font-dark;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+    }
+
+    div.auth-content {
+        width: 100%;
+        border-radius: $border-radius;
+        background-color: $white;
+        border: 1px solid $border-light;
+        display: flex;
+        flex-wrap: wrap;
+
+        div.auth-content-left {
+            flex: 0 0 50%;
+            height: 100%;
+            position: relative;
+            
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 1;
+            }
+
+            div.auth-content-left-rgba {
+                width: 100%;
+                height: 100%;
+                position: relative;
+                z-index: 2;
+                background-color: rgba(0,0,0,.3);
+            }
+        }   
+
+        div.auth-content-right {
+            flex: 0 0 50%;
+            height: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+
+            form.auth-form {
+                width: 80%;
+                height: 80%;
+
+                div.auth-form-logo {
+                    width: 100%;
+                    height: 80px;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    img {
+                        height: 80%;
+                    }
+
+                    h4 {
+                        font-size: 25px;
+                        font-family: 'Archivo Black', sans-serif;
+                        text-transform: uppercase;
+                        letter-spacing: 1px;
+                        margin-left: 10px;
+                    }
+                }
+
+                div.auth-form-content {
+                    width: 100%;
+                    margin-top: 30px;
+                    height: calc(100% - 110px);
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+
+                    p.auth-form-label {
+                        width: 100%;
+                        font-size: 13px;
+                        font-weight: bold;
+                        letter-spacing: .5px;
+                        color: $font-dark;
+                        margin-bottom: 5px;
+                    }
+
+                    input.auth-form-input {
+                        width: 100%;
+                        margin-bottom: 20px;
+                        display: flex;
+                        align-items: center;
+                        height: 45px;
+                        outline: none;
+                        border: 1px solid $border-light;
+                        border-radius: $border-radius;
+                        padding: 0 15px;
+                        box-sizing: border-box;
+                        transition: $transition;
+
+                        &:focus {
+                            border-color: $action;
+                        }
+                    }
+
+                    input.apellido {
+                        width: 48%;
+                    }
+
+                    p.auth-form-paragraph {
+                        width: 100%;
+                        font-size: 13px;
+                        font-weight: bold;
+                        letter-spacing: .5px;
+                        color: $font-gray;
+                        margin-bottom: 10px;
+
+                        span {
+                            float: right;
+                            text-decoration: underline;
+                            color: $main;
+                            cursor: pointer;
+                        }
+                    }
+
+                    button {
+                        outline: none;
+                        border: 0;
+                        width: 100%;
+                        height: 45px;
+                        margin-top: 15px;
+                        padding: 0 25px;
+                        border-radius: $border-radius;
+                        box-shadow: $box-shadow;
+                        font-size: 14px;
+                        font-weight: bold;
+                        letter-spacing: .5px;
+                        text-transform: uppercase;
+                        cursor: pointer;
+                        background-color: $main;
+                        color: $font-white;
+                        transition: $transition;
+                    }
+                }
+
+            }
+        }
+    }
+
+    div.auth-content-login {
+        height: 490px;
+    }
+
+    div.auth-content-register {
+        height: 840px;
+    }
+
+    div.auth-content-forgot {
+        height: 390px;
+    }
+}
+
+.invalid-input {
+    border: 1px solid $red !important;
+}
+
+.disabled-btn {
+    background-color: $gray !important;
+}

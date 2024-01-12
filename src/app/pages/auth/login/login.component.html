@@ -1,0 +1,68 @@
+<div class="auth">
+
+    <h2 class="auth-title">
+        Inicio de Sesión
+    </h2>
+    <div class="auth-content auth-content-login">
+        <div class="auth-content-left">
+            <img src="assets/contact-background.png" alt="contact-background.png">
+            <div class="auth-content-left-rgba"></div>
+        </div>
+        <div class="auth-content-right">
+            <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="login();">
+                <div class="auth-form-logo">
+                    <img 
+                        src="assets/santega-logo.png"
+                        alt="santega-logo.png"
+                    />
+                    <h4>Santega</h4>
+                </div>
+
+                <div class="auth-form-content">
+                    <p class="auth-form-label">Usuario (RFC):</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': loginForm.controls['usuario'].invalid && loginForm.controls['usuario'].touched
+                        }"
+                        class="auth-form-input" 
+                        type="text" 
+                        placeholder="QUMA470929F37" 
+                        autocomplete="off"
+                        formControlName="usuario"
+                    />
+
+                    <p class="auth-form-label">Contraseña:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': loginForm.controls['password'].invalid && loginForm.controls['password'].touched
+                        }"
+                        class="auth-form-input" 
+                        type="password" 
+                        placeholder="********" 
+                        autocomplete="off"
+                        formControlName="password"
+                    />
+
+                    <p class="auth-form-paragraph">
+                        ¿Aún no tienes una cuenta?
+                        <span routerLink="/auth/registro">Registrate aqui</span>
+                    </p>
+                    <p class="auth-form-paragraph">
+                        ¿Olvistaste tu contraseña?
+                        <span routerLink="/auth/recuperar-contraseña">Recuperar contraseña</span>
+                    </p>
+
+                    <button 
+                        type="submit" 
+                        [ngClass]="{
+                            'disabled-btn': loginForm.invalid
+                        }"
+                        [disabled]="loginForm.invalid"
+                    >
+                        Iniciar Sesión
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

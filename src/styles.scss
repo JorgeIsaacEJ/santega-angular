@@ -1,1 +1,149 @@
-/* You can add global styles to this file, and also import other style files */
+/**
+  ngx-toastr alerts -
+**/
+@import 'ngx-toastr/toastr';
+
+@import './app/app.component.scss';
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
+// font-family: 'Concert One', cursive;
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200&display=swap%27');
+// font-family: 'Josefin Sans', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap%27');
+// font-family: 'Quicksand', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+// font-family: 'Archivo Black', sans-serif;
+
+*, html, body {
+  margin: 0;
+  padding: 0; 
+  font-family: 'Quicksand', sans-serif;
+}
+
+body {
+  background-color: $body-color;
+}
+
+html {
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: $white;
+    color: $main;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $main;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: $main-light;
+  }
+}
+
+.toast-success {
+  background-color: #529351 !important;
+  width: 350px !important;
+}
+
+.toast-info {
+  background-color: $danger !important;
+  width: 350px !important;
+}
+
+.toast-error {
+  width: 350px !important;
+}
+
+.toast-message {
+  letter-spacing: .5px !important;
+}
+
+[anim="ripple"] {
+  position: relative;
+  overflow: hidden;
+
+  &:before {
+      content: '';
+      position:absolute;
+      display: block;
+      background: $ripple-background;
+      border-radius: 50%;
+      pointer-events: none; 
+      
+      //  position and size 
+      top: calc(var(--y) * 1px);
+      left: calc(var(--x) * 1px);
+      width:  calc(var(--d) * 1px);
+      height: calc(var(--d) * 1px);
+
+      //  animated properties
+      opacity: calc(var(--o, 1) * var(--ripple-opacity, 0.3));                
+      transition: calc(var(--t, 0) * var(--ripple-duration, 600ms)) var(--ripple-easing,linear);   
+      transform: translate(-50%, -50%) scale(var(--s, 1));
+      transform-origin: center;
+  }
+}
+
+/** Skeleton Effect **/
+.skeleton {
+	background-color: $bg-skeleton !important;
+	// The shine that's going to move across the skeleton:
+	background-image:			
+		linear-gradient(
+			90deg, 
+			rgba(#fff, 0), 
+			rgba(#fff, 0.5),
+			rgba(#fff, 0)
+		);
+	background-size: 40px 100%; // width of the shine
+	background-repeat: no-repeat; // No need to repeat the shine effect
+	background-position: left -40px top 0; // Place shine on the left side, with offset on the left based on the width of the shine - see background-size
+	animation: shine 1.2s ease infinite; // increase animation time to see effect in 'slow-mo'
+}
+
+@keyframes shine {
+	to {
+		// Move shine from left to right, with offset on the right based on the width of the shine - see background-size
+		background-position: right -40px top 0;
+	}
+}
+
+.fadeInAnimation {
+  animation: fadeInAnimation ease .3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeInAnimation {
+
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.fadeOutAnimation {
+  animation: fadeOutAnimation ease .3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeOutAnimation {
+
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

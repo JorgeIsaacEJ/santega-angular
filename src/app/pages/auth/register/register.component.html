@@ -1,0 +1,111 @@
+<div class="auth">
+
+    <h2 class="auth-title">
+        Registro
+    </h2>
+    <div class="auth-content auth-content-register">
+        <div class="auth-content-left">
+            <img src="assets/contact-background.png" alt="contact-background.png">
+            <div class="auth-content-left-rgba"></div>
+        </div>
+        <div class="auth-content-right">
+            <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="register();">
+                <div class="auth-form-logo">
+                    <img 
+                        src="assets/santega-logo.png"
+                        alt="santega-logo.png"
+                    />
+                    <h4>Santega</h4>
+                </div>
+
+                <div class="auth-form-content">
+                    <p class="auth-form-label">Nombres:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['Name'].invalid && registerForm.controls['Name'].touched
+                        }"
+                        class="auth-form-input" 
+                        type="text" 
+                        placeholder="Juan Manuel" 
+                        autocomplete="off"
+                        formControlName="Name"
+                    />
+                    
+                    <p class="auth-form-label">Apellido Paterno y Materno:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['Apellido_Paterno'].invalid && registerForm.controls['Apellido_Paterno'].touched
+                        }"
+                        class="auth-form-input apellido" 
+                        type="text" 
+                        placeholder="Perez" 
+                        autocomplete="off"
+                        formControlName="Apellido_Paterno"
+                    />
+
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['Apellido_Materno'].invalid && registerForm.controls['Apellido_Materno'].touched
+                        }"
+                        class="auth-form-input apellido" 
+                        type="text" 
+                        placeholder="Garzon" 
+                        autocomplete="off"
+                        formControlName="Apellido_Materno"
+                    />
+
+                    <p class="auth-form-label">RFC:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['Username'].invalid && registerForm.controls['Username'].touched
+                        }"
+                        class="auth-form-input" 
+                        type="text" 
+                        placeholder="QUMA470929F37" 
+                        autocomplete="off"
+                        formControlName="Username"
+                    />
+
+                    <p class="auth-form-label">Correo Electronico:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['Email'].invalid && registerForm.controls['Email'].touched
+                        }"
+                        class="auth-form-input" 
+                        type="email" 
+                        placeholder="example@email.com" 
+                        autocomplete="off"
+                        formControlName="Email"
+                    />
+
+                    <p class="auth-form-label">Contraseña:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['Password'].invalid && registerForm.controls['Password'].touched
+                        }"
+                        class="auth-form-input" 
+                        type="password" 
+                        placeholder="********" 
+                        autocomplete="off"
+                        formControlName="Password"
+                    />
+
+                    <p class="auth-form-paragraph">
+                        ¿Ya tienes una cuenta?
+                        <span routerLink="/auth/iniciar-sesion">Iniciar sesión</span>
+                    </p>
+
+                    <button
+                        type="submit"
+                        [ngClass]="{
+                            'disabled-btn': registerForm.invalid
+                        }"
+                        [disabled]="registerForm.invalid"
+                    >
+                        Registrarse
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

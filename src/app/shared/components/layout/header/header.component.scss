@@ -1,0 +1,107 @@
+@import 'src/app/app.component.scss';
+
+header.app-header {
+    width: 100%;
+    height: 80px;
+    background-color: $white;
+    border-bottom: 1px solid $border-light;
+    position: sticky;
+    top: 0;
+    user-select: none;
+    z-index: 100;
+
+    section.app-header-center {
+        width: 1300px;
+        height: 100%;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        padding: 0 10px;
+        box-sizing: border-box;
+
+        h2.app-header-center-title {
+            font-size: 38px;
+            font-family: 'Archivo Black';
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+
+        ul.app-header-nav-list {
+            width: 480px;
+            height: 100%;
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-left: 105px;
+
+            li.app-header-nav-list-item {
+                padding: 0 20px;
+                font-size: 16px;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                border-radius: $border-radius;
+                color: $font-dark;
+                letter-spacing: .5px;
+                border: 1px solid transparent;
+                cursor: pointer;
+                transition: $transition;
+
+                &:hover {
+                    color: $main;
+                }
+            }
+        }
+
+        ul.session-list {
+            margin-left: auto;
+            width: auto;
+
+            li.app-header-nav-list-item {
+                height: 40px;
+                margin-left: 15px;
+                padding: 0;
+
+                &:hover {
+                    border-color: transparent;
+                    box-shadow: none;
+                }
+
+                button {
+                    outline: none;
+                    border: 0;
+                    width: 100%;
+                    height: 100%;
+                    padding: 0 25px;
+                    border-radius: $border-radius;
+                    box-shadow: $box-shadow;
+                    font-size: 14px;
+                    font-weight: bold;
+                    letter-spacing: .5px;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                }
+
+                .login-btn {
+                    background-color: $main;
+                    color: $font-white;
+                }
+
+                .register-btn {
+                    background-color: $white;
+                    color: $font-dark;
+                }
+            }
+        }
+    }
+}
+
+.user-name-header {
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    max-width: 200px !important;
+}

@@ -1,0 +1,38 @@
+<header class="app-header">
+    <section class="app-header-center">
+        <h2 class="app-header-center-title" routerLink="/">
+            SANTEGA
+        </h2>
+        <ul class="app-header-nav-list">
+            <li class="app-header-nav-list-item" anim="ripple" (click)="setSection('aboutUs');" router>
+                Acerca de Nosotros
+            </li>
+            <li class="app-header-nav-list-item" anim="ripple" (click)="setSection('services');">
+                Servicios
+            </li>
+            <li class="app-header-nav-list-item" anim="ripple" (click)="setSection('contact');">
+                Contacto
+            </li>
+        </ul>
+        
+        <ul class="app-header-nav-list session-list">
+
+            <ng-container *ngIf="!user; else elseBlock">
+                <li class="app-header-nav-list-item">
+                    <button class="login-btn" anim="ripple" routerLink="/auth/iniciar-sesion">Iniciar Sesión</button>
+                </li>
+                <li class="app-header-nav-list-item">
+                    <button class="register-btn" anim="ripple" routerLink="/auth/registro">Registro</button>
+                </li>
+            </ng-container>
+            <ng-template #elseBlock>
+                <li class="app-header-nav-list-item">
+                    <button class="register-btn user-name-header" anim="ripple">{{ user.Name }} {{ user.Apellido_Paterno }} {{ user.Apellido_Materno }}</button>
+                </li>
+                <li class="app-header-nav-list-item">
+                    <button class="login-btn" anim="ripple" (click)="logout();">Cerrar Sesión</button>
+                </li>
+            </ng-template>
+        </ul>
+    </section>
+</header>

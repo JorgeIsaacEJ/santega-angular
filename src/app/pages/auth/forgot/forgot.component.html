@@ -1,0 +1,44 @@
+<div class="auth">
+
+    <h2 class="auth-title">
+        Recuperar Contraseña
+    </h2>
+    <div class="auth-content auth-content-forgot">
+        <div class="auth-content-left">
+            <img src="assets/contact-background.png" alt="contact-background.png">
+            <div class="auth-content-left-rgba"></div>
+        </div>
+        <div class="auth-content-right">
+            <form class="auth-form auth-form-forgot-password">
+                <div class="auth-form-logo">
+                    <img 
+                        src="assets/santega-logo.png"
+                        alt="santega-logo.png"
+                    />
+                    <h4>Santega</h4>
+                </div>
+
+                <div class="auth-form-content">
+                    <p class="auth-form-label">Correo Electronico:</p>
+                    <input
+                        class="auth-form-input" 
+                        type="email" 
+                        placeholder="example@email.com" 
+                        autocomplete="off"
+                    />
+
+                    <p class="auth-form-paragraph">
+                        ¿Aún no tienes una cuenta?
+                        <span routerLink="/auth/registro">Registrate aqui</span>
+                    </p>
+                    <p class="auth-form-paragraph">
+                        ¿Recordaste tu contraseña?
+                        <span routerLink="/auth/iniciar-sesion">Iniciar sesión</span>
+                    </p>
+
+                    <button>Recuperar Contraseña</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

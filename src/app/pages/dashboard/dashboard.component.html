@@ -1,0 +1,98 @@
+<div class="dashboard">
+
+    <section class="dashboard-welcome">
+        <h1>
+            Bienvenido a <br>
+            SANTEGA {{ user.Nombres }} {{ user.Apellido_Paterno }} {{ user.Apellido_Materno }}
+        </h1>
+    </section>
+
+    <section class="dashboard-debt-payment">
+        <div class="dashboard-debt-title">
+            <div></div>
+            <h2>Pagos</h2>
+        </div>
+        <ul class="debt-payment-info">
+            <h3>Información del credito</h3>
+            <li>Nombre del credito: <span>Credito de Prueba</span></li>
+            <li>Tipo de credito: <span>Nominal</span></li>
+            <li>Fecha de pago: <span>01/09/2024</span></li>
+            <li>Fecha Limite de pago: <span>01/15/2024</span></li>
+        </ul>
+        <ul class="debt-payment-info">
+            <h3>Metodos de Pago</h3>
+            <li>Tarjeta de Credito / Debito <span><mat-icon>check_box</mat-icon></span></li>
+            <li>Transferencia Bancaria <span><mat-icon>check_box</mat-icon></span></li>
+            <li>Pago Referenciado (Efectivo) <span><mat-icon>check_box</mat-icon></span></li>
+            <li>Pago Domiciliado <span><mat-icon>check_box</mat-icon></span></li>
+        </ul>
+        <div class="debt-make-payment">
+            <h3>Realizar Pago</h3>
+            <h5>Total a pagar:</h5>
+            <h2>$1,356.55</h2>
+            <button anim="ripple" type="button" (click)="makePayment();">Seleccionar Metodo de Pago</button>
+        </div>
+    </section>
+
+    <section class="dashboard-payment-history">
+        <div class="dashboard-payment-history-title">
+            <div></div>
+            <h2>Historial de Pagos</h2>
+        </div>
+        <ul class="paymet-history">
+            <li>
+                <p class="payment-name">Nombre del credito: <span>Nombre de prueba</span></p>
+                <p>Fecha de pago: <span>01/09/2024</span></p>
+                <p>Cantidad Pagada: <span>$1,432.00</span></p>
+                <p>Estatus: <span>Pago aprobado</span></p>
+            </li>
+
+            <li>
+                <p class="payment-name">Nombre del credito: <span>Nombre de prueba</span></p>
+                <p>Fecha de pago: <span>01/09/2024</span></p>
+                <p>Cantidad Pagada: <span>$1,432.00</span></p>
+                <p>Estatus: <span>Pago aprobado</span></p>
+            </li>
+
+            <li>
+                <p class="payment-name">Nombre del credito: <span>Nombre de prueba</span></p>
+                <p>Fecha de pago: <span>01/09/2024</span></p>
+                <p>Cantidad Pagada: <span>$1,432.00</span></p>
+                <p>Estatus: <span>Pago aprobado</span></p>
+            </li>
+
+            <li>
+                <p class="payment-name">Nombre del credito: <span>Nombre de prueba</span></p>
+                <p>Fecha de pago: <span>01/09/2024</span></p>
+                <p>Cantidad Pagada: <span>$1,432.00</span></p>
+                <p>Estatus: <span>Pago aprobado</span></p>
+            </li>
+
+            <li>
+                <p class="payment-name">Nombre del credito: <span>Nombre de prueba</span></p>
+                <p>Fecha de pago: <span>01/09/2024</span></p>
+                <p>Cantidad Pagada: <span>$1,432.00</span></p>
+                <p>Estatus: <span>Pago aprobado</span></p>
+            </li>
+
+            <li>
+                <p class="payment-name">Nombre del credito: <span>Nombre de prueba</span></p>
+                <p>Fecha de pago: <span>01/09/2024</span></p>
+                <p>Cantidad Pagada: <span>$1,432.00</span></p>
+                <p>Estatus: <span>Pago aprobado</span></p>
+            </li>
+
+            <li>
+                <p class="payment-name">Nombre del credito: <span>Nombre de prueba</span></p>
+                <p>Fecha de pago: <span>01/09/2024</span></p>
+                <p>Cantidad Pagada: <span>$1,432.00</span></p>
+                <p>Estatus: <span>Pago aprobado</span></p>
+            </li>
+        </ul>
+    </section>
+
+</div>
+
+<div class="payment-modal fadeInAnimation" #paymentModal>
+
+</div>

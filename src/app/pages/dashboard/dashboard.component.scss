@@ -1,0 +1,272 @@
+@import 'src/app/app.component.scss';
+
+div.dashboard {
+    width: 1100px;
+    margin: 20px auto;
+
+    section.dashboard-welcome {
+        width: 100%;
+        margin: 40px auto 40px;
+
+        h1 {
+            font-weight: 900;
+            font-family: 'Archivo Black', sans-serif;
+            color: $font-dark;
+            font-size: 40px;
+            text-shadow: -1px -1px 0px #fff,
+            3px 3px 0px #fff,
+            4px 4px 0px #00000055;
+            width: 100%;
+            line-height: 50px;
+        }
+    }
+
+    section.dashboard-debt-payment {
+        width: 100%;
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        div.dashboard-debt-title {
+            width: 100%;
+            margin-bottom: 10px;
+            position: relative;
+
+            div {
+                position: absolute;
+                width: 100%;
+                height: 3px;
+                background-color: $border-light;
+                z-index: 1;
+                margin-top: 19px;
+            }
+
+            h2 {
+                background-color: $body-color;
+                width: -moz-fit-content;
+                width: fit-content;
+                padding: 0 20px;
+                margin-left: 20px;
+                font-size: 28px;
+                color: $font-gray;
+                text-transform: uppercase;
+                position: relative;
+                z-index: 2;
+                font-weight: 900;
+            }
+        }
+
+        ul.debt-payment-info {
+            flex: 0 0 32%;
+            background-color: $white;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid $border-light;
+            border-radius: $border-radius;
+            list-style: none;
+
+            h3 {
+                width: 100%;
+                color: $font-dark;
+                font-weight: 900 !important;
+                font-size: 21px;
+                width: 100%;
+                margin: 10px 0 20px;
+            }
+
+            li {
+                width: 100%;
+                height: 50px;
+                border-bottom: 1px solid $border-light;
+                text-align: left;
+                font-weight: bold;
+                font-size: 14px;
+                letter-spacing: .5px;
+                display: flex;
+                align-items: center;
+                color: $font-dark;
+                
+                &:last-child {
+                    border-bottom: 0;
+                }
+
+                span {
+                    margin-left: auto;
+                    font-weight: lighter;
+                
+                    mat-icon {
+                        color: $green;
+                    }
+                }
+            }
+        }
+
+        div.debt-make-payment {
+            flex: 0 0 32%;
+            background-color: $white;
+            padding: 20px;
+            box-sizing: border-box;
+            border: 1px solid $border-light;
+            border-radius: $border-radius;
+
+            h3 {
+                width: 100%;
+                color: $font-dark;
+                font-weight: 900 !important;
+                font-size: 21px;
+                width: 100%;
+                margin: 10px 0 20px;
+            }
+
+            h5 {
+                width: 100%;
+                font-size: 19px;
+                margin-top: 32px !important;
+                border-bottom: 1px solid $border-light;
+                padding-bottom: 15px;
+            }
+
+            h2 {
+                width: 100%;
+                height: 80px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 40px;
+                color: $font-dark;
+                font-weight: 900;
+                margin-top: 10px;
+            }
+
+            button {
+                outline: none;
+                border: 0;
+                width: 100%;
+                height: 50px;
+                padding: 0 10px;
+                border-radius: $border-radius;
+                box-shadow: $box-shadow;
+                font-size: 15px;
+                font-weight: 900;
+                letter-spacing: .5px;
+                text-transform: uppercase;
+                cursor: pointer;
+                background-color: $action;
+                color: $font-white;
+                margin-top: 10px;
+            }
+        }
+    }
+
+    section.dashboard-payment-history {
+        width: 100%;
+        margin-top: 40px;
+        margin-bottom: 60px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        div.dashboard-payment-history-title {
+            width: 100%;
+            margin-bottom: 10px;
+            position: relative;
+
+            div {
+                position: absolute;
+                width: 100%;
+                height: 3px;
+                background-color: $border-light;
+                z-index: 1;
+                margin-top: 19px;
+            }
+
+            h2 {
+                background-color: $body-color;
+                width: -moz-fit-content;
+                width: fit-content;
+                padding: 0 20px;
+                margin-left: 20px;
+                font-size: 28px;
+                color: $font-gray;
+                text-transform: uppercase;
+                position: relative;
+                z-index: 2;
+                font-weight: 900;
+            }
+        }
+
+        ul.paymet-history {
+            width: 100%;
+            list-style: none;
+            max-height: 420px;
+            overflow-y: scroll;
+            padding-top: 10px;
+            padding-right: 10px;
+
+            &::-webkit-scrollbar {
+                width: 8px;
+                background-color: $white;
+                color: $main;
+            }
+            
+            &::-webkit-scrollbar-thumb {
+                background: $main;
+            }
+              
+            &::-webkit-scrollbar-thumb:hover {
+                background: $main-light;
+            }
+
+            li { 
+                width: 100%;
+                height: 60px;
+                display: flex;
+                align-items: center;
+                padding: 0 20px;
+                box-sizing: border-box;
+                border: 1px solid $border-light;
+                border-radius: $border-radius;
+                background-color: $white;
+                margin-bottom: 10px;
+
+                p {
+                    color: $font-dark;
+                    font-size: 13px;
+                    font-weight: 900;
+                    flex: 16.25%;
+                    text-align: center;
+                
+                    span {
+                        margin-left: 20px;
+                        font-weight: bold;
+                    }
+                }
+
+                p.payment-name {
+                    flex: 0 0 35%;
+                    text-align: left;
+                }
+            }
+        }
+    }
+}
+
+div.payment-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba( 255,255,255,.8 );
+    z-index: 101;
+    display: none;
+}
+
+.icon-checked {
+    color: $green;
+}
+
+.payment-modal-active {
+    display: flex !important;
+}
