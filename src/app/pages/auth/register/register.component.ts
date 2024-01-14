@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
     Name: ['', [ Validators.required ]],
     Apellido_Paterno: ['', [ Validators.required ]],
     Apellido_Materno: ['', [ Validators.required ]],
-    Username: ['', [ Validators.required ]],
+    Username: ['', [ Validators.required, Validators.minLength(13), Validators.maxLength(13) ]],
     Email: ['', [ Validators.required, Validators.email ]],
     Password: ['', [ Validators.required ]],
   })
@@ -40,13 +40,15 @@ export class RegisterComponent implements OnInit {
       this.registerForm.getRawValue()
     ).subscribe(( value: any ) => {
       
-      if ( typeof value !== 'string' ) {
+      if ( value && value.Error ) {
 
-        this.toastrService.info('Ha ocurrido un error al generar el registro, favor de intentarlo nuevamente!');
+        this.toastrService.info( value.Error );
+        this.registerForm.controls['Username'].setErrors({ invalid: true });
+        this.registerForm.controls['Email'].setErrors({ invalid: true });
         return;
       }
 
-      this.getUserData( value );
+      this.getUserData( value.FolioDeudor );
     });
   }
 

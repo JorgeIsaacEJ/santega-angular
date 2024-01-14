@@ -26,8 +26,8 @@
                 </li>
             </ng-container>
             <ng-template #elseBlock>
-                <li class="app-header-nav-list-item">
-                    <button class="register-btn user-name-header" anim="ripple">{{ user.Name }} {{ user.Apellido_Paterno }} {{ user.Apellido_Materno }}</button>
+                <li class="app-header-nav-list-item" routerLink="/panel">
+                    <button class="register-btn user-name-header" anim="ripple">Panel Administrativo</button>
                 </li>
                 <li class="app-header-nav-list-item">
                     <button class="login-btn" anim="ripple" (click)="logout();">Cerrar Sesión</button>

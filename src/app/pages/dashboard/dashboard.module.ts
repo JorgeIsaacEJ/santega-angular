@@ -4,6 +4,8 @@ import { DashboardComponent } from './dashboard.component';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
+import { NumberWithCommasPipe } from 'src/app/core/pipes/number-with-commas.pipe';
+import { LayoutModule } from 'src/app/shared/components/layout/layout.module';
 
 
 
@@ -18,6 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
       path: '', component: DashboardComponent
     }]),
     MatIconModule,
+    NumberWithCommasPipe,
+    LayoutModule,
   ]
 })
 export class DashboardModule { }
