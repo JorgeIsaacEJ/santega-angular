@@ -55,6 +55,7 @@ export class DashboardComponent implements OnInit {
         if ( value ) {
 
           this.currentDebts = value.Creditos;
+          console.log( this.currentDebts );
           return;
         }
     });
@@ -85,6 +86,7 @@ export class DashboardComponent implements OnInit {
         if ( value && value.Registro_de_Pagos.length > 0) {
 
           this.payments.push( ...value.Registro_de_Pagos );
+          console.log({ payments: this.payments })
           return;
         }
     })
@@ -186,9 +188,9 @@ export class DashboardComponent implements OnInit {
     setTimeout(() => {
       modal.classList.remove('fadeOutAnimation');
       modal.classList.remove('payment-modal-active');
-        
-      this.nuveiFrame.nativeElement.src = '';
+          
       this.nuveiFrameLoaded = false;
+      this.nuveiFrame.nativeElement.src = '';
     }, 301 );
   }
 
@@ -211,7 +213,7 @@ export class DashboardComponent implements OnInit {
 
     const modal: HTMLElement = this.paymentModal.nativeElement;
     if ( modal.classList.contains('payment-modal-active') ) {
-      
+
       this.closePaymentModal();
     }
   }

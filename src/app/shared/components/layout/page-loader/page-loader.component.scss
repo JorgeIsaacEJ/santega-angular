@@ -37,10 +37,11 @@ div.page-loader {
                 height:20px;
                 position: absolute;
                 border-radius: 50%;
-                background-color: $dark;
+                background-color: #00E6E7;
                 left:15%;
                 transform-origin: 50%;
                 animation: circle .5s alternate infinite ease;
+                border: 1px solid #000;
             }
             
             @keyframes circle{
@@ -116,10 +117,11 @@ div.page-loader {
             text-align: center;
             margin-bottom: 15px;
             line-height: 18px;
-            color: #101010;
+            color: $font-gray;
+            font-weight: 900;
 
             span {
-                color: #237970;
+                color: #000;
             }
         }
     }

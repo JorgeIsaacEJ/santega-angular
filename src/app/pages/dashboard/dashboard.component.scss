@@ -310,7 +310,7 @@ div.payment-modal {
         justify-content: center;
         box-shadow: $box-shadow;
         cursor: pointer;
-        z-index: 3;
+        z-index: 100;
 
         mat-icon {
             color: $font-white;
