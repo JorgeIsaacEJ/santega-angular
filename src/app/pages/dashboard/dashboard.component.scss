@@ -266,7 +266,6 @@ div.dashboard {
             }
         }
 
-            
         ul.payment-history-filters {
             width: 100%;
             height: 60px;
@@ -459,7 +458,7 @@ div.dashboard {
                 background: $main-light;
             }
 
-            li { 
+            li {
                 width: 100%;
                 height: 60px;
                 display: flex;
@@ -484,8 +483,8 @@ div.dashboard {
                     }
                 }
 
-                p.payment-name {
-                    flex: 0 0 12%;
+                p.payment-type-debt {
+                    flex: 0 0 22%;
                     text-align: left;
                 }
             }

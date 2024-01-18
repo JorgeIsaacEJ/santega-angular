@@ -291,9 +291,16 @@ export class DashboardComponent implements OnInit {
     });
 
     if ( debt.Folio === this.debtTypeSelected?.Folio ) {
-      this.debtTypeSelected = null;
-      this.paymentsSelected = [];
-      return;
+      
+      const paymentList = document.querySelector('.paymet-history');
+      paymentList?.classList.add('slideOutFromTopAnimation');
+      setTimeout(() => {
+
+        paymentList?.classList.remove('slideOutFromTopAnimation');
+        this.debtTypeSelected = null;
+        this.paymentsSelected = [];
+        return;
+      }, 300);
     }
 
     this.debtTypeSelected = debt;
