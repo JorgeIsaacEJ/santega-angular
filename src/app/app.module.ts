@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
@@ -6,6 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+
+import { registerLocaleData } from '@angular/common';
+import localeEsMx from '@angular/common/locales/es-MX';
+registerLocaleData(localeEsMx, 'es-Mx');
 
 @NgModule({
   declarations: [
@@ -23,7 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
       progressAnimation: 'decreasing',
     }),
   ],
-  providers: [],
+  providers: [ { provide: LOCALE_ID, useValue: 'es-Mx' } ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

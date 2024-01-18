@@ -183,7 +183,7 @@ enum MedioDePagoMedioDePagoDescripcion {
 
 interface ProductoDeCreditoProductoDeCredito {
     Folio:                           number;
-    Descripcion:                     ProductoDeCreditoProductoDeCreditoDescripcion | null;
+    Descripcion:                     string | null;
     Ramo:                            null;
     Tipo_de_Credito:                 null;
     Pago_a_Capital:                  null;
@@ -197,9 +197,6 @@ interface ProductoDeCreditoProductoDeCredito {
     Id:                              number;
 }
 
-enum ProductoDeCreditoProductoDeCreditoDescripcion {
-    CarteraHipotecaria = "Cartera Hipotecaria",
-}
 
 interface UsuarioQueRegistraSpartanUser {
     Id_User:                    number;

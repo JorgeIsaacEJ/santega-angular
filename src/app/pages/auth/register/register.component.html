@@ -31,7 +31,7 @@
                         formControlName="Name"
                     />
                     
-                    <p class="auth-form-label">Apellido Paterno y Materno:</p>
+                    <p class="auth-form-label">Apellido paterno y materno:</p>
                     <input
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Apellido_Paterno'].invalid && registerForm.controls['Apellido_Paterno'].touched
@@ -54,6 +54,26 @@
                         formControlName="Apellido_Materno"
                     />
 
+                    <p class="auth-form-label">Tipo de crédito:</p>
+                    <div class="custom-select">
+                        <select
+                            [ngClass]="{
+                                'invalid-input': registerForm.controls['Producto_de_Credito'].invalid && registerForm.controls['Producto_de_Credito'].touched
+                            }"
+                            class="auth-form-select" 
+                            formControlName="Producto_de_Credito"
+                            required
+                        >   
+                            <option class="select-placeholder" value="" disabled selected>Selecciona el tipo de credito</option>
+                            <option 
+                                *ngFor="let debt of typeDebts"
+                                [value]="debt.Folio"
+                            >
+                                {{ debt.Descripcion }}
+                            </option>
+                        </select>
+                    </div>
+
                     <p class="auth-form-label">RFC:</p>
                     <input
                         [ngClass]="{
@@ -66,7 +86,7 @@
                         formControlName="Username"
                     />
 
-                    <p class="auth-form-label">Correo Electronico:</p>
+                    <p class="auth-form-label">Correo eléctronico:</p>
                     <input
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Email'].invalid && registerForm.controls['Email'].touched

@@ -11,30 +11,30 @@
 
         <div class="dashboard-debt-title">
             <div></div>
-            <h2>Creditos Activos</h2>
+            <h2>Creditos activos</h2>
         </div>
 
         <ng-container *ngIf="currentDebts && currentDebts.length > 0">
             <ng-container *ngFor="let debt of currentDebts">
                 <ul class="debt-payment-info">
-                    <h3>Información del credito</h3>
-                    <li>Tipo de credito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
-                    <li>Contrato del credito: <span>{{ debt.Contrato }}</span></li>
+                    <h3>Información del crédito</h3>
+                    <li>Tipo de crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
+                    <li>Contrato del crédito: <span>{{ debt.Contrato }}</span></li>
                     <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | date }}</span></li>
-                    <li>Fecha Limite de pago: <span>{{ debt.Fecha_limite_de_Pago | date }}</span></li>
+                    <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | date }}</span></li>
                 </ul>
                 <ul class="debt-payment-info">
-                    <h3>Metodos de Pago</h3>
-                    <li>Tarjeta de Credito / Debito <span><mat-icon>check_box</mat-icon></span></li>
-                    <li>Transferencia Bancaria <span><mat-icon>check_box</mat-icon></span></li>
-                    <li>Pago Referenciado (Efectivo) <span><mat-icon>check_box</mat-icon></span></li>
-                    <li>Pago Domiciliado <span><mat-icon>check_box</mat-icon></span></li>
+                    <h3>Metodos de pago</h3>
+                    <li>Tarjeta de crédito / débito <span><mat-icon>check_box</mat-icon></span></li>
+                    <li>Transferencia bancaria <span><mat-icon>check_box</mat-icon></span></li>
+                    <li>Pago referenciado (Efectivo) <span><mat-icon>check_box</mat-icon></span></li>
+                    <li>Pago domiciliado <span><mat-icon>check_box</mat-icon></span></li>
                 </ul>
                 <div class="debt-make-payment">
                     <h3>Realizar Pago</h3>
                     <h5>Total a pagar:</h5>
                     <h2>${{ debt.Pago_Periodico | numberWithCommas }}</h2>
-                    <button anim="ripple" type="button" (click)="makePayment( debt );">Seleccionar Metodo de Pago</button>
+                    <button anim="ripple" type="button" (click)="makePayment( debt );">Seleccionar metodo de pago</button>
                 </div>
             </ng-container>
         </ng-container>
@@ -46,25 +46,70 @@
     </section>
 
     <section class="dashboard-payment-history">
+
         <div class="dashboard-payment-history-title">
             <div></div>
-            <h2>Historial de Pagos</h2>
+            <h2>Historial de pagos</h2>
         </div>
-        <ul class="paymet-history">
-            <ng-container *ngIf="payments && payments.length > 0">
-                <li *ngFor="let payment of payments">
-                    <!-- <p class="payment-name">Folio: <span>{{ payment.Credito }}</span></p> -->
-                    <p class="payment-type-debt">Tipo de Credito: <span>{{ payment.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></p>
+
+        <ul class="payment-history-options" *ngIf="debtTypes && debtTypes.length > 0">
+            <li 
+                *ngFor="let debt of debtTypes"
+                class="payment-history-options-item"
+                (click)="showPaymentHistory( debt, $event );"
+                [ngClass]="{
+                    'payment-history-option-item-user-has':  userHasDebtType( debt.Folio )
+                }"
+            >
+                {{ debt.Descripcion }}
+                <div class="payment-history-options-item-tooltip fadeInAnimation">
+                    {{ debt.Descripcion }}
+                </div>
+            </li>
+        </ul>
+
+        <ul class="payment-history-filters">
+            <li class="payment-history-filters-item">Número de contrato:</li>
+            <ng-container *ngIf="contractsOftypeDebtsSelected && contractsOftypeDebtsSelected.length > 0">
+                <li class="payment-history-filters-item" *ngFor="let debt of contractsOftypeDebtsSelected">
+                    <input type="checkbox" [value]="debt.Contrato" (change)="contractToggleCheck( $event );" checked>
+                    <p>{{ debt.Contrato }}</p>
+                </li>
+            </ng-container>
+
+            <li class="payment-history-filters-item-right">
+                <div class="custom-select">
+                    <select class="auth-form-select" (change)="filterPayments( $event );">   
+                        <option class="select-placeholder" value="" disabled selected>Filtrar por:&nbsp;&nbsp;Pagos recientes</option>
+                        <option value="desc">Pagos recientes</option>
+                        <option value="asc">Pagos antiguos</option>
+                        <option value="highest">Cantidad pagada mayor</option>
+                        <option value="lowest">Cantidad pagada menor</option>
+                    </select>
+                </div>
+                <div class="total-docs">
+                    ({{ paymentsSelected.length }})
+                </div>
+            </li>
+        </ul>
+
+        <ul class="paymet-history slideInFromTopAnimation" *ngIf="debtTypeSelected">
+
+            <ng-container *ngIf="paymentsSelected && paymentsSelected.length > 0">
+                <li *ngFor="let payment of paymentsSelected">
+                    <p class="payment-type-debt">Tipo de crédito: <span>{{ payment.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></p>
                     <p>Fecha de pago: <span>{{ payment.Fecha_de_Registro | date }}</span></p>
-                    <p>Cantidad Pagada: <span>${{ payment.Total_Pagado | numberWithCommas }}</span></p>
+                    <p>Cantidad pagada: <span>${{ payment.Total_Pagado | numberWithCommas }}</span></p>
                     <p>Estatus: <span>Pago aprobado</span></p>
                 </li>
             </ng-container>
-            <ng-container *ngIf="!payments || payments.length === 0">
+
+            <ng-container *ngIf="!paymentsSelected || paymentsSelected.length === 0">
                 <div class="no-data-found">
                     <p>No se han encontrado pagos registrados.</p>
                 </div>
             </ng-container>
+
         </ul>
     </section>
 
@@ -78,10 +123,30 @@
 
     <div class="nuvei-content">
 
-        <div class="nuvei-loader" *ngIf="!nuveiFrameLoaded">
+        <div class="nuvei-loader">
             <app-page-loader></app-page-loader>
         </div>
+    </div>  
+</div>
 
-        <iframe (load)="iframeLoaded();" #nuveiFrame></iframe>
-    </div>
+<div class="payment-modal-status" *ngIf="nuveiResponse" #paymentModalStatus>
+
+    <ul class="payment-modal-status-content">
+        
+        <div class="close-payment-modal" (click)="closePaymentModalStatus();">
+            <mat-icon>close</mat-icon>
+        </div>
+
+        <h2>Detalles del pago</h2>
+        <li>Folio de la transacción: <span>{{ nuveiResponse!.TransactionID! }}</span></li>
+        <li>Nombre del crédito: <span>{{ nuveiResponse!.productId!.replaceAll('_', ' ') }}</span></li>
+        <li>Cantidad pagada: <span>${{ nuveiResponse!.totalAmount! | numberWithCommas }} {{ nuveiResponse!.currency! }}</span></li>
+        <li>Fecha de pago: <span>{{ nuveiResponse!.responseTimeStamp! | date }}</span></li>
+        <li>Metodo de pago: <span>{{ nuveiResponse!.payment_method! }}</span></li>
+        <li>Correo electrónico: <span>{{ nuveiResponse!.email! }}</span></li>
+
+        <div class="payment-modal-status-content-bottom">
+            <button type="button" (click)="closePaymentModalStatus();">Aceptar</button>
+        </div>
+    </ul>
 </div>

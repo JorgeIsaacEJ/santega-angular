@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { DebtService } from 'src/app/shared/services/debt.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
 @Component({
@@ -17,9 +18,11 @@ export class RegisterComponent implements OnInit {
     Apellido_Paterno: ['', [ Validators.required ]],
     Apellido_Materno: ['', [ Validators.required ]],
     Username: ['', [ Validators.required, Validators.minLength(13), Validators.maxLength(13) ]],
+    Producto_de_Credito: ['', [ Validators.required ]],
     Email: ['', [ Validators.required, Validators.email ]],
     Password: ['', [ Validators.required ]],
-  })
+  });
+  public typeDebts: any[] = [];
 
   constructor(
     private readonly fb: FormBuilder,
@@ -27,11 +30,23 @@ export class RegisterComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly userService: UserService,
     private readonly router: Router,
+    private readonly debtService: DebtService,
   ) {}
 
   ngOnInit(): void {
     
     window.scrollTo({ top: 0 });
+    this.getTypeDebts();
+  }
+
+  getTypeDebts(): void {
+
+    this.debtService.getTypeDebts()
+      .subscribe(( value: any ) => {
+
+        if ( !value ) return;
+        this.typeDebts = value;
+    })
   }
 
   register(): void {
@@ -42,7 +57,13 @@ export class RegisterComponent implements OnInit {
       
       if ( value && value.Error ) {
 
-        this.toastrService.info( value.Error );
+        if ( value.Error === 'ERROR_RFC_NO_EXISTE' ) {
+
+          this.toastrService.info('Ha ocurrido un error en el registro, favor de intentarlo mas tarde');
+        } else {
+          
+          this.toastrService.info( value.Error );
+        }
         this.registerForm.controls['Username'].setErrors({ invalid: true });
         this.registerForm.controls['Email'].setErrors({ invalid: true });
         return;

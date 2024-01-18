@@ -44,20 +44,21 @@ html {
 
 .toast-success {
   background-color: #529351 !important;
-  width: 350px !important;
+  width: 400px !important;
 }
 
 .toast-info {
   background-color: $danger !important;
-  width: 350px !important;
+  width: 400px !important;
 }
 
 .toast-error {
-  width: 350px !important;
+  width: 400px !important;
 }
 
 .toast-message {
   letter-spacing: .5px !important;
+  line-height: 22px !important;
 }
 
 [anim="ripple"] {
@@ -110,6 +111,10 @@ html {
 	}
 }
 
+
+///////////////////////////
+/* Fade Slide Animations */
+///////////////////////////
 .fadeInAnimation {
   animation: fadeInAnimation ease .3s;
   animation-iteration-count: 1;
@@ -141,6 +146,23 @@ html {
 
   100% {
     opacity: 0;
+  }
+}
+
+.slideInFromTopAnimation {
+  animation: slideInFromTopAnimation ease .3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes slideInFromTopAnimation {
+
+  0% {
+    max-height: 0;
+  }
+
+  100% {
+    max-height: 420px;
   }
 }
 

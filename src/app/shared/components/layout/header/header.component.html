@@ -5,7 +5,7 @@
         </h2>
         <ul class="app-header-nav-list">
             <li class="app-header-nav-list-item" anim="ripple" (click)="setSection('aboutUs');" router>
-                Acerca de Nosotros
+                Acerca de nosotros
             </li>
             <li class="app-header-nav-list-item" anim="ripple" (click)="setSection('services');">
                 Servicios
@@ -19,7 +19,7 @@
 
             <ng-container *ngIf="!user; else elseBlock">
                 <li class="app-header-nav-list-item">
-                    <button class="login-btn" anim="ripple" routerLink="/auth/iniciar-sesion">Iniciar Sesión</button>
+                    <button class="login-btn" anim="ripple" routerLink="/auth/iniciar-sesion">Iniciar sesión</button>
                 </li>
                 <li class="app-header-nav-list-item">
                     <button class="register-btn" anim="ripple" routerLink="/auth/registro">Registro</button>
@@ -30,7 +30,7 @@
                     <button class="register-btn user-name-header" anim="ripple">Panel Administrativo</button>
                 </li>
                 <li class="app-header-nav-list-item">
-                    <button class="login-btn" anim="ripple" (click)="logout();">Cerrar Sesión</button>
+                    <button class="login-btn" anim="ripple" (click)="logout();">Cerrar sesión</button>
                 </li>
             </ng-template>
         </ul>

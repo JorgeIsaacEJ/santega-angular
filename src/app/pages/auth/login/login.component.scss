@@ -119,6 +119,75 @@ div.auth {
                         width: 48%;
                     }
 
+                    div.custom-select {
+                        width: 100%;
+                        position: relative;
+
+                        &::before,
+                        &::after {
+                            position: absolute;
+                            content: "";
+                            right: 1rem;
+                            pointer-events: none;
+                        }
+                        
+                        &::before {
+                            border-left: 6px solid transparent;
+                            border-right: 6px solid transparent;
+                            border-bottom: 6px solid $font-gray;
+                            top: 25%;
+                            right: 15px;
+                        }
+                      
+                        &::after {
+                            border-left: 6px solid transparent;
+                            border-right: 6px solid transparent;
+                            border-top: 6px solid $font-gray;
+                            top: 40%;
+                            right: 15px;
+                        }
+
+                        select.auth-form-select {
+                            width: 100%;
+                            margin-bottom: 20px;
+                            display: flex;
+                            align-items: center;
+                            height: 45px;
+                            outline: none;
+                            border: 1px solid $border-light;
+                            border-radius: $border-radius;
+                            padding: 0 15px;
+                            box-sizing: border-box;
+                            transition: $transition;
+                            cursor: pointer;
+                            -webkit-appearance: none;
+                            -moz-appearance: none;
+                            appearance: none;
+                            color: $font-dark;
+
+                            &:invalid { 
+                                color: $font-gray; 
+                            }
+    
+                            option {
+                                font-size: 13px;
+                                font-weight: bold;
+                                color: $font-dark;
+                                padding: 10px 0;
+                                height: 50px;
+                            }
+
+                            option.select-placeholder {
+                                color: $font-gray;
+                            }
+    
+                            &:focus {
+                                border-color: $action;
+                            }
+                        }
+                    }
+
+
                     p.auth-form-paragraph {
                         width: 100%;
                         font-size: 13px;

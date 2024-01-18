@@ -72,6 +72,8 @@ export class AuthService {
             Password: md5( form.Password ),
         }
 
+        console.log({ form })
+
         return this.http.post(
             `${ this.apiUrl }/${ this.registerRoute }`, form, {
                 headers: {
