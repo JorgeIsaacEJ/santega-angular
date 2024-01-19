@@ -53,7 +53,7 @@ export class DashboardComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(( queries: Partial<NuveiQueryParamsResponse> ) => {
-
+        console.log( queries )
         if ( Object.keys( queries ).length !== 0 ) {
 
           this.showPaymentModalStatus( queries );
@@ -251,10 +251,15 @@ export class DashboardComponent implements OnInit {
         if ( value ) {
 
           this.localStorageService.removeData('debt-folio-payed');
+          this.debtTypes = undefined;
+          this.currentDebts = undefined;
+          this.debts = undefined;
+          this.payments = [];
+          this.paymentsSelected = [];
+
           this.getTypeDebts();
           this.getCurrentDebts();
           this.getDebts();
-
           return;
         }
     });
@@ -269,7 +274,6 @@ export class DashboardComponent implements OnInit {
       modal.classList.remove('payment-modal-active');
 
       this.nuveiResponse = null;
-      this.router.navigate(['/panel']);
     }, 301 );
   }
 
@@ -471,15 +475,15 @@ export class DashboardComponent implements OnInit {
   ) onKeydownHandler( e: any ) {
 
     const paymentModal: HTMLElement = this.paymentModal.nativeElement;
-    if ( paymentModal.classList.contains('payment-modal-active') ) {
+    if ( paymentModal && paymentModal.classList.contains('payment-modal-active') ) {
 
       this.closePaymentModal();
     }
 
     const paymentModalStatus: HTMLElement = this.paymentModalStatus.nativeElement;
-    if ( paymentModalStatus.classList.contains('payment-modal-active') ) {
+    if ( paymentModalStatus && paymentModalStatus.classList.contains('payment-modal-active') ) {
 
-      this.closePaymentModal();
+      this.closePaymentModalStatus();
     }
   }
 }
