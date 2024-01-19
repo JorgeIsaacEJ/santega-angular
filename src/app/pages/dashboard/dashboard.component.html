@@ -16,26 +16,50 @@
 
         <ng-container *ngIf="currentDebts && currentDebts.length > 0">
             <ng-container *ngFor="let debt of currentDebts">
-                <ul class="debt-payment-info">
-                    <h3>Información del crédito</h3>
-                    <li>Tipo de crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
-                    <li>Contrato del crédito: <span>{{ debt.Contrato }}</span></li>
-                    <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | date }}</span></li>
-                    <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | date }}</span></li>
-                </ul>
-                <ul class="debt-payment-info">
-                    <h3>Métodos de pago</h3>
-                    <li>Tarjeta de crédito / débito <span><mat-icon>check_box</mat-icon></span></li>
-                    <li>Transferencia bancaria <span><mat-icon>check_box</mat-icon></span></li>
-                    <li>Pago referenciado (Efectivo) <span><mat-icon>check_box</mat-icon></span></li>
-                    <li>Pago domiciliado <span><mat-icon>check_box</mat-icon></span></li>
-                </ul>
-                <div class="debt-make-payment">
-                    <h3>Realizar pago</h3>
-                    <h5>Total a pagar:</h5>
-                    <h2>${{ debt.Pago_Periodico | numberWithCommas }}</h2>
-                    <button anim="ripple" type="button" (click)="makePayment( debt );">Seleccionar método de pago</button>
-                </div>
+                <ng-container *ngIf="isCurrentMonth( debt.Fecha_Ultimo_Pago.toString() );">
+                    <ul class="debt-payment-info">
+                        <h3>Información del crédito</h3>
+                        <li>Tipo de crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
+                        <li>Contrato del crédito: <span>{{ debt.Contrato }}</span></li>
+                        <li>Fecha de pago: <span>{{ addMonthToDate( debt.Fecha_de_Pago ) | date }}</span></li>
+                        <li>Fecha límite de pago: <span>{{ addMonthToDate( debt.Fecha_limite_de_Pago ) | date }}</span></li>
+                    </ul>
+                    <ul class="debt-payment-info">
+                        <h3>Métodos de pago</h3>
+                        <li>Tarjeta de crédito / débito <span><mat-icon>check_box</mat-icon></span></li>
+                        <li class="no-payment-accept">Transferencia bancaria <span><mat-icon>cancel</mat-icon></span></li>
+                        <li class="no-payment-accept">Pago referenciado (Efectivo) <span><mat-icon>cancel</mat-icon></span></li>
+                        <li class="no-payment-accept">Pago domiciliado <span><mat-icon>cancel</mat-icon></span></li>
+                    </ul>
+                    <div class="debt-make-payment">
+                        <h3>Realizar pago</h3>
+                        <h5>Total a pagar:</h5>
+                        <h2>$0,00</h2>
+                        <button anim="ripple" type="button" (click)="makePayment( debt );">Seleccionar método de pago</button>
+                    </div>
+                </ng-container>
+                <ng-container *ngIf="!isCurrentMonth( debt.Fecha_Ultimo_Pago.toString() );">
+                    <ul class="debt-payment-info">
+                        <h3>Información del crédito</h3>
+                        <li>Tipo de crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
+                        <li>Contrato del crédito: <span>{{ debt.Contrato }}</span></li>
+                        <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | date }}</span></li>
+                        <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | date }}</span></li>
+                    </ul>
+                    <ul class="debt-payment-info">
+                        <h3>Métodos de pago</h3>
+                        <li>Tarjeta de crédito / débito <span><mat-icon>check_box</mat-icon></span></li>
+                        <li class="no-payment-accept">Transferencia bancaria <span><mat-icon>cancel</mat-icon></span></li>
+                        <li class="no-payment-accept">Pago referenciado (Efectivo) <span><mat-icon>cancel</mat-icon></span></li>
+                        <li class="no-payment-accept">Pago domiciliado <span><mat-icon>cancel</mat-icon></span></li>
+                    </ul>
+                    <div class="debt-make-payment">
+                        <h3>Realizar pago</h3>
+                        <h5>Total a pagar:</h5>
+                        <h2>${{ debt.Pago_Periodico | numberWithCommas }}</h2>
+                        <button anim="ripple" type="button" (click)="makePayment( debt );">Seleccionar método de pago</button>
+                    </div>
+                </ng-container>
             </ng-container>
         </ng-container>
         <ng-container *ngIf="!currentDebts || currentDebts.length === 0">
@@ -80,7 +104,7 @@
             <li class="payment-history-filters-item-right">
                 <div class="custom-select">
                     <select class="auth-form-select" (change)="filterPayments( $event );">   
-                        <option class="select-placeholder" value="" disabled selected>Filtrar por:&nbsp;&nbsp;Pagos recientes</option>
+                        <option class="select-placeholder" value="" disabled selected>Ordenar por:&nbsp;&nbsp;Pagos recientes</option>
                         <option value="desc">Pagos recientes</option>
                         <option value="asc">Pagos antiguos</option>
                         <option value="highest">Cantidad pagada mayor</option>
@@ -99,7 +123,7 @@
                 <li *ngFor="let payment of paymentsSelected">
                     <p class="payment-type-debt">Tipo de crédito: <span>{{ payment.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></p>
                     <p>No. de contrato: <span>{{ payment.No__Contrato }}</span></p>
-                    <p>Fecha de pago: <span>{{ payment.Fecha_de_Registro | date }}</span></p>
+                    <p class="payment-date">Fecha de pago: <span>{{ payment.Fecha_de_Registro | date: 'MMM d, y, h:mm:ss a' }}</span></p>
                     <p>Cantidad pagada: <span>${{ payment.Total_Pagado | numberWithCommas }}</span></p>
                     <p>Estatus: <span>Pago aprobado</span></p>
                 </li>

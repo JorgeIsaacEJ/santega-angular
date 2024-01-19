@@ -101,6 +101,12 @@ div.dashboard {
                     }
                 }
             }
+            
+            li.no-payment-accept {
+                span mat-icon {
+                    color: $red !important;
+                }
+            }
         }
 
         div.debt-make-payment {
@@ -463,19 +469,27 @@ div.dashboard {
                 height: 60px;
                 display: flex;
                 align-items: center;
-                padding: 0 20px;
                 box-sizing: border-box;
-                border: 1px solid $border-light;
-                border-radius: $border-radius;
+                border: 2px solid $border-light;
+                border-radius: 10px;
                 background-color: $white;
                 margin-bottom: 10px;
 
                 p {
                     color: $font-dark;
+                    height: 100%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                     font-size: 13px;
                     font-weight: 900;
                     flex: 16.25%;
                     text-align: center;
+                    border-radius: $border-radius;
+                    
+                    &:nth-child(odd) {
+                        background-color: $border-light;
+                    }
                 
                     span {
                         margin-left: 20px;
@@ -486,6 +500,14 @@ div.dashboard {
                 p.payment-type-debt {
                     flex: 0 0 22%;
                     text-align: left;
+                }
+
+                p.payment-date {
+                    flex: 0 0 25%;
+
+                    span {
+                        text-transform: capitalize;
+                    }
                 }
             }
         }

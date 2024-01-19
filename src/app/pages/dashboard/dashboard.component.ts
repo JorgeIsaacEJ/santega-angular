@@ -55,15 +55,18 @@ export class DashboardComponent implements OnInit {
       .subscribe(( queries: Partial<NuveiQueryParamsResponse> ) => {
 
         if ( Object.keys( queries ).length !== 0 ) {
+
           this.showPaymentModalStatus( queries );
           return;
+        } else {
+
+          this.getTypeDebts();
+          this.getCurrentDebts();
+          this.getDebts();
         }
     });
     
     window.scrollTo({ top: 0 });
-    this.getTypeDebts();
-    this.getCurrentDebts();
-    this.getDebts();
   }
 
   getTypeDebts(): void {
@@ -87,6 +90,7 @@ export class DashboardComponent implements OnInit {
         if ( value ) {
 
           this.currentDebts = value.Creditos;
+          console.log({ debts: this.currentDebts });
           return;
         }
     });
@@ -152,6 +156,7 @@ export class DashboardComponent implements OnInit {
       checksum: checkSum
     })}`;
 
+    this.localStorageService.saveData('debt-folio-payed', String( currentDebt.Folio ));
     window.open( urlToPay, '_self' );
   }
 
@@ -229,8 +234,30 @@ export class DashboardComponent implements OnInit {
       ? queries 
       : null;
       
-    if ( payment_status === 'success' )
+    if ( payment_status === 'success' ) {
+
       this.toastrService.success(`El pago del credito ${ queries.productId!.replaceAll('_', ' ')} por la cantidad de $${ queries.totalAmount }${ queries.currency } ha sido exitoso!`);
+      this.generatePaymentRecord( queries.totalAmount! );
+    }
+  }
+
+  generatePaymentRecord( totalAmount: number ): void {
+    const debtFolio = this.localStorageService.getData('debt-folio-payed');
+    if ( !debtFolio ) return;
+
+    this.paymentService.makePayment({ Credito: String( debtFolio! ), Total_a_Pagar: String( totalAmount )})
+      .subscribe(( value ) => {
+
+        if ( value ) {
+
+          this.localStorageService.removeData('debt-folio-payed');
+          this.getTypeDebts();
+          this.getCurrentDebts();
+          this.getDebts();
+
+          return;
+        }
+    });
   }
 
   closePaymentModalStatus(): void {
@@ -394,6 +421,36 @@ export class DashboardComponent implements OnInit {
       var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
       return result * order;
     }
+  }
+
+  isCurrentMonth( dateTime: string ): boolean {
+    const parts = dateTime.split(/[- :]/);
+
+    const formatNumber = ( n: number | string ) => {
+      n = String(n)
+      if (n.length == 1)
+        n = '0' + n
+      return n
+    }
+    
+    const month = parts[1];
+    const year = parts[0];
+    
+    const currentdate = new Date();
+    const cur_month = formatNumber( String( currentdate.getMonth() + 1 ));
+    const cur_year = String( currentdate.getFullYear() );
+
+    if (cur_month === month && year === cur_year)
+      return true;
+
+    return false;
+  }
+
+  addMonthToDate( date: Date ): Date {
+    let d = new Date(date);
+    d.setMonth(d.getMonth() + 1); 
+
+    return d;
   }
 
   @HostListener(
