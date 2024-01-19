@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NumberWithCommasPipe } from 'src/app/core/pipes/number-with-commas.pipe';
 import { LayoutModule } from 'src/app/shared/components/layout/layout.module';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AddMonthToDatePipe } from 'src/app/core/pipes/add-month-to-date.pipe';
 
 
 
@@ -22,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     }]),
     MatIconModule,
     NumberWithCommasPipe,
+    AddMonthToDatePipe,
     LayoutModule,
     ReactiveFormsModule,
   ]

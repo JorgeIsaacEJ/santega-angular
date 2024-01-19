@@ -450,13 +450,6 @@ export class DashboardComponent implements OnInit {
     return false;
   }
 
-  addMonthToDate( date: Date ): Date {
-    let d = new Date(date);
-    d.setMonth(d.getMonth() + 1); 
-
-    return d;
-  }
-
   @HostListener(
     'click', ['$event']
   ) onClick( e: any ): void {
