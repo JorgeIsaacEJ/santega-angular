@@ -147,6 +147,9 @@ export class DashboardComponent implements OnInit {
       item_quantity_1: 1,
       time_stamp: this.createTimeStamp(),
       version: '4.0.0',
+      payment_method_mode: 'filter',
+      payment_method: 'cc_card',
+      email: 'test@gmail.com',
       notify_url: 'https://google.com',
     }
 
@@ -274,6 +277,9 @@ export class DashboardComponent implements OnInit {
       modal.classList.remove('payment-modal-active');
 
       this.nuveiResponse = null;
+      this.payments = [];
+      this.paymentsSelected = [];
+      this.router.navigate(['/panel']);
     }, 301 );
   }
 
@@ -426,7 +432,7 @@ export class DashboardComponent implements OnInit {
       return result * order;
     }
   }
-
+  
   isCurrentMonth( dateTime: string ): boolean {
     const parts = dateTime.split(/[- :]/);
 

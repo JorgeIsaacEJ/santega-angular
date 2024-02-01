@@ -37,7 +37,7 @@
                             
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
                             <li>Cantidad a pagar: <span class="total-amount-to-pay">$0,00 MXN</span></li>
-                            <button anim="ripple" type="button" (click)="makePayment( debt );">Pagar</button>
+                            <button class="btn-disabled" anim="ripple" type="button" (click)="makePayment( debt );" disabled>Pagar</button>
                         </ul>
                     </div>
                 </ng-container>
@@ -46,11 +46,11 @@
                         <ul class="debt-payment-info-left">
                             <li>Crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
                             <li>Saldo actual: <span>${{ debt.Saldo_Actual | numberWithCommas}} MXN</span></li>
-                            <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | addMonthToDate | date }}</span></li>
+                            <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | date }}</span></li>
                                 
                             <li>No. de cuenta: <span>{{ debt.Cuenta }}</span></li>
                             <li>Saldo vencido: <span>${{ debt.Saldo_Vencido | numberWithCommas }} MXN</span></li>
-                            <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | addMonthToDate | date }}</span></li>
+                            <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | date }}</span></li>
 
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
                             <li>Monto otorgado: <span>${{ debt.Monto_Otorgado | numberWithCommas}} MXN</span></li>
