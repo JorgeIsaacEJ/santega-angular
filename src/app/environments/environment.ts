@@ -10,5 +10,9 @@ export const environment = {
       successURL: 'https://sandbox.nuvei.com/lib/demo_process_request/response.php',
       failureURL: 'https://ppp-test.safecharge.com/ppp/defaultCancel.do',
       paymentURL: 'https://ppp-test.safecharge.com/ppp/purchase.do',
-    }
+    },
+    //Paycash SandBox
+    apipaycash: "https://sb-api-mexico-emisor.paycashglobal.com/",
+    idpaycash: 473,
+    keypaycash: "a5157d8d984011eebae60aec000473000",
   };
