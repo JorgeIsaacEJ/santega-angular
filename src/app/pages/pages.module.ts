@@ -4,6 +4,7 @@ import { PagesComponent } from './pages.component';
 import { Route, RouterModule } from '@angular/router';
 import { LayoutModule } from '../shared/components/layout/layout.module';
 import { AuthGuard } from '../core/guards/auth.guard';
+import { ReferenceComponent } from './reference/reference.component';
 
 const routes: Route[] = [
   {
@@ -41,7 +42,8 @@ const routes: Route[] = [
 
 @NgModule({
   declarations: [
-    PagesComponent
+    PagesComponent,
+    ReferenceComponent
   ],
   imports: [
     CommonModule,
