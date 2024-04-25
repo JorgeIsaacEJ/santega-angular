@@ -15,12 +15,12 @@ export class PaycashService {
   constructor(private http:HttpClient) { }
 
   //Otiene token
-  getToken():Observable<Tokenresponse>{
+  getToken():Observable<any>{
     return this.http.get<Tokenresponse>(`${this.apiUrl}v1/authre?key=` + this.keypaycash);
   }
 
   //Otiene referencia
-  getReference(reference: string):Observable<Tokenresponse>{
+  getReference(reference: string, token: string):Observable<any>{
     return this.http.get<Tokenresponse>(`${this.apiUrl}v1/search?Reference=` + reference);
   }
 }

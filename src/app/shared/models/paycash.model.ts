@@ -4,7 +4,7 @@ export interface Tokenresponse {
     ErrorCode: string;
     ErrorMessage: string;
 }
-export interface Tokenresponse {
+export interface Reference {
     paging: results
 }
 interface results {
