@@ -1,0 +1,38 @@
+* {
+    box-sizing: border-box;
+}
+
+div.containerfind input[type=text] {
+    padding: 10px;
+    font-size: 17px;
+    border: 1px solid grey;
+    float: left;
+    width: 70%;
+    //background: #f1f1f1;
+  }
+
+  div.containerfind input[type=text]:hover {
+    border: 1px solid #2196F3;
+  }
+  
+  div.containerfind button {
+    float: left;
+    width: 30%;
+    padding: 10px;
+    background: #2196F3;
+    color: white;
+    font-size: 17px;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
+  }
+  
+  div.containerfind button:hover {
+    background: #0b7dda;
+  }
+  
+  div.containerfind::after {
+    content: "";
+    clear: both;
+    display: table;
+  }

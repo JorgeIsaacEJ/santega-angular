@@ -1,8 +1,6 @@
-<div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-    <div class="payment-modal-reference-content-bottom">
-        <input type="text" class="text" #ref>
-        <button class="" type="submit" (click)="getReference(ref.value)">
-            <i class="fa fa-search">Busca referencia</i>
-        </button>
+<div style="margin:auto; max-width:450px; margin-top:30px; margin-bottom:30px;">
+    <div class="payment-modal-reference-content-bottom containerfind">
+        <input type="text" class="text" placeholder="Ingresa tu referencia" #ref>
+        <button type="submit" (click)="getReference(ref.value)"><i class="fa fa-search">Verificar</i></button>
     </div>
 </div>
