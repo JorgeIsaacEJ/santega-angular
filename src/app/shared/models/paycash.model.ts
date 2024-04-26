@@ -8,7 +8,7 @@ export interface Reference {
     paging: results
 }
 interface results {
-    results: data
+    results: data[]
 }
 interface data
 {

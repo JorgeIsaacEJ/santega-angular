@@ -6,6 +6,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PageLoaderComponent } from './page-loader/page-loader.component';
+import { ReferenceComponent } from 'src/app/pages/reference/reference.component';
 
 @NgModule({
   declarations: [
@@ -13,12 +14,14 @@ import { PageLoaderComponent } from './page-loader/page-loader.component';
     FooterComponent,
     SidebarComponent,
     PageLoaderComponent,
+    ReferenceComponent
   ],
   exports: [
     HeaderComponent,
     FooterComponent,
     SidebarComponent,
     PageLoaderComponent,
+    ReferenceComponent
   ],
   imports: [
     CommonModule,

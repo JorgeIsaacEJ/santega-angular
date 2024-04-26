@@ -5,6 +5,7 @@ import { environment } from 'src/app/environments/environment';
 import { NuveiParams } from 'src/app/shared/interfaces/nuvei-params.interface';
 import { NuveiQueryParamsResponse } from 'src/app/shared/interfaces/nuvei-query-params-response.interface';
 import { DebtModel } from 'src/app/shared/models/debt.model';
+import { Reference } from 'src/app/shared/models/paycash.model';
 import { Credito, UserCurrentDebtsResponse } from 'src/app/shared/models/user-current-debts-reponse.model';
 import { RegistroDePago, UserHistoryPaymentsResponse } from 'src/app/shared/models/user-history-payments-response.model';
 import { UserModel } from 'src/app/shared/models/user.model';
@@ -22,11 +23,13 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('paymentModal') paymentModal!: ElementRef;
   @ViewChild('paymentModalStatus') paymentModalStatus!: ElementRef;
+  @ViewChild('paymentReference') paymentReference!: ElementRef;
 
   public user: UserModel;
   
   public debtTypes?: DebtModel[];
   public debtTypeSelected?: DebtModel | null;
+  public reference?: string = "";
 
   public currentDebts?: Credito[];
   public debts?: Credito[];
@@ -484,5 +487,26 @@ export class DashboardComponent implements OnInit {
 
       this.closePaymentModalStatus();
     }
+  }
+
+  showReferencemodal(): void{
+    const referenceModal: HTMLElement = this.paymentReference.nativeElement;
+    referenceModal.classList.remove('payment-modal-hide');
+    referenceModal.classList.add('payment-modal-active');
+  }
+
+  closeReferenceModal(): void {
+    const modal: HTMLElement = this.paymentReference.nativeElement;
+    modal.classList.add('fadeOutAnimation');
+
+    setTimeout(() => {
+      modal.classList.remove('fadeOutAnimation');
+      modal.classList.remove('payment-modal-active');
+      modal.classList.add('payment-modal-hide');
+    }, 301 );
+  }
+
+  public getReference(date: Reference):void {
+    console.log('Response reference: ', date);
   }
 }

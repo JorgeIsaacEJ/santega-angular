@@ -62,7 +62,7 @@
                             
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
                             <li>Cantidad a pagar: <span class="total-amount-to-pay">${{ debt.Pago_Periodico | numberWithCommas }} MXN</span></li>
-                            <button anim="ripple" type="button" (click)="makePayment( debt );">Pagar</button>
+                            <button anim="ripple" type="button" (click)="showReferencemodal();">Pagar</button>
                         </ul>
                     </div>
                 </ng-container>
@@ -179,5 +179,16 @@
         <div class="payment-modal-status-content-bottom">
             <button type="button" (click)="closePaymentModalStatus();">Aceptar</button>
         </div>
+    </ul>
+</div>
+
+<div class="payment-modal-reference payment-modal-hide" #paymentReference>
+    <ul class="payment-modal-reference-content">
+        <div class="close-reference-modal" (click)="closeReferenceModal();">
+            <mat-icon>close</mat-icon>
+        </div>
+
+        <h2>Detalles del pago</h2>
+        <app-reference (getReferenceResult)="getReference($event)"></app-reference>
     </ul>
 </div>

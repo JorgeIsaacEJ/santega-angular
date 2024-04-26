@@ -1,0 +1,10 @@
+{
+    "/proxy": {
+      "target": "https://sb-api-mexico-emisor.paycashglobal.com/",
+      "secure": false,
+      "pathRewrite": {
+        "^/proxy": ""
+      },
+      "changeOrigin": true
+    }
+  }
