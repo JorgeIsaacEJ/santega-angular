@@ -506,7 +506,12 @@ export class DashboardComponent implements OnInit {
     }, 301 );
   }
 
-  public getReference(date: Reference):void {
-    console.log('Response reference: ', date);
+  public getReference(reference: Reference):void {
+    if(reference.paging.results[0].ErrorCode == '0'){
+
+    }
+    else{
+      
+    }
   }
 }

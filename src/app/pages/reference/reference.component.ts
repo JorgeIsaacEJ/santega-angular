@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Reference, Tokenresponse } from 'src/app/shared/models/paycash.model';
 import { PaycashService } from 'src/app/shared/services/paycash.service';
 
@@ -8,6 +9,7 @@ import { PaycashService } from 'src/app/shared/services/paycash.service';
   styleUrls: ['./reference.component.scss']
 })
 export class ReferenceComponent {
+  form!:FormGroup;
   token!: Tokenresponse;  
   reference!: Reference;
   @Output() getReferenceResult = new EventEmitter<Reference>();
@@ -17,7 +19,20 @@ export class ReferenceComponent {
   }
 
   ngOnInit(): void{
+    this.form = new FormGroup({
+      freferencenumber: new FormControl('', [Validators.required]),
+      freference: new FormControl()
+    });
+  }
 
+  submit(){
+    this.form.controls['freference'].setValue({
+      referencenumber: this.form.controls['freferencenumber'].value
+    });
+  }
+
+  get f(){
+    return this.form.controls;
   }
 
   getReference(reference: string){
@@ -29,6 +44,13 @@ export class ReferenceComponent {
       this.paycashservice.getReference(reference, Tokenresponse).subscribe((reference: Reference)=>{
         this.reference = reference;
         this.getReferenceResult.emit(this.reference);
+        if(this.reference.paging.results[0].ErrorCode == '0'){
+          console.log("OK");
+          return !this.form.controls
+        }
+        else{
+          return this.form.controls
+        }
       })
     })
   }

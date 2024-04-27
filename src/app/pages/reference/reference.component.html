@@ -1,6 +1,11 @@
 <div style="margin:auto; max-width:450px; margin-top:30px; margin-bottom:30px;">
-    <div class="payment-modal-reference-content-bottom containerfind">
-        <input type="text" class="text" placeholder="Ingresa tu referencia" #ref>
-        <button type="submit" (click)="getReference(ref.value)"><i class="fa fa-search">Verificar</i></button>
-    </div>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="payment-modal-reference-content-bottom containerfind">
+            <input type="text" class="text" placeholder="Ingresa tu referencia" #ref id="freferencenumber" formControlName="freferencenumber" [min]="4" [maxlength]="40">
+            <button type="submit" (click)="getReference(ref.value)" [disabled]="!form.valid"><i class="fa fa-search">Verificar</i></button>
+        </div>
+        <div *ngIf="f['freferencenumber'].touched && f['freferencenumber'].invalid" class="alert">
+            <div *ngIf="f['freferencenumber'].errors && f['freferencenumber'].errors['required']">Referencia no valida</div>
+        </div>
+    </form>
 </div>
