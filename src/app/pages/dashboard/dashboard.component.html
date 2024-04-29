@@ -22,7 +22,7 @@
                             <li>Crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
                             <li>Saldo actual: <span>${{ debt.Saldo_Actual | numberWithCommas}} MXN</span></li>
                             <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | addMonthToDate | date }}</span></li>
-                                
+
                             <li>No. de cuenta: <span>{{ debt.Cuenta }}</span></li>
                             <li>Saldo vencido: <span>${{ debt.Saldo_Vencido | numberWithCommas }} MXN</span></li>
                             <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | addMonthToDate | date }}</span></li>
@@ -34,7 +34,7 @@
                         <ul class="debt-payment-info-right">
                             <h3>Realizar pago</h3>
                             <div></div>
-                            
+
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
                             <li>Cantidad a pagar: <span class="total-amount-to-pay">$0,00 MXN</span></li>
                             <button class="btn-disabled" anim="ripple" type="button" (click)="makePayment( debt );" disabled>Pagar</button>
@@ -47,7 +47,7 @@
                             <li>Crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
                             <li>Saldo actual: <span>${{ debt.Saldo_Actual | numberWithCommas}} MXN</span></li>
                             <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | date }}</span></li>
-                                
+
                             <li>No. de cuenta: <span>{{ debt.Cuenta }}</span></li>
                             <li>Saldo vencido: <span>${{ debt.Saldo_Vencido | numberWithCommas }} MXN</span></li>
                             <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | date }}</span></li>
@@ -59,10 +59,10 @@
                         <ul class="debt-payment-info-right">
                             <h3>Realizar pago</h3>
                             <div></div>
-                            
+
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
                             <li>Cantidad a pagar: <span class="total-amount-to-pay">${{ debt.Pago_Periodico | numberWithCommas }} MXN</span></li>
-                            <button anim="ripple" type="button" (click)="showReferencemodal();">Pagar</button>
+                            <button anim="ripple" type="button" (click)="showReferencemodal(currentDebt);">Pagar</button>
                         </ul>
                     </div>
                 </ng-container>
@@ -83,7 +83,7 @@
         </div>
 
         <ul class="payment-history-options" *ngIf="debtTypes && debtTypes.length > 0">
-            <li 
+            <li
                 *ngFor="let debt of debtTypes"
                 class="payment-history-options-item"
                 (click)="showPaymentHistory( debt, $event );"
@@ -109,7 +109,7 @@
 
             <li class="payment-history-filters-item-right">
                 <div class="custom-select">
-                    <select class="auth-form-select" (change)="filterPayments( $event );">   
+                    <select class="auth-form-select" (change)="filterPayments( $event );">
                         <option class="select-placeholder" value="" disabled selected>Ordenar por:&nbsp;&nbsp;Pagos recientes</option>
                         <option value="desc">Pagos recientes</option>
                         <option value="asc">Pagos antiguos</option>
@@ -147,7 +147,7 @@
 </div>
 
 <div class="payment-modal fadeInAnimation" #paymentModal>
-    
+
     <div class="close-payment-modal" (click)="closePaymentModal();">
         <mat-icon>close</mat-icon>
     </div>
@@ -157,13 +157,13 @@
         <div class="nuvei-loader">
             <app-page-loader></app-page-loader>
         </div>
-    </div>  
+    </div>
 </div>
 
 <div class="payment-modal-status" *ngIf="nuveiResponse" #paymentModalStatus>
 
     <ul class="payment-modal-status-content">
-        
+
         <div class="close-payment-modal" (click)="closePaymentModalStatus();">
             <mat-icon>close</mat-icon>
         </div>
@@ -188,6 +188,6 @@
             <mat-icon>close</mat-icon>
         </div>
         <h2>Referencia de pago</h2>
-        <app-reference (getReferenceResult)="getReference($event)"></app-reference>
+        <app-reference debt="" (getReferenceResult)="getReference($event)"></app-reference>
     </ul>
 </div>

@@ -10,7 +10,7 @@ import { PaycashService } from 'src/app/shared/services/paycash.service';
 })
 export class ReferenceComponent {
   form!:FormGroup;
-  token!: Tokenresponse;  
+  token!: Tokenresponse;
   reference!: Reference;
   @Output() getReferenceResult = new EventEmitter<Reference>();
 
@@ -53,5 +53,10 @@ export class ReferenceComponent {
         }
       })
     })
+  }
+
+  validateReference(ref: FormControl): boolean{
+    if (ref.touched && ref.invalid || ref.errors && ref.errors['required']) return false;
+    return true
   }
 }

@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('paymentReference') paymentReference!: ElementRef;
 
   public user: UserModel;
-  
+
   public debtTypes?: DebtModel[];
   public debtTypeSelected?: DebtModel | null;
   public reference?: string = "";
@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit {
 
   private nuveiKeys: NuveiParams = environment.nuvei;
   public nuveiResponse?: Partial<NuveiQueryParamsResponse> | null;
-  
+
   constructor(
     private readonly animateService: AnimateService,
     private readonly route: ActivatedRoute,
@@ -68,7 +68,7 @@ export class DashboardComponent implements OnInit {
           this.getDebts();
         }
     });
-    
+
     window.scrollTo({ top: 0 });
   }
 
@@ -86,7 +86,7 @@ export class DashboardComponent implements OnInit {
   }
 
   getCurrentDebts(): void {
-    
+
     this.paymentService.getCurrentDebtsByUser( this.user.Folio )
       .subscribe(( value: UserCurrentDebtsResponse ) => {
 
@@ -125,7 +125,7 @@ export class DashboardComponent implements OnInit {
 
           this.payments.push( ...value.Registro_de_Pagos );
           this.debtTypes?.map(( debt ) => {
-      
+
             if ( this.userHasDebtType( debt.Folio ) ) {
               this.showPaymentHistory( debt );
             }
@@ -178,12 +178,12 @@ export class DashboardComponent implements OnInit {
       dateToTimeStamp.getSeconds()
     ].join(':').replace('/', '-');
 
-    
+
     return timeStamp.replaceAll('/', '-');
   }
 
   protected createQueryString( data: any ): string {
-    
+
     return Object.keys( data ).map(key => {
 
       let val = data[key];
@@ -210,7 +210,7 @@ export class DashboardComponent implements OnInit {
 
   async generateSha256( value: string ): Promise<string> {
 
-    const msgBuffer = new TextEncoder().encode( value );  
+    const msgBuffer = new TextEncoder().encode( value );
     const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
     const hashArray = Array.from(new Uint8Array( hashBuffer ));
     const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
@@ -228,7 +228,7 @@ export class DashboardComponent implements OnInit {
   }
 
   showPaymentModalStatus( queries: Partial<NuveiQueryParamsResponse> ): void {
-      
+
     const { payment_status } = queries;
     if ( payment_status === 'denied' ) {
 
@@ -236,10 +236,10 @@ export class DashboardComponent implements OnInit {
       return;
     }
 
-    this.nuveiResponse = ( Object.keys( queries ).length !== 0 ) 
-      ? queries 
+    this.nuveiResponse = ( Object.keys( queries ).length !== 0 )
+      ? queries
       : null;
-      
+
     if ( payment_status === 'success' ) {
 
       this.toastrService.success(`El pago del credito ${ queries.productId!.replaceAll('_', ' ')} por la cantidad de $${ queries.totalAmount }${ queries.currency } ha sido exitoso!`);
@@ -294,18 +294,18 @@ export class DashboardComponent implements OnInit {
       this.toastrService.info('No cuentas con este tipo de credito!');
       return;
     }
-    
-    this.contractsOftypeDebtsSelected = this.debts?.filter(( x: Credito ) => 
+
+    this.contractsOftypeDebtsSelected = this.debts?.filter(( x: Credito ) =>
       ( x.Producto_de_Credito_Producto_de_Credito.Folio === debt.Folio )
     );
 
     if ( !event ) {
-  
+
       this.debtTypeSelected = debt;
       this.paymentsSelected = this.payments.filter(( x: RegistroDePago ) => (
         x.Producto_de_Credito_Producto_de_Credito.Folio === debt.Folio
       ));
-      this.paymentsSelected = this.paymentsSelected.sort( 
+      this.paymentsSelected = this.paymentsSelected.sort(
         this.dynamicSort('Fecha_de_Registro', -1),
       );
 
@@ -331,7 +331,7 @@ export class DashboardComponent implements OnInit {
     });
 
     if ( debt.Folio === this.debtTypeSelected?.Folio ) {
-      
+
       const paymentList = document.querySelector('.paymet-history');
       paymentList?.classList.add('slideOutFromTopAnimation');
       setTimeout(() => {
@@ -347,23 +347,23 @@ export class DashboardComponent implements OnInit {
     this.paymentsSelected = this.payments.filter(( x: RegistroDePago ) => (
       x.Producto_de_Credito_Producto_de_Credito.Folio === debt.Folio
     ));
-    this.paymentsSelected = this.paymentsSelected.sort( 
+    this.paymentsSelected = this.paymentsSelected.sort(
       this.dynamicSort('Fecha_de_Registro', -1),
     );
-    
+
     const li: HTMLElement = event.target;
     li.classList.add('payment-history-option-item-active');
   }
 
   userHasDebtType( debtFolio: number ): boolean {
-    
+
     const x = this.payments.find(( payment: RegistroDePago ) => (
       payment.Producto_de_Credito_Producto_de_Credito.Folio === debtFolio
     ));
 
     if ( x )  {
       const debt: any = x.Producto_de_Credito_Producto_de_Credito;
-      this.debtTypes = this.debtTypes!.filter(( debt: DebtModel ) => ( 
+      this.debtTypes = this.debtTypes!.filter(( debt: DebtModel ) => (
         debt.Folio !== debtFolio
       ));
       this.debtTypes.unshift( debt );
@@ -379,63 +379,63 @@ export class DashboardComponent implements OnInit {
 
       this.paymentsSelected = [
         ...this.paymentsSelected,
-        ...this.payments.filter(( x: RegistroDePago ) => ( 
+        ...this.payments.filter(( x: RegistroDePago ) => (
           x.No__Contrato === contractOfDebt && x.Producto_de_Credito_Producto_de_Credito.Descripcion
         )),
       ];
-      
-      this.paymentsSelected = this.paymentsSelected.sort( 
+
+      this.paymentsSelected = this.paymentsSelected.sort(
         this.dynamicSort('Fecha_de_Registro', -1),
       );
     } else {
 
       this.paymentsSelected = this.paymentsSelected
         .filter(( x: RegistroDePago ) => ( x.No__Contrato !== contractOfDebt ));
-      this.paymentsSelected = this.paymentsSelected.sort( 
+      this.paymentsSelected = this.paymentsSelected.sort(
         this.dynamicSort('Fecha_de_Registro', -1),
       );
     }
 
     return;
   }
-  
+
   filterPayments( event: any ): void {
 
     const value = event.target.value;
-    if ( value === 'desc' ) 
-      this.paymentsSelected = this.paymentsSelected.sort( 
+    if ( value === 'desc' )
+      this.paymentsSelected = this.paymentsSelected.sort(
         this.dynamicSort('Fecha_de_Registro', -1),
       );
 
     if ( value === 'asc' )
-      this.paymentsSelected = this.paymentsSelected.sort( 
+      this.paymentsSelected = this.paymentsSelected.sort(
         this.dynamicSort('Fecha_de_Registro', 1),
       );
 
     if ( value === 'highest')
-      this.paymentsSelected = this.paymentsSelected.sort( 
+      this.paymentsSelected = this.paymentsSelected.sort(
         this.dynamicSort('Total_Pagado', -1),
       );
 
     if ( value === 'lowest' )
-      this.paymentsSelected = this.paymentsSelected.sort( 
+      this.paymentsSelected = this.paymentsSelected.sort(
         this.dynamicSort('Total_Pagado', 1),
       );
-    
+
     return;
   }
 
   dynamicSort( property: string, order: number ) {
 
     return function ( a: any, b: any ) {
-      /* next line works with strings and numbers, 
+      /* next line works with strings and numbers,
        * and you may want to customize it to your needs
        */
       var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
       return result * order;
     }
   }
-  
+
   isCurrentMonth( dateTime: string ): boolean {
     const parts = dateTime.split(/[- :]/);
 
@@ -445,10 +445,10 @@ export class DashboardComponent implements OnInit {
         n = '0' + n
       return n
     }
-    
+
     const month = parts[1];
     const year = parts[0];
-    
+
     const currentdate = new Date();
     const cur_month = formatNumber( String( currentdate.getMonth() + 1 ));
     const cur_year = String( currentdate.getFullYear() );
@@ -489,10 +489,13 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  showReferencemodal(): void{
+  showReferencemodal(currentDebt: Credito): void{
     const referenceModal: HTMLElement = this.paymentReference.nativeElement;
     referenceModal.classList.remove('payment-modal-hide');
     referenceModal.classList.add('payment-modal-active');
+
+    let jsn = JSON.stringify(currentDebt);
+    referenceModal.setAttribute("debt", jsn);
   }
 
   closeReferenceModal(): void {
@@ -508,10 +511,16 @@ export class DashboardComponent implements OnInit {
 
   public getReference(reference: Reference):void {
     if(reference.paging.results[0].ErrorCode == '0'){
+      const referenceModal: HTMLElement = this.paymentReference.nativeElement;
+
+      if (referenceModal.getAttribute("debt")){
+        let currentDebt: Credito = JSON.parse(referenceModal.getAttribute("debt")!);
+        this.makePayment(currentDebt);
+      }
 
     }
     else{
-      
+
     }
   }
 }
