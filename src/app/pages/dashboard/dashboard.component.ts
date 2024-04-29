@@ -93,7 +93,6 @@ export class DashboardComponent implements OnInit {
         if ( value ) {
 
           this.currentDebts = value.Creditos;
-          console.log({ debts: this.currentDebts });
           return;
         }
     });
@@ -512,15 +511,13 @@ export class DashboardComponent implements OnInit {
   public getReference(reference: Reference):void {
     if(reference.paging.results[0].ErrorCode == '0'){
       const referenceModal: HTMLElement = this.paymentReference.nativeElement;
-
       if (referenceModal.getAttribute("debt")){
         let currentDebt: Credito = JSON.parse(referenceModal.getAttribute("debt")!);
         this.makePayment(currentDebt);
       }
-
     }
     else{
-
+      alert("Referencia invalida");
     }
   }
 }

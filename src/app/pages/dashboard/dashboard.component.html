@@ -62,7 +62,7 @@
 
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
                             <li>Cantidad a pagar: <span class="total-amount-to-pay">${{ debt.Pago_Periodico | numberWithCommas }} MXN</span></li>
-                            <button anim="ripple" type="button" (click)="showReferencemodal(currentDebt);">Pagar</button>
+                            <button anim="ripple" type="button" (click)="showReferencemodal(debt);">Pagar</button>
                         </ul>
                     </div>
                 </ng-container>

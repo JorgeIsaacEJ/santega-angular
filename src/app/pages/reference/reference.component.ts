@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Reference, Tokenresponse } from 'src/app/shared/models/paycash.model';
 import { PaycashService } from 'src/app/shared/services/paycash.service';
 
@@ -20,7 +20,7 @@ export class ReferenceComponent {
 
   ngOnInit(): void{
     this.form = new FormGroup({
-      freferencenumber: new FormControl('', [Validators.required]),
+      freferencenumber: new FormControl('', [Validators.required, Validators.minLength(4)]),
       freference: new FormControl()
     });
   }
@@ -44,19 +44,16 @@ export class ReferenceComponent {
       this.paycashservice.getReference(reference, Tokenresponse).subscribe((reference: Reference)=>{
         this.reference = reference;
         this.getReferenceResult.emit(this.reference);
-        if(this.reference.paging.results[0].ErrorCode == '0'){
-          console.log("OK");
-          return !this.form.controls
-        }
-        else{
-          return this.form.controls
-        }
       })
     })
   }
 
-  validateReference(ref: FormControl): boolean{
-    if (ref.touched && ref.invalid || ref.errors && ref.errors['required']) return false;
-    return true
+  validateReference(ref: AbstractControl): boolean{
+    if (ref.touched && (ref.invalid || ref.errors && ref.errors['required'])) {
+      return false;
+    }
+    else{
+      return true;
+    }
   }
 }

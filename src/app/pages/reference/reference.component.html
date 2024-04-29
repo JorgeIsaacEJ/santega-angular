@@ -4,7 +4,7 @@
             <input type="text" class="text" placeholder="Ingresa tu referencia" #ref formControlName="freferencenumber" [min]="4" [maxlength]="40">
             <button type="submit" (click)="getReference(ref.value)" [disabled]="!form.valid"><i class="fa fa-search">Verificar</i></button>
         </div>
-        <div *ngIf="validateReference(ref)" class="alert">
+        <div *ngIf="!validateReference(f['freferencenumber'])" class="alert">
             <div>Referencia no valida</div>
         </div>
     </form>
