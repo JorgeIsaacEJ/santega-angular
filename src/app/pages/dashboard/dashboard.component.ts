@@ -135,6 +135,7 @@ export class DashboardComponent implements OnInit {
   }
 
   async makePayment( currentDebt: Credito ) {
+    //TODO: recibir referencia
     const modal: HTMLElement = this.paymentModal.nativeElement;
     modal.classList.add('payment-modal-active');
 
@@ -508,16 +509,31 @@ export class DashboardComponent implements OnInit {
     }, 301 );
   }
 
-  public getReference(reference: Reference):void {
-    if(reference.paging.results[0].ErrorCode == '0'){
-      const referenceModal: HTMLElement = this.paymentReference.nativeElement;
-      if (referenceModal.getAttribute("debt")){
-        let currentDebt: Credito = JSON.parse(referenceModal.getAttribute("debt")!);
+  public getReference(reference: Reference): void {
+    const referenceModal: HTMLElement = this.paymentReference.nativeElement;
+    if (referenceModal.getAttribute("debt")) {
+      let currentDebt: Credito = JSON.parse(referenceModal.getAttribute("debt")!);
+      if (this.validateReference(reference, currentDebt)) {
         this.makePayment(currentDebt);
       }
     }
-    else{
+    else {
       alert("Referencia invalida");
     }
   }
+
+  // Valida ErrorCode, Amount y ExpirationDate
+  validateReference(reference: Reference, debt: Credito) {
+    if (reference.paging.results[0].ErrorCode != '0') return false;
+
+    let amount = reference.paging.results[0].Amount;
+    if (amount != debt.Pago_Periodico) return false;
+
+    let dateReference = new Date(reference.paging.results[0].ExpirationDate);
+    let today = new Date();
+    if (dateReference.getTime() < today.getTime()) return false;
+
+    return true;
+  }
+
 }
