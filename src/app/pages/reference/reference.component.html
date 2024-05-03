@@ -1,25 +1,35 @@
 <div style="margin:auto; max-width:450px; margin-top:30px; margin-bottom:30px;">
     <form [formGroup]="form" (ngSubmit)="submit()">
         <div class="payment-modal-reference-content-bottom containerfind">
-            <input type="text" class="text" placeholder="Ingresa tu referencia" #ref formControlName="freferencenumber" [min]="4" [maxlength]="40">
-            <button type="submit" (click)="getReference(ref.value)" [disabled]="!form.valid"><i class="fa fa-search">Verificar</i></button>
+            <input type="text" class="text" placeholder="Ingresa tu referencia" #ref formControlName="freferencenumber"
+                [min]="4" [maxlength]="40">
+            <button type="submit" (click)="getReference(ref.value)" [disabled]="!form.valid"><i
+                    class="fa fa-search">Verificar</i></button>
         </div>
         <div *ngIf="!validateReference(f['freferencenumber'])" class="alert">
             <div>Referencia no valida</div>
         </div>
-        
-    <div class="page-loader payment-modal nuvei-content" *ngIf="spinner">
-        <div class="page-loader-content">
-        <div class="page-loader-circles">
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="circle"></div>
-            <div class="shadow"></div>
-            <div class="shadow"></div>
-            <div class="shadow"></div>
+        <div class="alert" *ngIf="isExistingReference.length > 0">
+            <div>{{isExistingReference}}</div>
         </div>
+        <div class="payment-modal fadeInAnimation" [class.payment-modal-active]="loading">
+            <div class="nuvei-content">
+                <div class="nuvei-loader">
+                    <div class="page-loader">
+                        <div class="page-loader-content">
+                            <div class="page-loader-circles">
+                                <div class="circle"></div>
+                                <div class="circle"></div>
+                                <div class="circle"></div>
+                                <div class="shadow"></div>
+                                <div class="shadow"></div>
+                                <div class="shadow"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
     </form>
+
 </div>

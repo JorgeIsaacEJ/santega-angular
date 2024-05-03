@@ -39,12 +39,16 @@ div.containerfind::after {
   display: table;
 }
 
-div.alert {
-  text-align: center;
-  color: red;
-  margin: auto;
-  margin-top: 15px;
-  margin-bottom: 15px;
+div.containerfind button {
+  float: left;
+  width: 30%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
 }
 
 button:disabled {
@@ -60,7 +64,7 @@ button:disabled {
   opacity: 3 !important;
 }
 
-.payment-modal {
+div.payment-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -71,40 +75,182 @@ button:disabled {
   display: none;
   align-items: center;
   justify-content: center;
-}
 
-.nuvei-content {
-  width: 1100px;
-  height: 90%;
+  div.nuvei-content {
+    width: 1100px;
+    height: 90%;
 
-  iframe {
-    width: 100%;
-    height: 100%;
-    padding: 20px 0;
+    iframe {
+      width: 100%;
+      height: 100%;
+      padding: 20px 0;
+      border-radius: $border-radius;
+      box-sizing: border-box;
+      border: 0;
+    }
+  }
+
+  div.close-payment-modal {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: $main;
     border-radius: $border-radius;
-    box-sizing: border-box;
-    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: $box-shadow;
+    cursor: pointer;
+    z-index: 100;
+
+    mat-icon {
+      color: $font-white;
+      font-weight: bold;
+      font-size: 25px;
+    }
   }
 }
 
-.close-payment-modal {
+.payment-modal-active {
+  display: flex !important;
+}
+
+.payment-modal-hide {
+  display: none !important;
+}
+
+
+div.page-loader {
   position: fixed;
-  top: 30px;
-  right: 30px;
-  width: 50px;
-  height: 50px;
-  background-color: $main;
-  border-radius: $border-radius;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 11;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: $box-shadow;
-  cursor: pointer;
-  z-index: 100;
+  animation: fadeIn .3s;
 
-  mat-icon {
-    color: $font-white;
-    font-weight: bold;
-    font-size: 25px;
+  @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+  }
+
+  div.page-loader-content {
+      width: 500px;
+      height: 300px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: wrap;
+      border-radius: 10px;
+      padding: 30px 20px;
+
+      div.page-loader-circles {
+          width:200px;
+          height:60px;
+          transform: translate(-2%, 0%);
+
+          .circle {
+              width:20px;
+              height:20px;
+              position: absolute;
+              border-radius: 50%;
+              background-color: #00E6E7;
+              left:15%;
+              transform-origin: 50%;
+              animation: circle .5s alternate infinite ease;
+              border: 1px solid #000;
+          }
+
+          @keyframes circle{
+              0%{
+                  top:60px;
+                  height:5px;
+                  border-radius: 50px 50px 25px 25px;
+                  transform: scaleX(1.7);
+              }
+              40%{
+                  height:20px;
+                  border-radius: 50%;
+                  transform: scaleX(1);
+              }
+              100%{
+                  top:0%;
+              }
+          }
+          .circle:nth-child(2){
+              left:45%;
+              animation-delay: .2s;
+          }
+          .circle:nth-child(3){
+              left:auto;
+              right:15%;
+              animation-delay: .3s;
+          }
+          .shadow{
+              width:20px;
+              height:4px;
+              border-radius: 50%;
+              background-color: rgba(0,0,0,.5);
+              position: absolute;
+              top:62px;
+              transform-origin: 50%;
+              z-index: -1;
+              left:15%;
+              filter: blur(1px);
+              animation: shadow .5s alternate infinite ease;
+          }
+
+          @keyframes shadow{
+              0%{
+                  transform: scaleX(1.5);
+              }
+              40%{
+                  transform: scaleX(1);
+                  opacity: .7;
+              }
+              100%{
+                  transform: scaleX(.2);
+                  opacity: .4;
+              }
+          }
+          .shadow:nth-child(4){
+              left: 45%;
+              animation-delay: .2s
+          }
+          .shadow:nth-child(5){
+              left:auto;
+              right:15%;
+              animation-delay: .3s;
+          }
+
+      }
+
+      p.page-loader-content-text {
+          width: 100%;
+          margin: 0;
+          font-size: 16px;
+          font-weight: bold;
+          letter-spacing: .5px;
+          text-align: center;
+          margin-bottom: 15px;
+          line-height: 18px;
+          color: $font-gray;
+          font-weight: 900;
+
+          span {
+              color: #000;
+          }
+      }
   }
 }
+
+
+
+
+
+

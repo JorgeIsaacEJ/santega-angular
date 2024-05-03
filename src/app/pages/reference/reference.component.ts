@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Reference, Tokenresponse } from 'src/app/shared/models/paycash.model';
 import { PaycashService } from 'src/app/shared/services/paycash.service';
@@ -9,53 +9,56 @@ import { PaycashService } from 'src/app/shared/services/paycash.service';
   styleUrls: ['./reference.component.scss']
 })
 export class ReferenceComponent {
-  form!:FormGroup;
-  token!: Tokenresponse;
-  reference!: Reference;
-  spinner: boolean = true;
+  @Input() isExistingReference!: string;
   @Output() getReferenceResult = new EventEmitter<Reference>();
 
-  constructor(private readonly paycashservice: PaycashService){
+  form!: FormGroup;
+  token!: Tokenresponse;
+  reference!: Reference;
+
+  loading: boolean = false;
+
+  constructor(private readonly paycashservice: PaycashService) {
 
   }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.form = new FormGroup({
       freferencenumber: new FormControl('', [Validators.required, Validators.minLength(4)]),
       freference: new FormControl()
     });
   }
 
-  submit(){
+  submit() {
     this.form.controls['freference'].setValue({
       referencenumber: this.form.controls['freferencenumber'].value
     });
   }
 
-  get f(){
+  get f() {
     return this.form.controls;
   }
 
-  getReference(reference: string){
+  getReference(reference: string) {
+    this.loading = true;
     //Genera token
-    this.spinner = true;
-    this.paycashservice.getToken().subscribe((data: Tokenresponse)=>{
+    this.paycashservice.getToken().subscribe((data: Tokenresponse) => {
       this.token = data;
       //Valida la referencia
       let Tokenresponse = this.token.Authorization;
-      this.paycashservice.getReference(reference, Tokenresponse).subscribe((reference: Reference)=>{
+      this.paycashservice.getReference(reference, Tokenresponse).subscribe((reference: Reference) => {
         this.reference = reference;
         this.getReferenceResult.emit(this.reference);
-        this.spinner = false;
+        this.loading = false;
       })
     })
   }
 
-  validateReference(ref: AbstractControl): boolean{
+  validateReference(ref: AbstractControl): boolean {
     if (ref.touched && (ref.invalid || ref.errors && ref.errors['required'])) {
       return false;
     }
-    else{
+    else {
       return true;
     }
   }

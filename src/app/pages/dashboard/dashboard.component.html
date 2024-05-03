@@ -19,13 +19,15 @@
                 <ng-container *ngIf="isCurrentMonth( debt.Fecha_Ultimo_Pago.toString() );">
                     <div class="debt-payment-info">
                         <ul class="debt-payment-info-left">
-                            <li>Crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
+                            <li>Crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span>
+                            </li>
                             <li>Saldo actual: <span>${{ debt.Saldo_Actual | numberWithCommas}} MXN</span></li>
                             <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | addMonthToDate | date }}</span></li>
 
                             <li>No. de cuenta: <span>{{ debt.Cuenta }}</span></li>
                             <li>Saldo vencido: <span>${{ debt.Saldo_Vencido | numberWithCommas }} MXN</span></li>
-                            <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | addMonthToDate | date }}</span></li>
+                            <li>Fecha límite de pago: <span>{{ debt.Fecha_limite_de_Pago | addMonthToDate | date
+                                    }}</span></li>
 
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
                             <li>Monto otorgado: <span>${{ debt.Monto_Otorgado | numberWithCommas}} MXN</span></li>
@@ -37,14 +39,16 @@
 
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
                             <li>Cantidad a pagar: <span class="total-amount-to-pay">$0,00 MXN</span></li>
-                            <button class="btn-disabled" anim="ripple" type="button" (click)="makePayment( debt );" disabled>Pagar</button>
+                            <button class="btn-disabled" anim="ripple" type="button" (click)="makePayment( debt );"
+                                disabled>Pagar</button>
                         </ul>
                     </div>
                 </ng-container>
                 <ng-container *ngIf="!isCurrentMonth( debt.Fecha_Ultimo_Pago.toString() );">
                     <div class="debt-payment-info">
                         <ul class="debt-payment-info-left">
-                            <li>Crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></li>
+                            <li>Crédito: <span>{{ debt.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span>
+                            </li>
                             <li>Saldo actual: <span>${{ debt.Saldo_Actual | numberWithCommas}} MXN</span></li>
                             <li>Fecha de pago: <span>{{ debt.Fecha_de_Pago | date }}</span></li>
 
@@ -61,7 +65,8 @@
                             <div></div>
 
                             <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
-                            <li>Cantidad a pagar: <span class="total-amount-to-pay">${{ debt.Pago_Periodico | numberWithCommas }} MXN</span></li>
+                            <li>Cantidad a pagar: <span class="total-amount-to-pay">${{ debt.Pago_Periodico |
+                                    numberWithCommas }} MXN</span></li>
                             <button anim="ripple" type="button" (click)="showReferencemodal(debt);">Pagar</button>
                         </ul>
                     </div>
@@ -83,14 +88,10 @@
         </div>
 
         <ul class="payment-history-options" *ngIf="debtTypes && debtTypes.length > 0">
-            <li
-                *ngFor="let debt of debtTypes"
-                class="payment-history-options-item"
-                (click)="showPaymentHistory( debt, $event );"
-                [ngClass]="{
+            <li *ngFor="let debt of debtTypes" class="payment-history-options-item"
+                (click)="showPaymentHistory( debt, $event );" [ngClass]="{
                     'payment-history-option-item-user-has':  userHasDebtType( debt.Folio )
-                }"
-            >
+                }">
                 {{ debt.Descripcion }}
                 <div class="payment-history-options-item-tooltip fadeInAnimation">
                     {{ debt.Descripcion }}
@@ -110,7 +111,8 @@
             <li class="payment-history-filters-item-right">
                 <div class="custom-select">
                     <select class="auth-form-select" (change)="filterPayments( $event );">
-                        <option class="select-placeholder" value="" disabled selected>Ordenar por:&nbsp;&nbsp;Pagos recientes</option>
+                        <option class="select-placeholder" value="" disabled selected>Ordenar por:&nbsp;&nbsp;Pagos
+                            recientes</option>
                         <option value="desc">Pagos recientes</option>
                         <option value="asc">Pagos antiguos</option>
                         <option value="highest">Cantidad pagada mayor</option>
@@ -127,9 +129,11 @@
 
             <ng-container *ngIf="paymentsSelected && paymentsSelected.length > 0">
                 <li *ngFor="let payment of paymentsSelected" class="payment-status-success">
-                    <p class="payment-type-debt">Tipo de crédito: <span>{{ payment.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></p>
+                    <p class="payment-type-debt">Tipo de crédito: <span>{{
+                            payment.Producto_de_Credito_Producto_de_Credito.Descripcion }}</span></p>
                     <p>No. de contrato: <span>{{ payment.No__Contrato }}</span></p>
-                    <p class="payment-date">Fecha de pago: <span>{{ payment.Fecha_de_Registro | date: 'MMM d, y, h:mm:ss a' }}</span></p>
+                    <p class="payment-date">Fecha de pago: <span>{{ payment.Fecha_de_Registro | date: 'MMM d, y, h:mm:ss
+                            a' }}</span></p>
                     <p>Cantidad pagada: <span>${{ payment.Total_Pagado | numberWithCommas }}</span></p>
                     <p>Estatus: <span>Pago aprobado <mat-icon class="icon-checked">check_box</mat-icon></span></p>
                 </li>
@@ -171,7 +175,8 @@
         <h2>Detalles del pago</h2>
         <li>Folio de la transacción: <span>{{ nuveiResponse!.TransactionID! }}</span></li>
         <li>Nombre del crédito: <span>{{ nuveiResponse!.productId!.replaceAll('_', ' ') }}</span></li>
-        <li>Cantidad pagada: <span>${{ nuveiResponse!.totalAmount! | numberWithCommas }} {{ nuveiResponse!.currency! }}</span></li>
+        <li>Cantidad pagada: <span>${{ nuveiResponse!.totalAmount! | numberWithCommas }} {{ nuveiResponse!.currency!
+                }}</span></li>
         <li>Fecha de pago: <span>{{ nuveiResponse!.responseTimeStamp! | date }}</span></li>
         <li>Método de pago: <span>{{ nuveiResponse!.payment_method! }}</span></li>
         <li>Correo electrónico: <span>{{ nuveiResponse!.email! }}</span></li>
@@ -184,10 +189,11 @@
 
 <div class="payment-modal-reference payment-modal-hide" #paymentReference>
     <ul class="payment-modal-reference-content">
-        <div class="close-reference-modal" (click)="closeReferenceModal();">
+        <div class="close-reference-modal" (click)="closeReferenceModal()">
             <mat-icon>close</mat-icon>
         </div>
         <h2>Referencia de pago</h2>
-        <app-reference debt="" (getReferenceResult)="getReference($event)"></app-reference>
+        <app-reference debt="" (getReferenceResult)="getReference($event)"
+            [isExistingReference]="referenceError"></app-reference>
     </ul>
 </div>

@@ -40,6 +40,8 @@ export class DashboardComponent implements OnInit {
   private nuveiKeys: NuveiParams = environment.nuvei;
   public nuveiResponse?: Partial<NuveiQueryParamsResponse> | null;
 
+  public referenceError: string = "";
+
   constructor(
     private readonly animateService: AnimateService,
     private readonly route: ActivatedRoute,
@@ -499,6 +501,7 @@ export class DashboardComponent implements OnInit {
   }
 
   closeReferenceModal(): void {
+    this.referenceError = "";
     const modal: HTMLElement = this.paymentReference.nativeElement;
     modal.classList.add('fadeOutAnimation');
 
@@ -513,11 +516,13 @@ export class DashboardComponent implements OnInit {
     const referenceModal: HTMLElement = this.paymentReference.nativeElement;
     if (referenceModal.getAttribute("debt")) {
       let currentDebt: Credito = JSON.parse(referenceModal.getAttribute("debt")!);
-      if (this.validateReference(reference, currentDebt)) {
+      let isValidReference = this.validateReference(reference, currentDebt);
+      if (isValidReference === true) {
         this.makePayment(currentDebt);
+        this.closeReferenceModal();
       }
       else {
-        alert("Referencia invalida");
+        this.referenceError = isValidReference;
       }
     }
 
@@ -525,14 +530,14 @@ export class DashboardComponent implements OnInit {
 
   // Valida ErrorCode, Amount y ExpirationDate
   validateReference(reference: Reference, debt: Credito) {
-    if (reference.paging.results[0].ErrorCode != '0') return false;
+    if (reference.paging.results[0].ErrorCode != '0') return reference.paging.results[0].ErrorMessage;
 
     let amount = reference.paging.results[0].Amount;
-    if (amount != debt.Pago_Periodico) return false;
+    if (amount != debt.Pago_Periodico) return "La referencia no corresponde al monto";
 
     let dateReference = new Date(reference.paging.results[0].ExpirationDate);
     let today = new Date();
-    if (dateReference.getTime() < today.getTime()) return false;
+    if (dateReference.getTime() < today.getTime()) return "Referencia vencida";
 
     return true;
   }
