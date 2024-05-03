@@ -1,59 +1,110 @@
+@import 'src/app/app.component.scss';
+
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 div.containerfind input[type=text] {
-    padding: 10px;
-    font-size: 17px;
-    border: 1px solid grey;
-    float: left;
-    width: 70%;
-    //background: #f1f1f1;
-  }
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 70%;
+  //background: #f1f1f1;
+}
 
-  div.containerfind input[type=text]:hover {
-    border: 1px solid #2196F3;
-  }
-  
-  div.containerfind button {
-    float: left;
-    width: 30%;
-    padding: 10px;
-    background: #2196F3;
-    color: white;
-    font-size: 17px;
-    border: 1px solid grey;
-    border-left: none;
-    cursor: pointer;
-  }
-  
-  div.containerfind button:hover {
-    background: #0b7dda;
-  }
-  
-  div.containerfind::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
+div.containerfind input[type=text]:hover {
+  border: 1px solid #2196F3;
+}
 
-  div.alert {
-    text-align: center;
-    color: red;
-    margin: auto;
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
+div.containerfind button {
+  float: left;
+  width: 30%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
 
-  button:disabled{
-    float: left !important;
-    width: 30% !important;
-    padding: 10px !important;
-    background: #c3cbd1 !important;
-    color: rgb(10, 10, 10) !important;
-    font-size: 17px !important;
-    border: 1px solid grey !important;
-    border-left: none !important;
-    cursor: not-allowed !important;
-    opacity: 3 !important;
+div.containerfind button:hover {
+  background: #0b7dda;
+}
+
+div.containerfind::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+div.alert {
+  text-align: center;
+  color: red;
+  margin: auto;
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+button:disabled {
+  float: left !important;
+  width: 30% !important;
+  padding: 10px !important;
+  background: #c3cbd1 !important;
+  color: rgb(10, 10, 10) !important;
+  font-size: 17px !important;
+  border: 1px solid grey !important;
+  border-left: none !important;
+  cursor: not-allowed !important;
+  opacity: 3 !important;
+}
+
+.payment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, .9);
+  z-index: 101;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.nuvei-content {
+  width: 1100px;
+  height: 90%;
+
+  iframe {
+    width: 100%;
+    height: 100%;
+    padding: 20px 0;
+    border-radius: $border-radius;
+    box-sizing: border-box;
+    border: 0;
   }
+}
+
+.close-payment-modal {
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  background-color: $main;
+  border-radius: $border-radius;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $box-shadow;
+  cursor: pointer;
+  z-index: 100;
+
+  mat-icon {
+    color: $font-white;
+    font-weight: bold;
+    font-size: 25px;
+  }
+}

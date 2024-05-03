@@ -7,5 +7,19 @@
         <div *ngIf="!validateReference(f['freferencenumber'])" class="alert">
             <div>Referencia no valida</div>
         </div>
+        
+    <div class="page-loader payment-modal nuvei-content" *ngIf="spinner">
+        <div class="page-loader-content">
+        <div class="page-loader-circles">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+            <div class="shadow"></div>
+        </div>
+        </div>
+    </div>
+
     </form>
 </div>

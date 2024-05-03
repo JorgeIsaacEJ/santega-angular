@@ -12,6 +12,7 @@ export class ReferenceComponent {
   form!:FormGroup;
   token!: Tokenresponse;
   reference!: Reference;
+  spinner: boolean = true;
   @Output() getReferenceResult = new EventEmitter<Reference>();
 
   constructor(private readonly paycashservice: PaycashService){
@@ -37,6 +38,7 @@ export class ReferenceComponent {
 
   getReference(reference: string){
     //Genera token
+    this.spinner = true;
     this.paycashservice.getToken().subscribe((data: Tokenresponse)=>{
       this.token = data;
       //Valida la referencia
@@ -44,6 +46,7 @@ export class ReferenceComponent {
       this.paycashservice.getReference(reference, Tokenresponse).subscribe((reference: Reference)=>{
         this.reference = reference;
         this.getReferenceResult.emit(this.reference);
+        this.spinner = false;
       })
     })
   }

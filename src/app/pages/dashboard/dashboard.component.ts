@@ -516,10 +516,11 @@ export class DashboardComponent implements OnInit {
       if (this.validateReference(reference, currentDebt)) {
         this.makePayment(currentDebt);
       }
+      else {
+        alert("Referencia invalida");
+      }
     }
-    else {
-      alert("Referencia invalida");
-    }
+
   }
 
   // Valida ErrorCode, Amount y ExpirationDate
