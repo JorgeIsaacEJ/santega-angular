@@ -11,7 +11,7 @@
         <div class="auth-content-right">
             <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="register();">
                 <div class="auth-form-logo">
-                    <img 
+                    <img
                         src="assets/santega-logo.png"
                         alt="santega-logo.png"
                     />
@@ -24,21 +24,21 @@
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Name'].invalid && registerForm.controls['Name'].touched
                         }"
-                        class="auth-form-input" 
-                        type="text" 
-                        placeholder="Juan Manuel" 
+                        class="auth-form-input"
+                        type="text"
+                        placeholder="Juan Manuel"
                         autocomplete="off"
                         formControlName="Name"
                     />
-                    
+
                     <p class="auth-form-label">Apellido paterno y materno:</p>
                     <input
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Apellido_Paterno'].invalid && registerForm.controls['Apellido_Paterno'].touched
                         }"
-                        class="auth-form-input apellido" 
-                        type="text" 
-                        placeholder="Perez" 
+                        class="auth-form-input apellido"
+                        type="text"
+                        placeholder="Perez"
                         autocomplete="off"
                         formControlName="Apellido_Paterno"
                     />
@@ -47,9 +47,9 @@
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Apellido_Materno'].invalid && registerForm.controls['Apellido_Materno'].touched
                         }"
-                        class="auth-form-input apellido" 
-                        type="text" 
-                        placeholder="Garzon" 
+                        class="auth-form-input apellido"
+                        type="text"
+                        placeholder="Garzon"
                         autocomplete="off"
                         formControlName="Apellido_Materno"
                     />
@@ -60,12 +60,12 @@
                             [ngClass]="{
                                 'invalid-input': registerForm.controls['Producto_de_Credito'].invalid && registerForm.controls['Producto_de_Credito'].touched
                             }"
-                            class="auth-form-select" 
+                            class="auth-form-select"
                             formControlName="Producto_de_Credito"
                             required
-                        >   
-                            <option class="select-placeholder" value="" disabled selected>Selecciona el tipo de credito</option>
-                            <option 
+                        >
+                            <option class="select-placeholder" value="" disabled selected>Selecciona el tipo de crédito</option>
+                            <option
                                 *ngFor="let debt of typeDebts"
                                 [value]="debt.Folio"
                             >
@@ -79,9 +79,9 @@
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Username'].invalid && registerForm.controls['Username'].touched
                         }"
-                        class="auth-form-input" 
-                        type="text" 
-                        placeholder="QUMA470929F37" 
+                        class="auth-form-input"
+                        type="text"
+                        placeholder="QUMA470929F37"
                         autocomplete="off"
                         formControlName="Username"
                     />
@@ -91,9 +91,9 @@
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Email'].invalid && registerForm.controls['Email'].touched
                         }"
-                        class="auth-form-input" 
-                        type="email" 
-                        placeholder="example@email.com" 
+                        class="auth-form-input"
+                        type="email"
+                        placeholder="example@email.com"
                         autocomplete="off"
                         formControlName="Email"
                     />
@@ -103,9 +103,9 @@
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Password'].invalid && registerForm.controls['Password'].touched
                         }"
-                        class="auth-form-input" 
-                        type="password" 
-                        placeholder="********" 
+                        class="auth-form-input"
+                        type="password"
+                        placeholder="********"
                         autocomplete="off"
                         formControlName="Password"
                     />
