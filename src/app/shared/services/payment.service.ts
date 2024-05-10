@@ -34,6 +34,28 @@ export class PaymentService {
         private readonly localStorageService: LocalStorageService,
     ) {}
 
+    //Consulta de datos del deudor Metodo Generico
+    DeudorListaSelAll( startRowIndex: number, maximumRows: number, where: string ): Observable<UserFolioResponse> {
+
+        return this.http.get<UserFolioResponse>(`${ this.apiUrl }/api/Deudor/ListaSelAll?startRowIndex=${startRowIndex}&maximumRows=${maximumRows}&${where}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
+    }
+
+    //Consulta de datos del credito Metodo Generico
+    CreditoListaSelAll( startRowIndex: number, maximumRows: number, where: string ): Observable<UserCurrentDebtsResponse> {
+
+        return this.http.get<UserCurrentDebtsResponse>(`${ this.apiUrl }/api/Credito/ListaSelAll?startRowIndex=${startRowIndex}&maximumRows=${maximumRows}&${where}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
+    }
+
     makePayment( payment: MakePaymentModel ): Observable<string> {
 
         return this.http.post<string>(`${ this.apiUrl }/${ this.routes.makePayment }`, payment, {

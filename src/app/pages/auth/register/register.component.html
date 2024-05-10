@@ -9,7 +9,7 @@
             <div class="auth-content-left-rgba"></div>
         </div>
         <div class="auth-content-right">
-            <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="register();">
+            <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="getValidaRFCReferenciaDeudor();">
                 <div class="auth-form-logo">
                     <img
                         src="assets/santega-logo.png"
@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="auth-form-content">
-                    <p class="auth-form-label">Nombres:</p>
+                    <!-- <p class="auth-form-label">Nombres:</p>
                     <input
                         [ngClass]="{
                             'invalid-input': registerForm.controls['Name'].invalid && registerForm.controls['Name'].touched
@@ -72,7 +72,7 @@
                                 {{ debt.Descripcion }}
                             </option>
                         </select>
-                    </div>
+                    </div> -->
 
                     <p class="auth-form-label">RFC:</p>
                     <input
@@ -84,6 +84,18 @@
                         placeholder="QUMA470929F37"
                         autocomplete="off"
                         formControlName="Username"
+                    />
+
+                    <p class="auth-form-label">Referencia:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['ReferenciaPaycash'].invalid && registerForm.controls['ReferenciaPaycash'].touched
+                        }"
+                        class="auth-form-input"
+                        type="text"
+                        placeholder="1234567890"
+                        autocomplete="off"
+                        formControlName="ReferenciaPaycash"
                     />
 
                     <p class="auth-form-label">Correo eléctronico:</p>
@@ -108,6 +120,18 @@
                         placeholder="********"
                         autocomplete="off"
                         formControlName="Password"
+                    />
+
+                    <p class="auth-form-label">Confirmar contraseña:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['Password2'].invalid && registerForm.controls['Password2'].touched
+                        }"
+                        class="auth-form-input"
+                        type="password"
+                        placeholder="********"
+                        autocomplete="off"
+                        formControlName="Password2"
                     />
 
                     <p class="auth-form-paragraph">

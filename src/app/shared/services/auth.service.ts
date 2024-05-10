@@ -5,7 +5,7 @@ import { environment } from "src/app/environments/environment";
 import { ToastrService } from "ngx-toastr";
 import { LocalStorageService } from "./local-storage.service";
 import { LoginModel } from "../models/login.model";
-import { RegisterModel } from "../models/register.model";
+import { RegisterModel, RegisterModelNew } from "../models/register.model";
 import * as md5 from 'md5';
 
 @Injectable({
@@ -65,8 +65,8 @@ export class AuthService {
         );
     }
 
-    register( form: RegisterModel ) {
-
+    //register( form: RegisterModel ) {
+    register( form: RegisterModelNew ) {
         form = {
             ...form,
             Password: md5( form.Password ),

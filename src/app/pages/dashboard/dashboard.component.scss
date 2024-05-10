@@ -312,7 +312,7 @@ div.dashboard {
                 font-size: 13px;
                 display: flex;
                 flex-direction: row;
-                flex-wrap: wrap;
+                flex-wrap: wrap;z
 
                 input[type=checkbox] {
                     position: relative;
@@ -850,4 +850,17 @@ div.payment-modal-reference {
             }
         }
     }
+}
+
+input.total-amount-to-pay[type="text"]{
+    width: 40%;
+    text-align: right;
+    clear: both;
+    padding: 1px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    margin-left: auto;
+    font-size: 19px;
+    font-weight: 900;
 }

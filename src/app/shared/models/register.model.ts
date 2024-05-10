@@ -7,3 +7,10 @@ export interface RegisterModel {
     Apellido_Paterno: string;
     Apellido_Materno: string;
 }
+export interface RegisterModelNew {
+    RCF: string;
+    Referencia: string;
+    Email: string;
+    Username: string;
+    Password: string;
+}
