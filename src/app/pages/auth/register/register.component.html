@@ -86,7 +86,7 @@
                         formControlName="Username"
                     />
 
-                    <p class="auth-form-label">Referencia:</p>
+                    <p class="auth-form-label">Referencia Paycash:</p>
                     <input
                         [ngClass]="{
                             'invalid-input': registerForm.controls['ReferenciaPaycash'].invalid && registerForm.controls['ReferenciaPaycash'].touched
@@ -108,6 +108,18 @@
                         placeholder="example@email.com"
                         autocomplete="off"
                         formControlName="Email"
+                    />
+
+                    <p class="auth-form-label">Celular:</p>
+                    <input
+                        [ngClass]="{
+                            'invalid-input': registerForm.controls['Telefono'].invalid && registerForm.controls['Telefono'].touched
+                        }"
+                        class="auth-form-input"
+                        type="tel"
+                        placeholder="5555555555"
+                        autocomplete="off"
+                        formControlName="Telefono"
                     />
 
                     <p class="auth-form-label">Contraseña:</p>

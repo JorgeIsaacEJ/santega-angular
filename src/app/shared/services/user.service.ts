@@ -5,6 +5,7 @@ import { environment } from "src/app/environments/environment";
 import { ToastrService } from "ngx-toastr";
 import { LocalStorageService } from "./local-storage.service";
 import { LoginModel } from "../models/login.model";
+import { DetalleMedioContactoDeudor } from '../models/user.model'
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ export class UserService {
 
     private apiUrl: string = environment.api;
     private findOneRoute: string = '/api/Deudor/ListaSelAll?startRowIndex=0&maximumRows=1&where=Deudor.Usuario_que_Registra=';
-
+    private medioContactoDeudor: string = '/api/Detalle_Medio_Contacto_Deudor/post';
     constructor(
         private readonly http: HttpClient,
         private readonly localStorageService: LocalStorageService,
@@ -35,5 +36,15 @@ export class UserService {
                 return value;
             })
         );
+    }
+
+    setDetalleMedioContactoDeudor( detalleMedioDeContactoDeudor: DetalleMedioContactoDeudor ) {
+
+        return this.http.post<string>(`${ this.apiUrl }/${ this.medioContactoDeudor }`, detalleMedioDeContactoDeudor, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
     }
 }

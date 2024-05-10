@@ -2,8 +2,8 @@
 
     <section class="dashboard-welcome">
         <h1>
-            Bienvenido a <br>
-            SANTEGA {{ user.Nombres }} {{ user.Apellido_Paterno }} {{ user.Apellido_Materno }}
+            Bienvenido a SANTEGA<br>
+            {{ user.Nombres }} {{ user.Apellido_Paterno }} {{ user.Apellido_Materno }}
         </h1>
     </section>
 
@@ -37,7 +37,7 @@
                             <h3>Realizar pago</h3>
                             <div></div>
 
-                            <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
+                            <li>No. de referencia: <span>{{ debt.Referencia_Bancaria }}</span></li>
                             <li>Cantidad a pagar: <span class="total-amount-to-pay">$0,00 MXN</span></li>
                             <button class="btn-disabled" anim="ripple" type="button" (click)="makePayment( debt );"
                                 disabled>Pagar</button>
@@ -64,10 +64,10 @@
                             <h3>Realizar pago</h3>
                             <div></div>
 
-                            <li>No. de contrato: <span>{{ debt.Contrato }}</span></li>
-                            <li>Cantidad a pagar: <span class="total-amount-to-pay">${{ debt.Pago_Periodico |
-                                    numberWithCommas }} MXN</span></li>
-                            <button anim="ripple" type="button" (click)="showReferencemodal(debt);">Pagar</button>
+                            <li>No. de referencia: <span>{{ debt.Referencia_Bancaria }}</span></li>
+                            <li>Cantidad a pagar: <input type="text" [placeholder]="debt.Pago_Periodico |
+                                    numberWithCommas" [value]="debt.Pago_Periodico | numberWithCommas" class="total-amount-to-pay" mask="separator.2" thousandSeparator="," decimalMarker="." prefix="$ "></li>
+                            <button anim="ripple" type="button" (click)="makePayment(debt);">Pagar</button>
                         </ul>
                     </div>
                 </ng-container>

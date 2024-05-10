@@ -7,6 +7,7 @@ import { LocalStorageService } from "./local-storage.service";
 import { LoginModel } from "../models/login.model";
 import { RegisterModel, RegisterModelNew } from "../models/register.model";
 import * as md5 from 'md5';
+import { SpartanUser } from "../models/user.model";
 
 @Injectable({
     providedIn: 'root'
@@ -17,6 +18,7 @@ export class AuthService {
     private oauthRoute: string = 'oauth/token';
     private loginRoute: string = 'api/Spartan_SecurityAccount/Login';
     private registerRoute: string = 'api/Spartan_User/PostDeudor';
+    private registerRoutePost: string = 'api/Spartan_User/post';
 
     constructor(
         private readonly http: HttpClient,
@@ -65,8 +67,25 @@ export class AuthService {
         );
     }
 
-    //register( form: RegisterModel ) {
-    register( form: RegisterModelNew ) {
+    register_spartane_post( form: RegisterModel ) {
+        form = {
+            ...form,
+            Password: md5( form.Password ),
+        }
+
+        console.log({ form })
+
+        return this.http.post(
+            `${ this.apiUrl }/${ this.registerRoutePost }`, form, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+                }
+            }
+        );
+    }
+
+    register( form: SpartanUser ) {
         form = {
             ...form,
             Password: md5( form.Password ),

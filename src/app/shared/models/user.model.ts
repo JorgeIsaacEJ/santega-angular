@@ -99,3 +99,18 @@ interface UsuarioQueRegistraSpartanUser {
     Status_Spartan_User_Status: null;
     Id:                         number;
 }
+export interface DetalleMedioContactoDeudor{
+    Folio: number;
+    Deudor: number;
+    Medio_de_Contacto: number;
+    Referencia: string;
+}
+export interface SpartanUser{
+    Name: string;
+    Role: string;
+    Image: string;
+    Email: string;
+    Status: string;
+    Username: string;
+    Password: string;
+}

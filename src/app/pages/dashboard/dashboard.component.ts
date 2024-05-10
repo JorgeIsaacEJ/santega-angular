@@ -148,7 +148,7 @@ export class DashboardComponent implements OnInit {
       currency: 'MXN',
       user_token_id: this.user.Folio,
       item_name_1: currentDebt.Producto_de_Credito_Producto_de_Credito.Descripcion.replaceAll(' ', '_'),
-      item_amount_1: currentDebt.Pago_Periodico,
+      item_amount_1: currentDebt.Pago_Periodico, //Cambiar por valor de input Amount
       item_quantity_1: 1,
       time_stamp: this.createTimeStamp(),
       version: '4.0.0',
