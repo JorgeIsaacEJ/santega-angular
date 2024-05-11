@@ -8,6 +8,7 @@ import { NumberWithCommasPipe } from 'src/app/core/pipes/number-with-commas.pipe
 import { LayoutModule } from 'src/app/shared/components/layout/layout.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddMonthToDatePipe } from 'src/app/core/pipes/add-month-to-date.pipe';
+import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask } from 'ngx-mask';
 
 
 
@@ -26,6 +27,11 @@ import { AddMonthToDatePipe } from 'src/app/core/pipes/add-month-to-date.pipe';
     AddMonthToDatePipe,
     LayoutModule,
     ReactiveFormsModule,
-  ]
+    NgxMaskDirective,
+    NgxMaskPipe
+  ],
+  providers: [
+    provideEnvironmentNgxMask()
+  ],
 })
 export class DashboardModule { }

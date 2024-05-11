@@ -65,8 +65,16 @@
                             <div></div>
 
                             <li>No. de referencia: <span>{{ debt.Referencia_Bancaria }}</span></li>
-                            <li>Cantidad a pagar: <input type="text" [placeholder]="debt.Pago_Periodico |
-                                    numberWithCommas" [value]="debt.Pago_Periodico | numberWithCommas" class="total-amount-to-pay" mask="separator.2" thousandSeparator="," decimalMarker="." prefix="$ "></li>
+                            <li>Cantidad a pagar:
+                                <input type="text"
+                                    [placeholder]="debt.Pago_Periodico | currency:'MXN'"
+                                    class="total-amount-to-pay"
+                                    mask="separator.2"
+                                    thousandSeparator=","
+                                    decimalMarker="."
+                                    prefix="$"
+                                />
+                            </li>
                             <button anim="ripple" type="button" (click)="makePayment(debt);">Pagar</button>
                         </ul>
                     </div>
