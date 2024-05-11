@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserCurrentDebtsResponse } from 'src/app/shared/models/user-current-debts-reponse.model';
 import { UserFolioResponse } from 'src/app/shared/models/user-folio-response.model';
+import { SpartanUsers } from 'src/app/shared/models/user-spartan.model';
 import { DetalleMedioContactoDeudor } from 'src/app/shared/models/user.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { DebtService } from 'src/app/shared/services/debt.service';
@@ -87,16 +88,17 @@ export class RegisterComponent implements OnInit {
 
   getUserData( id: string ) {
 
-    this.userService.findOne( id ).subscribe(( value: any ) => {
-
-      if ( value && value.RowCount === 0 ) {
+    this.userService.findOne( id ).subscribe(( spartanUsers: SpartanUsers ) => {
+      this.userService.findOneByRFC(spartanUsers.Spartan_Users[0].Username).subscribe(( Deudor: UserFolioResponse ) => {
+      if ( Deudor && Deudor.RowCount === 0 ) {
 
         this.toastrService.info('Ha ocurrido un error al iniciar sesión, intentalo de nuevo!');
         return;
       }
 
-      this.toastrService.success(`Bienvenid@ ${ value.Deudors[0].Nombres }`);
+      this.toastrService.success(`Bienvenid@ ${ Deudor.Deudors[0].Nombres }`);
       this.router.navigate(['/panel']);
+    });
     });
   }
 

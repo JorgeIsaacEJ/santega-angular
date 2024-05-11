@@ -13,8 +13,9 @@ import { DetalleMedioContactoDeudor } from '../models/user.model'
 export class UserService {
 
     private apiUrl: string = environment.api;
-    private findOneRoute: string = '/api/Deudor/ListaSelAll?startRowIndex=0&maximumRows=1&where=Deudor.Usuario_que_Registra=';
+    private findOneRoute: string = '/api/Deudor/ListaSelAll?startRowIndex=0&maximumRows=1&where=Deudor.RFC=';
     private medioContactoDeudor: string = '/api/Detalle_Medio_Contacto_Deudor/post';
+    private findUserById: string  = '/api/Spartan_User/ListaSelAll?startRowIndex=0&maximumRows=1&where=Spartan_User.Id_User='
     constructor(
         private readonly http: HttpClient,
         private readonly localStorageService: LocalStorageService,
@@ -23,7 +24,23 @@ export class UserService {
     findOne( id: string ) {
 
         return this.http.get(
-            `${ this.apiUrl }/${ this.findOneRoute }${ id }`, {
+            `${ this.apiUrl }/${ this.findUserById }${ id }`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+                }
+            }
+        ).pipe(
+            map(( value: any ) => {
+                return value;
+            })
+        );
+    }
+
+    findOneByRFC( RFC: string ) {
+
+        return this.http.get(
+            `${ this.apiUrl }/${ this.findOneRoute }'${ RFC }'`, {
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
