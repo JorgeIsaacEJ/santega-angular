@@ -4,7 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/app/environments/environment';
 import { NuveiParams } from 'src/app/shared/interfaces/nuvei-params.interface';
 import { NuveiQueryParamsResponse } from 'src/app/shared/interfaces/nuvei-query-params-response.interface';
-import { DebtModel } from 'src/app/shared/models/debt.model';
+import { DebtModel, PagosReferencia } from 'src/app/shared/models/debt.model';
 import { Reference } from 'src/app/shared/models/paycash.model';
 import { Credito, UserCurrentDebtsResponse } from 'src/app/shared/models/user-current-debts-reponse.model';
 import { RegistroDePago, UserHistoryPaymentsResponse } from 'src/app/shared/models/user-history-payments-response.model';
@@ -36,6 +36,7 @@ export class DashboardComponent implements OnInit {
   public payments: RegistroDePago[] = [];
   public paymentsSelected: RegistroDePago[] = [];
   public contractsOftypeDebtsSelected?: Credito[] = [];
+  public Pagos: PagosReferencia[] = [];
 
   private nuveiKeys: NuveiParams = environment.nuvei;
   public nuveiResponse?: Partial<NuveiQueryParamsResponse> | null;
@@ -95,6 +96,9 @@ export class DashboardComponent implements OnInit {
         if ( value ) {
 
           this.currentDebts = value.Creditos;
+          for (let item of this.currentDebts) {
+            this.Pagos.push({ Referencia_Bancaria: item.Referencia_Bancaria, Pago_Periodico: item.Pago_Periodico });
+          }
           return;
         }
     });
@@ -139,16 +143,18 @@ export class DashboardComponent implements OnInit {
   async makePayment( currentDebt: Credito ) {
     //TODO: recibir referencia
     const modal: HTMLElement = this.paymentModal.nativeElement;
+    const objeto = this.Pagos.find(item => item.Referencia_Bancaria === currentDebt.Referencia_Bancaria);
+    const Pago_Periodico = objeto?.Pago_Periodico
     modal.classList.add('payment-modal-active');
 
     const queries = {
       merchant_id: this.nuveiKeys.merchantId,
       merchant_site_id: this.nuveiKeys.siteId,
-      total_amount: currentDebt.Pago_Periodico,
+      total_amount: Pago_Periodico,
       currency: 'MXN',
       user_token_id: this.user.Folio,
       item_name_1: currentDebt.Producto_de_Credito_Producto_de_Credito.Descripcion.replaceAll(' ', '_'),
-      item_amount_1: currentDebt.Pago_Periodico, //Cambiar por valor de input Amount
+      item_amount_1: Pago_Periodico, //Cambiar por valor de input Amount
       item_quantity_1: 1,
       time_stamp: this.createTimeStamp(),
       version: '4.0.0',
@@ -540,6 +546,14 @@ export class DashboardComponent implements OnInit {
     if (dateReference.getTime() < today.getTime()) return "Referencia vencida";
 
     return true;
+  }
+
+  ChangePago(referencia: string, monto: any){
+    const montoInt: number = parseFloat(monto.target.value.replace('$','').replace(',',''));
+    const objeto = this.Pagos.find(item => item.Referencia_Bancaria === referencia);
+    if (objeto) {
+      objeto.Pago_Periodico = montoInt;
+    }
   }
 
 }

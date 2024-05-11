@@ -13,3 +13,7 @@ export interface DebtModel {
     Pago_a_IVA_de_Interes_Moratorio: null;
     Id:                              number;
 }
+export interface PagosReferencia {
+    Referencia_Bancaria: string;
+    Pago_Periodico: number;
+  }

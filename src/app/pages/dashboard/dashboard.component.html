@@ -73,6 +73,7 @@
                                     thousandSeparator=","
                                     decimalMarker="."
                                     prefix="$"
+                                    (change)="ChangePago(debt.Referencia_Bancaria, $event)"
                                 />
                             </li>
                             <button anim="ripple" type="button" (click)="makePayment(debt);">Pagar</button>

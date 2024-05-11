@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UserFolioResponse } from 'src/app/shared/models/user-folio-response.model';
+import { SpartanUsers } from 'src/app/shared/models/user-spartan.model';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserService } from 'src/app/shared/services/user.service';
 
@@ -48,16 +50,16 @@ export class LoginComponent implements OnInit {
 
   getUserData( id: string ) {
 
-    this.userService.findOne( id ).subscribe(( value: any ) => {
-
-      if ( value && value.RowCount === 0 ) {
+    this.userService.findOne( id ).subscribe(( spartanUsers: SpartanUsers ) => {
+      this.userService.findOneByRFC(spartanUsers.Spartan_Users[0].Username).subscribe(( Deudor: UserFolioResponse ) => {
+      if ( Deudor && Deudor.RowCount === 0 ) {
 
         this.toastrService.info('Ha ocurrido un error al iniciar sesión, intentalo de nuevo!');
         return;
       }
-
-      this.toastrService.success(`Bienvenid@ ${ value.Deudors[0].Nombres }`);
+      this.toastrService.success(`Bienvenid@ ${ Deudor.Deudors[0].Nombres }`);
       this.router.navigate(['/panel']);
+      });
     });
   }
   
