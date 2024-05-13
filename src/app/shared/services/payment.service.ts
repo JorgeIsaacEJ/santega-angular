@@ -8,6 +8,7 @@ import { UserFolioResponse } from "../models/user-folio-response.model";
 import { Credito, UserCurrentDebtsResponse } from "../models/user-current-debts-reponse.model";
 import { UserHistoryPaymentsResponse } from "../models/user-history-payments-response.model";
 import { MakePaymentModel } from "../models/make-payment.model";
+import { RegistroDePagoPost } from "../models/payment.model";
 
 @Injectable({
     providedIn: 'root'
@@ -49,6 +50,17 @@ export class PaymentService {
     CreditoListaSelAll( startRowIndex: number, maximumRows: number, where: string ): Observable<UserCurrentDebtsResponse> {
 
         return this.http.get<UserCurrentDebtsResponse>(`${ this.apiUrl }/api/Credito/ListaSelAll?startRowIndex=${startRowIndex}&maximumRows=${maximumRows}&${where}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
+    }
+
+    //Registro de respuesta de pago
+    RegistroDePagoPost( registroDePago: RegistroDePagoPost) {
+
+        return this.http.post<UserCurrentDebtsResponse>(`${ this.apiUrl }/api/Registro_de_Pago/post`, registroDePago, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`

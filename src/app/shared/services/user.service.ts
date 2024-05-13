@@ -32,6 +32,7 @@ export class UserService {
             }
         ).pipe(
             map(( value: any ) => {
+                this.localStorageService.saveData('spartane_user', String(id));
                 return value;
             })
         );

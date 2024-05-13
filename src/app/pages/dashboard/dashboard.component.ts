@@ -6,6 +6,7 @@ import { NuveiParams } from 'src/app/shared/interfaces/nuvei-params.interface';
 import { NuveiQueryParamsResponse } from 'src/app/shared/interfaces/nuvei-query-params-response.interface';
 import { DebtModel, PagosReferencia } from 'src/app/shared/models/debt.model';
 import { Reference } from 'src/app/shared/models/paycash.model';
+import { RegistroDePagoPost } from 'src/app/shared/models/payment.model';
 import { Credito, UserCurrentDebtsResponse } from 'src/app/shared/models/user-current-debts-reponse.model';
 import { RegistroDePago, UserHistoryPaymentsResponse } from 'src/app/shared/models/user-history-payments-response.model';
 import { UserModel } from 'src/app/shared/models/user.model';
@@ -169,7 +170,7 @@ export class DashboardComponent implements OnInit {
       ...queries,
       checksum: checkSum
     })}`;
-
+    this.localStorageService.saveData('debt-select-to-pay', String(JSON.stringify(currentDebt)));
     this.localStorageService.saveData('debt-folio-payed', String( currentDebt.Folio ));
     window.open( urlToPay, '_self' );
   }
@@ -188,6 +189,29 @@ export class DashboardComponent implements OnInit {
 
 
     return timeStamp.replaceAll('/', '-');
+  }
+
+  protected createOnlyDateStamp(): string{
+    const ahora = new Date();
+    const anio = ahora.getFullYear();
+    const mes = this.agregarCeroDelante(ahora.getMonth());
+    const dia = this.agregarCeroDelante(ahora.getDay());
+    const time = "00:00:00.000"//this.createOnlyTimeStamp();
+
+    return `${anio}-${mes}-${dia} ${time}`;
+  }
+
+  protected createOnlyTimeStamp(): string{
+      const ahora = new Date();
+      const horas = this.agregarCeroDelante(ahora.getHours());
+      const minutos = this.agregarCeroDelante(ahora.getMinutes());
+      const segundos = this.agregarCeroDelante(ahora.getSeconds());
+  
+      return `${horas}:${minutos}:${segundos}`;
+  }
+
+  agregarCeroDelante(numero: number): string {
+    return numero < 10 ? `0${numero}` : `${numero}`;
   }
 
   protected createQueryString( data: any ): string {
@@ -251,15 +275,59 @@ export class DashboardComponent implements OnInit {
     if ( payment_status === 'success' ) {
 
       this.toastrService.success(`El pago del credito ${ queries.productId!.replaceAll('_', ' ')} por la cantidad de $${ queries.totalAmount }${ queries.currency } ha sido exitoso!`);
-      this.generatePaymentRecord( queries.totalAmount! );
+      this.generatePaymentRecord( queries );
     }
   }
 
-  generatePaymentRecord( totalAmount: number ): void {
+  generatePaymentRecord( queries: Partial<NuveiQueryParamsResponse> ): void {
     const debtFolio = this.localStorageService.getData('debt-folio-payed');
+    const SelectedCreditoToPay: Credito = JSON.parse(this.localStorageService.getData('debt-select-to-pay'));
+    const SpartaneID: number = parseInt(this.localStorageService.getData('spartane_user'));
+        let totalAmount: number = queries.totalAmount!;
+        let registroDePago: RegistroDePagoPost = {
+          Folio: 0, //Nuevo registro
+          Fecha_de_Registro: this.createOnlyDateStamp(), //Fecha actual
+          Hora_de_Registro: this.createOnlyTimeStamp(), //Hora actual
+          Usuario_que_Registra: SpartaneID, //Id de usuario de deudor (spartan_user)
+          Deudor: SelectedCreditoToPay.Deudor, //Folio del deudor (credito)
+          Credito: SelectedCreditoToPay.Folio, //Folio del crédito (credito)
+          No__Cuenta: SelectedCreditoToPay.Cuenta, //Número de cuenta (credito)
+          No__Contrato: SelectedCreditoToPay.Contrato, //Número de contrato (credito)
+          Producto_de_Credito: SelectedCreditoToPay.Producto_de_Credito, //Producto de credito (credito)
+          Fecha_de_Prestamo: null,
+          Monto_Otorgado: null,
+          Saldo_Actual: null,
+          Plazo_Contratado: null,
+          Plazo_Remanente: null,
+          Dias_de_Atraso: null,
+          Dia_de_Corte: null,
+          Dias_para_Pago: null,
+          Medio_de_Pago: 2800, //Pago en línea
+          No__de_Referencia: queries.TransactionID!, //Referencia que regresa Nuvei
+          Total_a_Pagar: null,
+          Total_Pagado: totalAmount, //Monto Pagado
+          Pago_a_Capital: null,
+          Pago_a_IVA_de_Capital: null,
+          Pago_a_Comison_de_Admon__de_Cuenta: null,
+          Pago_a_IVA_de_Comision: null,
+          Pago_a_Interes: null,
+          Pago_a_IVA_de_Interes: null,
+          Pago_a_Moratorios: null,
+          Pago_a_IVA_Mora: null,
+          Saldo: null,
+          Fecha_de_Registro_Sistema: null,
+          Gastos_Administrativos: null,
+          IVA_Gastos_Administrativos: null,
+          Seguro_Vida: null,
+          Seguro_Danos: null,
+          GPS: null,
+          Archivo: null,
+          Consecutivo_Pago: null
+        };
     if ( !debtFolio ) return;
 
-    this.paymentService.makePayment({ Credito: String( debtFolio! ), Total_a_Pagar: String( totalAmount )})
+    //this.paymentService.makePayment({ Credito: String( debtFolio! ), Total_a_Pagar: String( totalAmount )})
+    this.paymentService.RegistroDePagoPost(registroDePago)
       .subscribe(( value ) => {
 
         if ( value ) {
