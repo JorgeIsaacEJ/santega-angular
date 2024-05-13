@@ -142,10 +142,16 @@ export class DashboardComponent implements OnInit {
   }
 
   async makePayment( currentDebt: Credito ) {
-    //TODO: recibir referencia
     const modal: HTMLElement = this.paymentModal.nativeElement;
     const objeto = this.Pagos.find(item => item.Referencia_Bancaria === currentDebt.Referencia_Bancaria);
     const Pago_Periodico = objeto?.Pago_Periodico
+
+    // Valida que Pago_Periodico > 0
+    if (!Pago_Periodico || typeof Pago_Periodico !== 'number' || Pago_Periodico <= 0) {
+      this.toastrService.error(`Cantidad inválida`);
+      return;
+    }
+
     modal.classList.add('payment-modal-active');
 
     const queries = {
@@ -206,7 +212,7 @@ export class DashboardComponent implements OnInit {
       const horas = this.agregarCeroDelante(ahora.getHours());
       const minutos = this.agregarCeroDelante(ahora.getMinutes());
       const segundos = this.agregarCeroDelante(ahora.getSeconds());
-  
+
       return `${horas}:${minutos}:${segundos}`;
   }
 
