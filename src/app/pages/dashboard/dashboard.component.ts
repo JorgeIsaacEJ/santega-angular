@@ -197,14 +197,6 @@ export class DashboardComponent implements OnInit {
     return timeStamp.replaceAll('/', '-');
   }
 
-  protected createOnlyDateStamp(date: Date): string {
-    return date.toISOString().replace('T', ' ').replace('Z', '');
-  }
-
-  protected createOnlyTimeStamp(date: Date): string {
-    return this.createOnlyDateStamp(date).split(' ')[1];
-  }
-
   protected createQueryString( data: any ): string {
 
     return Object.keys( data ).map(key => {
@@ -275,11 +267,15 @@ export class DashboardComponent implements OnInit {
     const SelectedCreditoToPay: Credito = JSON.parse(this.localStorageService.getData('debt-select-to-pay'));
     const SpartaneID: number = parseInt(this.localStorageService.getData('spartane_user'));
     let totalAmount: number = queries.totalAmount!;
-    const now = new Date();
+
+    const timeStamp =
+      queries.responseTimeStamp?.replace('.', ' ') ??
+      new Date().toISOString().replace('T', ' ').substring(0, 23);
+
     let registroDePago: RegistroDePagoPost = {
       Folio: 0, //Nuevo registro
-      Fecha_de_Registro: this.createOnlyDateStamp(now), //Fecha actual
-      Hora_de_Registro: this.createOnlyTimeStamp(now), //Hora actual
+      Fecha_de_Registro: `${timeStamp}.000`, //Fecha actual
+      Hora_de_Registro: `${timeStamp.split(' ')[1]}.000`, //Hora actual
       Usuario_que_Registra: SpartaneID, //Id de usuario de deudor (spartan_user)
       Deudor: SelectedCreditoToPay.Deudor, //Folio del deudor (credito)
       Credito: SelectedCreditoToPay.Folio, //Folio del crédito (credito)
