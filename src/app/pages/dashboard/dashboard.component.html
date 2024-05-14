@@ -95,7 +95,7 @@
             <h2>Historial de pagos</h2>
         </div>
 
-        <ul class="payment-history-options" *ngIf="debtTypes && debtTypes.length > 0">
+        <ul class="payment-history-options hide" *ngIf="debtTypes && debtTypes.length > 0">
             <li *ngFor="let debt of debtTypes" class="payment-history-options-item"
                 (click)="showPaymentHistory( debt, $event );" [ngClass]="{
                     'payment-history-option-item-user-has':  userHasDebtType( debt.Folio )

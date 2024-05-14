@@ -94,7 +94,7 @@ div.dashboard {
                     color: $font-dark;
                     padding: 0 15px;
                     box-sizing: border-box;
-    
+
                     span {
                         margin-left: auto;
                         font-weight: lighter;
@@ -153,7 +153,7 @@ div.dashboard {
                     &:nth-child(-1) {
                         border-bottom: 2px !important;
                     }
-    
+
                     span {
                         margin-left: auto;
                         font-weight: lighter;
@@ -385,7 +385,7 @@ div.dashboard {
                         right: 1rem;
                         pointer-events: none;
                     }
-                    
+
                     &::before {
                         border-left: 6px solid transparent;
                         border-right: 6px solid transparent;
@@ -393,7 +393,7 @@ div.dashboard {
                         top: 24%;
                         right: 15px;
                     }
-                  
+
                     &::after {
                         border-left: 6px solid transparent;
                         border-right: 6px solid transparent;
@@ -423,8 +423,8 @@ div.dashboard {
                         font-weight: bold;
                         color: $font-dark;
 
-                        &:invalid { 
-                            color: $font-gray; 
+                        &:invalid {
+                            color: $font-gray;
                         }
 
                         option {
@@ -461,7 +461,7 @@ div.dashboard {
                     font-weight: 900;
                 }
             }
-        }   
+        }
 
         ul.paymet-history {
             width: 100%;
@@ -476,11 +476,11 @@ div.dashboard {
                 background-color: $white;
                 color: $main;
             }
-            
+
             &::-webkit-scrollbar-thumb {
                 background: $main;
             }
-              
+
             &::-webkit-scrollbar-thumb:hover {
                 background: $main-light;
             }
@@ -507,11 +507,11 @@ div.dashboard {
                     flex: 16.25%;
                     text-align: center;
                     border-radius: $border-radius;
-                    
+
                     &:nth-child(even) {
                         background-color: $border-light;
                     }
-                
+
                     span {
                         margin-left: 10px;
                         font-weight: bold;
@@ -577,7 +577,7 @@ div.payment-modal {
     div.nuvei-content {
         width: 1100px;
         height: 90%;
-        
+
         iframe {
             width: 100%;
             height: 100%;
@@ -646,7 +646,7 @@ div.payment-modal-status {
             box-shadow: $box-shadow;
             cursor: pointer;
             z-index: 100;
-    
+
             mat-icon {
                 color: $font-dark;
                 font-weight: bold;
@@ -683,10 +683,10 @@ div.payment-modal-status {
             color: $font-dark;
             font-weight: 900;
 
-            &:nth-child(odd) { 
-                background: #f0f0f0; 
+            &:nth-child(odd) {
+                background: #f0f0f0;
             }
-            
+
             span {
                 margin-left: auto;
                 font-weight: 100;
@@ -773,7 +773,7 @@ div.payment-modal-reference {
             box-shadow: $box-shadow;
             cursor: pointer;
             z-index: 100;
-    
+
             mat-icon {
                 color: $font-dark;
                 font-weight: bold;
@@ -810,10 +810,10 @@ div.payment-modal-reference {
             color: $font-dark;
             font-weight: 900;
 
-            &:nth-child(odd) { 
-                background: #f0f0f0; 
+            &:nth-child(odd) {
+                background: #f0f0f0;
             }
-            
+
             span {
                 margin-left: auto;
                 font-weight: 100;
@@ -863,4 +863,8 @@ input.total-amount-to-pay[type="text"]{
     margin-left: auto;
     font-size: 19px;
     font-weight: 900;
+}
+
+.hide {
+  display: none !important;
 }
