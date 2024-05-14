@@ -84,6 +84,7 @@
                         placeholder="QUMA470929F37"
                         autocomplete="off"
                         formControlName="Username"
+                        maxlength="13"
                     />
 
                     <p class="auth-form-label">Referencia Paycash:</p>
@@ -116,7 +117,8 @@
                             'invalid-input': registerForm.controls['Telefono'].invalid && registerForm.controls['Telefono'].touched
                         }"
                         class="auth-form-input"
-                        type="tel"
+                        type='text'  
+                        mask="(000) 000 00 00"
                         placeholder="5555555555"
                         autocomplete="off"
                         formControlName="Telefono"

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RegisterComponent } from './register.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask } from 'ngx-mask';
 
 
 
@@ -16,6 +17,11 @@ import { ReactiveFormsModule } from '@angular/forms';
       path: '', component: RegisterComponent,
     }]),
     ReactiveFormsModule,
-  ]
+    NgxMaskDirective,
+    NgxMaskPipe
+  ],
+  providers: [
+    provideEnvironmentNgxMask()
+  ],
 })
 export class RegisterModule { }

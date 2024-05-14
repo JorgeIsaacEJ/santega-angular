@@ -145,7 +145,7 @@ export class DashboardComponent implements OnInit {
     const modal: HTMLElement = this.paymentModal.nativeElement;
     const objeto = this.Pagos.find(item => item.Referencia_Bancaria === currentDebt.Referencia_Bancaria);
     const Pago_Periodico = objeto?.Pago_Periodico
-
+    const MailUser: string = this.localStorageService.getData('spartane_mail');
     // Valida que Pago_Periodico > 0
     if (!Pago_Periodico || typeof Pago_Periodico !== 'number' || Pago_Periodico <= 0) {
       this.toastrService.error(`Cantidad inválida`);
@@ -167,7 +167,7 @@ export class DashboardComponent implements OnInit {
       version: '4.0.0',
       payment_method_mode: 'filter',
       payment_method: 'cc_card',
-      email: 'test@gmail.com',
+      email: MailUser,
       notify_url: 'https://google.com',
     }
 
@@ -197,18 +197,18 @@ export class DashboardComponent implements OnInit {
     return timeStamp.replaceAll('/', '-');
   }
 
-  protected createOnlyDateStamp(): string{
-    const ahora = new Date();
+  protected createOnlyDateStamp(fecha: Date): string{
+    const ahora = fecha;
     const anio = ahora.getFullYear();
-    const mes = this.agregarCeroDelante(ahora.getMonth());
-    const dia = this.agregarCeroDelante(ahora.getDay());
-    const time = "00:00:00.000"//this.createOnlyTimeStamp();
+    const mes = ('0' + (ahora.getMonth() + 1)).slice(-2);
+    const dia = ('0' + ahora.getDate()).slice(-2);
+    const time = this.createOnlyTimeStamp(fecha);
 
-    return `${anio}-${mes}-${dia} ${time}`;
+    return `${anio}-${mes}-${dia} ${time}.000`;
   }
 
-  protected createOnlyTimeStamp(): string{
-      const ahora = new Date();
+  protected createOnlyTimeStamp(fecha: Date): string{
+      const ahora = fecha;
       const horas = this.agregarCeroDelante(ahora.getHours());
       const minutos = this.agregarCeroDelante(ahora.getMinutes());
       const segundos = this.agregarCeroDelante(ahora.getSeconds());
@@ -289,11 +289,12 @@ export class DashboardComponent implements OnInit {
     const debtFolio = this.localStorageService.getData('debt-folio-payed');
     const SelectedCreditoToPay: Credito = JSON.parse(this.localStorageService.getData('debt-select-to-pay'));
     const SpartaneID: number = parseInt(this.localStorageService.getData('spartane_user'));
+    const ahora = new Date();
         let totalAmount: number = queries.totalAmount!;
         let registroDePago: RegistroDePagoPost = {
           Folio: 0, //Nuevo registro
-          Fecha_de_Registro: this.createOnlyDateStamp(), //Fecha actual
-          Hora_de_Registro: this.createOnlyTimeStamp(), //Hora actual
+          Fecha_de_Registro: this.createOnlyDateStamp(ahora), //Fecha actual
+          Hora_de_Registro: this.createOnlyTimeStamp(ahora), //Hora actual
           Usuario_que_Registra: SpartaneID, //Id de usuario de deudor (spartan_user)
           Deudor: SelectedCreditoToPay.Deudor, //Folio del deudor (credito)
           Credito: SelectedCreditoToPay.Folio, //Folio del crédito (credito)
