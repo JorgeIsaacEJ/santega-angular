@@ -319,24 +319,20 @@ export class DashboardComponent implements OnInit {
     if (!debtFolio) return;
 
     //this.paymentService.makePayment({ Credito: String( debtFolio! ), Total_a_Pagar: String( totalAmount )})
-    this.paymentService.RegistroDePagoPost(registroDePago)
-      .subscribe((value) => {
+    this.paymentService.RegistroDePagoPost(registroDePago).subscribe((value) => {
+      if (!value) return;
 
-        if (value) {
+      this.localStorageService.removeData('debt-folio-payed');
+      this.debtTypes = undefined;
+      this.currentDebts = undefined;
+      this.debts = undefined;
+      this.payments = [];
+      this.paymentsSelected = [];
 
-          this.localStorageService.removeData('debt-folio-payed');
-          this.debtTypes = undefined;
-          this.currentDebts = undefined;
-          this.debts = undefined;
-          this.payments = [];
-          this.paymentsSelected = [];
-
-          this.getTypeDebts();
-          this.getCurrentDebts();
-          this.getDebts();
-          return;
-        }
-      });
+      this.getTypeDebts();
+      this.getCurrentDebts();
+      this.getDebts();
+    });
   }
 
   closePaymentModalStatus(): void {
