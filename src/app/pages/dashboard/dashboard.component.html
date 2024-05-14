@@ -36,7 +36,7 @@
                             <h3>Realizar pago</h3>
                             <div></div>
 
-                            <li>No. de referencia: <span>{{ debt.Referencia_Bancaria }}</span></li>
+                            <li>Referencia Paycash: <span>{{ debt.Referencia_Bancaria }}</span></li>
                             <li>Cantidad a pagar: <span class="total-amount-to-pay">$0,00 MXN</span></li>
                             <button class="btn-disabled" anim="ripple" type="button" (click)="makePayment( debt );"
                                 disabled>Pagar</button>
@@ -63,7 +63,7 @@
                             <h3>Realizar pago</h3>
                             <div></div>
 
-                            <li>No. de referencia: <span>{{ debt.Referencia_Bancaria }}</span></li>
+                            <li>Referencia Paycash: <span>{{ debt.Referencia_Bancaria }}</span></li>
                             <li>Cantidad a pagar:
                                 <input type="text"
                                     [placeholder]="debt.Pago_Periodico | currency:'MXN'"
