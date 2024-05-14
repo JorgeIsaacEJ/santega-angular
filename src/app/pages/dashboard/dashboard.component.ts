@@ -145,7 +145,7 @@ export class DashboardComponent implements OnInit {
     const modal: HTMLElement = this.paymentModal.nativeElement;
     const objeto = this.Pagos.find(item => item.Referencia_Bancaria === currentDebt.Referencia_Bancaria);
     const Pago_Periodico = objeto?.Pago_Periodico
-
+    const MailUser: string = this.localStorageService.getData('spartane_mail');
     // Valida que Pago_Periodico > 0
     if (!Pago_Periodico || typeof Pago_Periodico !== 'number' || Pago_Periodico <= 0) {
       this.toastrService.error(`Cantidad inválida`);
@@ -167,7 +167,7 @@ export class DashboardComponent implements OnInit {
       version: '4.0.0',
       payment_method_mode: 'filter',
       payment_method: 'cc_card',
-      email: 'test@gmail.com',
+      email: MailUser,
       notify_url: 'https://google.com',
     }
 

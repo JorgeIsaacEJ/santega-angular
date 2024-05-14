@@ -58,6 +58,7 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.localStorageService.removeData('user');
     this.localStorageService.removeData('spartane_user');
+    this.localStorageService.removeData('spartane_mail');
     this.router.navigate(['auth/iniciar-sesion']);
   }
 }
