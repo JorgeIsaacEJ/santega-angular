@@ -608,4 +608,12 @@ export class DashboardComponent implements OnInit {
     }
   }
 
+  modificarMonto(referencia: string) {
+    const editables = document.querySelectorAll(`.edit-${referencia}`);
+
+    editables.forEach(element => {
+      element.classList.toggle('hide');
+    });
+  }
+
 }

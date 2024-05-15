@@ -868,3 +868,14 @@ input.total-amount-to-pay[type="text"]{
 .hide {
   display: none !important;
 }
+
+.modifyAmount {
+  font-size: 11px;
+  display: flex;
+  padding: 0 15px;
+  box-sizing: border-box;
+  flex-direction: row-reverse;
+  text-decoration: underline;
+  // margin-top: -7px;
+  cursor: pointer;
+}

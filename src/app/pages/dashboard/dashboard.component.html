@@ -64,7 +64,19 @@
                             <div></div>
 
                             <li>Referencia Paycash: <span>{{ debt.Referencia_Bancaria }}</span></li>
-                            <li>Cantidad a pagar:
+
+                            <li class="{{'edit-'+debt.Referencia_Bancaria}}">
+                                Cantidad a pagar:
+                                <span class="total-amount-to-pay">
+                                    {{debt.Pago_Periodico | currency:'MXN'}} MXN
+                                </span>
+                            </li>
+                            <span class="modifyAmount {{'edit-'+debt.Referencia_Bancaria}}" (click)="modificarMonto(debt.Referencia_Bancaria)">
+                                Modificar monto
+                            </span>
+
+                            <li class="hide {{'edit-'+debt.Referencia_Bancaria}}">
+                                Cantidad a pagar:
                                 <input type="text"
                                     [placeholder]="debt.Pago_Periodico | currency:'MXN'"
                                     class="total-amount-to-pay"
