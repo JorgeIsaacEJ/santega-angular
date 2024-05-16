@@ -9,7 +9,7 @@
             <div class="auth-content-left-rgba"></div>
         </div>
         <div class="auth-content-right">
-            <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="getValidaRFCReferenciaDeudor();" *ngIf="paso == 1">
+            <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="ValidaRegistroPaso1();" *ngIf="paso == 1">
                 <div class="auth-form-logo">
                     <img
                         src="assets/santega-logo.png"
@@ -137,7 +137,7 @@
                     <input
                     class="auth-form-input"
                     type='checkbox'  
-                    (click)="acceptedFile();"
+                    (click)="ValidaRegistroPaso2();"
                 />
                 </div>
             </form>

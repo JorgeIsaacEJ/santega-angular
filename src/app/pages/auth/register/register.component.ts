@@ -41,6 +41,7 @@ export class RegisterComponent implements OnInit {
   public typeDebts: any[] = [];
   public medioContactoDeudorTelefono: any = {};
   public medioContactoDeudorCorreo: any = {};
+  public folio: number = 0;
   public paso: number = 1;
 
   constructor(
@@ -111,8 +112,9 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-  //Consulta RFC Y Referencia Paycash
-  async getValidaRFCReferenciaDeudor() {
+  //REGISTRO PASO 1
+  //Valida los filtros de la persona que se registra
+  async ValidaRegistroPaso1() {
     let name = this.registerForm.controls['Name'].value;
     let tel = this.registerForm.controls['Telefono'].value
     let mail = this.registerForm.controls['Email'].value;
@@ -120,92 +122,73 @@ export class RegisterComponent implements OnInit {
     let nacimiento = this.registerForm.controls['FecNacimiento'].value;
     let rfc = this.registerForm.controls['Username'].value;
     let referencia = this.registerForm.controls['ReferenciaPaycash'].value;
-    let pass = this.registerForm.controls['Password'].value;
-    let pass_confirm = this.registerForm.controls['Password2'].value;
-    let Deudorwhere = `where=Deudor.RFC='${rfc}'`;
     let Paso_1 = await this.getFindByFilters(tel,mail,referencia,rfc,credito,name,nacimiento);
     //Si avanza del paso 1 Solicitamos aviso de privacidad
     if (Paso_1) {
       this.paso = 2;
+      let where1 = "where=Detalle_Medio_Contacto_Deudor.Deudor=" + this.folio.toString();
+      let where2 = "where=Credito.Deudor=" + this.folio.toString();
+      let where3 = "where=Deudor.Folio=" + this.folio.toString();
+      let resp11 = await this.setUsuario(where1, "telefono");
+      let resp12 = await this.setUsuario(where1, "correo");
+      let resp21 = await this.setCredito(where2);
+      let resp31 = await this.setDeudor(where3)
     }
+  }
+  //REGISTRO PASO 2
+  //Decarga el PDF
+  openFile(){
+
+  }
+  //Acepta datos PDF
+  ValidaRegistroPaso2(){
+    if (true) {
+      this.paso = 3;
+    }
+  }
+  //REGISTRO PASO 3
+  //Confirma celular (Envio de clave de activacion)
+  confirmPhone(){
+    if (true) {
+      this.paso = 4;
+    }
+  }
+  //Setea cuanta para acceso
+  setPassWord(){
+    let pass = this.formPassword.controls['Password'].value;
+    let pass_confirm = this.formPassword.controls['Password2'].value;
     if(pass != pass_confirm){
       this.toastrService.info('La contraseña no coincide, intentalo de nuevo!');
-      this.registerForm.controls['Password'].setErrors({ invalid: true });
-      this.registerForm.controls['Password2'].setErrors({ invalid: true });
+      this.formPassword.controls['Password'].setErrors({ invalid: true });
+      this.formPassword.controls['Password2'].setErrors({ invalid: true });
       return;
     }
-      this.paymentService.DeudorListaSelAll(0, 1, Deudorwhere).subscribe(( Deudor: UserFolioResponse ) => {
-      if ( Deudor && Deudor.RowCount === 0 ) {
-        this.toastrService.info('El RFC no existe, intentalo de nuevo!');
-        this.registerForm.controls['Username'].setErrors({ invalid: true });
-        return;
-      }
-      let Creditowhere = `where=Credito.Referencia_Bancaria='${referencia}'`;
-      this.paymentService.CreditoListaSelAll(0, 1, Creditowhere).subscribe(( Credito: UserCurrentDebtsResponse ) => {
-      if ( Credito && Credito.RowCount === 0 ) {
-        this.toastrService.info('La referencia no existe, intentalo de nuevo!');
-        this.registerForm.controls['ReferenciaPaycash'].setErrors({ invalid: true });
-        return;
-      }
-      if(Credito.Creditos[0].Deudor != Deudor.Deudors[0].Folio ){
-        this.toastrService.info('La referencia no corresponde al RFC, intentalo de nuevo!');
-        this.registerForm.controls['ReferenciaPaycash'].setErrors({ invalid: true });
-        return;
-      }
-      //Ambos existen
-      this.registerForm.controls['Name'].setValue(Deudor.Deudors[0].Nombre_Completo);
-      this.registerForm.controls['Role'].setValue(19);
-      this.registerForm.controls['Image'].setValue(null);
-      this.registerForm.controls['Status'].setValue(1);
+    this.registerForm.controls['Password'].setValue(pass);
+    this.registerForm.controls['Password2'].setErrors(pass_confirm);
       //Medio de contacto
       this.medioContactoDeudorTelefono = {
         Folio: 0,
-        Deudor: Deudor.Deudors[0].Folio,
+        Deudor: this.folio,
         Medio_de_Contacto: 3,
-        Referencia: this.registerForm.controls['Telefono'].value
+        Referencia: this.formPassword.controls['Telefono'].value //Siempre toma el segundo numero
       };
       this.medioContactoDeudorCorreo = {
         Folio: 0,
-        Deudor: Deudor.Deudors[0].Folio,
+        Deudor: this.folio,
         Medio_de_Contacto: 4,
         Referencia: this.registerForm.controls['Email'].value
       };
       //Registro
       this.register();
-    });
-    });
   }
 
-  //REGISTRO PASO 1
-  setDetalleMedioContactoDeudor(detalleMedioDeContactoDeudor: DetalleMedioContactoDeudor){
-    this.userService.setDetalleMedioContactoDeudor(detalleMedioDeContactoDeudor).subscribe(( value: any ) => {
-      if ( value && value.RowCount === 0 ) {
-        this.toastrService.info('Ha ocurrido un error al registrar los datos de contact, intentalo de nuevo!');
-        return;
-      }
-    });
-  }
-  //REGISTRO PASO 2
-  openFile(){
-
-  }
-
-  acceptedFile(){
-
-  }
-  //REGISTRO PASO 3
-  setPassWord(){
-
-  }
-
-  //Busqueda por filtros
   async getFindByFilters(telefono: string, correo: string, referencia: string, rfc: string, credito: string, nombre: string,  fecnacimiento: string): Promise<boolean>{
     let findUser: number = 0;
     let findDeudor: number = 0;
     let findCredito: number = 0;
     let andTelefono = (telefono.length > 1) ? ` Detalle_Medio_Contacto_Deudor.Referencia='${telefono}' and Detalle_Medio_Contacto_Deudor.Medio_de_Contacto = 3`: ``;
     let andCorreo = (correo.length > 1) ? ` Detalle_Medio_Contacto_Deudor.Referencia='${correo}' and Detalle_Medio_Contacto_Deudor.Medio_de_Contacto = 4`: ``;
-    let andReferencia = (referencia.length > 1) ? ` Credito.Referencia_Bancaria.='${referencia}'`: ``;
+    let andReferencia = (referencia.length > 1) ? ` Credito.Referencia_Bancaria='${referencia}'`: ``;
     let andCredito = (credito.length > 1) ? ` Credito.Folio=${credito}`: ``;
     let andRFC = (rfc.length > 1) ? ` Deudor.RFC='${rfc}'`: ``;
     let andNombre = (nombre.length > 1) ? ` Deudor.Nombre_Completo='${nombre}'`: ``;
@@ -242,9 +225,11 @@ export class RegisterComponent implements OnInit {
     }
     //Valida si los filtros son de la misma tabla
     if(findUser != 0 && andTelefono != "" && andCorreo != ""){
+      this.folio = findUser;
       return true;
     }
     if(findCredito != 0 && andReferencia != "" && andCredito != ""){
+      this.folio = findCredito;
       return true;
     }
     if(findDeudor != 0){
@@ -258,10 +243,14 @@ export class RegisterComponent implements OnInit {
       if(andNacimiento != ""){
         contador++;
       }
-      if(contador > 1) return true;
+      if(contador > 1) {
+        this.folio = findDeudor;
+        return true;
+      }
     }
     //Valido que al menos dos Folios sean iguales 
     if((findUser > 0 && findUser == findCredito) || (findCredito > 0 && findCredito == findDeudor) || (findUser > 0 && findUser == findDeudor)){
+      this.folio = (findUser > 0) ? findUser : (findCredito > 0) ? findCredito : findDeudor;
       return true;
     }
     return false;
@@ -321,6 +310,85 @@ export class RegisterComponent implements OnInit {
           reject(error);
         }
       );
+    });
+  }
+
+  async setUsuario(filtro: string, tipo: string): Promise<number>{
+    return new Promise<number>((resolve, reject) => {
+      this.userService.DetalleMedioContactoDeudorListaSelAll(0, 1, filtro).subscribe(
+        (User: any) => {
+          let value: number = 0;
+          if (User && User.RowCount === 0) {
+            resolve(0);
+          } else {
+            if(tipo == "telefono"){
+              this.registerForm.controls['Telefono'].setValue(User.Detalle_Medio_Contacto_Deudors[0].Referencia);
+              this.formPassword.controls['Telefono'].setValue(User.Detalle_Medio_Contacto_Deudors[0].Referencia);
+              value = parseInt(User.Detalle_Medio_Contacto_Deudors[0].Deudor);
+              resolve(value);
+            }
+            else{
+              this.registerForm.controls['Email'].setValue(User.Detalle_Medio_Contacto_Deudors[0].Referencia);
+            }
+            resolve(value);
+          }
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  async setCredito(filtro: string): Promise<number> {
+    return new Promise<number>((resolve, reject) => {
+      this.paymentService.CreditoListaSelAll(0, 1, filtro).subscribe(
+        (Credito: UserCurrentDebtsResponse) => {
+          let value: number = 0;
+          if (Credito && Credito.RowCount === 0) {
+            resolve(0);
+          } else {
+            value = Credito.Creditos[0].Deudor;
+            this.registerForm.controls['ReferenciaPaycash'].setValue(Credito.Creditos[0].Referencia_Bancaria);
+            this.registerForm.controls['NumCredito'].setValue(Credito.Creditos[0].Folio.toString());
+            resolve(value);
+          }
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  async setDeudor(filtro: string): Promise<number>{
+    return new Promise<number>((resolve, reject) => {
+      this.paymentService.DeudorListaSelAll(0, 1, filtro).subscribe(
+        (Deudor: UserFolioResponse) => {
+          let value: number = 0;
+          if (Deudor && Deudor.RowCount === 0) {
+            resolve(0);
+          } else {
+            value = Deudor.Deudors[0].Folio;
+            this.registerForm.controls['Name'].setValue(Deudor.Deudors[0].Nombre_Completo);
+            this.registerForm.controls['Username'].setValue(Deudor.Deudors[0].RFC);
+            this.registerForm.controls['FecNacimiento'].setValue(Deudor.Deudors[0].Fecha_de_Nacimiento);
+            resolve(value);
+          }
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+
+  setDetalleMedioContactoDeudor(detalleMedioDeContactoDeudor: DetalleMedioContactoDeudor){
+    this.userService.setDetalleMedioContactoDeudor(detalleMedioDeContactoDeudor).subscribe(( value: any ) => {
+      if ( value && value.RowCount === 0 ) {
+        this.toastrService.info('Ha ocurrido un error al registrar los datos de contact, intentalo de nuevo!');
+        return;
+      }
     });
   }
 }
