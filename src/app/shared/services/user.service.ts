@@ -6,6 +6,7 @@ import { ToastrService } from "ngx-toastr";
 import { LocalStorageService } from "./local-storage.service";
 import { LoginModel } from "../models/login.model";
 import { DetalleMedioContactoDeudor } from '../models/user.model'
+import { SpartanUsers } from "../models/user-spartan.model";
 
 @Injectable({
     providedIn: 'root'
@@ -20,6 +21,28 @@ export class UserService {
         private readonly http: HttpClient,
         private readonly localStorageService: LocalStorageService,
     ) {}
+
+    //Consulta del user spartane Metodo Generico
+    DetalleMedioContactoDeudorListaSelAll( startRowIndex: number, maximumRows: number, where: string ): Observable<any> {
+
+        return this.http.get<any>(`${ this.apiUrl }/api/Detalle_Medio_Contacto_Deudor/ListaSelAll?startRowIndex=${startRowIndex}&maximumRows=${maximumRows}&${where}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
+    }
+
+    //Consulta del user spartane Metodo Generico
+    SpartanUserListaSelAll( startRowIndex: number, maximumRows: number, where: string ): Observable<SpartanUsers> {
+
+        return this.http.get<SpartanUsers>(`${ this.apiUrl }/api/Spartan_User/ListaSelAll?startRowIndex=${startRowIndex}&maximumRows=${maximumRows}&${where}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
+    }
 
     findOne( id: string ) {
 
