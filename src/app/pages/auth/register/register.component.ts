@@ -132,7 +132,11 @@ export class RegisterComponent implements OnInit {
       let resp11 = await this.setUsuario(where1, "telefono");
       let resp12 = await this.setUsuario(where1, "correo");
       let resp21 = await this.setCredito(where2);
-      let resp31 = await this.setDeudor(where3)
+      let resp31 = await this.setDeudor(where3);
+      this.toastrService.success('Usuario verificado!');
+    }
+    else{
+      this.toastrService.info('Ha ocurrido un error al iniciar sesión, intentalo de nuevo!');
     }
   }
   //REGISTRO PASO 2
