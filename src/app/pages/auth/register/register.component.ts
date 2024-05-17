@@ -19,11 +19,11 @@ import jsPDF from 'jspdf';
 })
 export class RegisterComponent implements OnInit {
 
-    public registerForm: FormGroup = this.fb.group({
+  public registerForm: FormGroup = this.fb.group({
     Name: [''],
     Role: [],
     Image: [],
-    Email: ['', [ Validators.email ]],
+    Email: ['', [ Validators.required, Validators.email ]],
     Telefono: ['', [ Validators.minLength(10), Validators.maxLength(10) ]],
     Status: [],
     Username: ['', [ Validators.minLength(13), Validators.maxLength(13) ]],
