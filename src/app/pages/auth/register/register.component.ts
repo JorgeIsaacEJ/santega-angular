@@ -136,7 +136,7 @@ export class RegisterComponent implements OnInit {
       this.toastrService.success('Usuario verificado!');
     }
     else{
-      this.toastrService.info('Ha ocurrido un error al iniciar sesión, intentalo de nuevo!');
+      this.toastrService.info('Datos incorrectos, intentalo de nuevo!');
     }
   }
   //REGISTRO PASO 2
