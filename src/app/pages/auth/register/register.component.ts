@@ -35,8 +35,8 @@ export class RegisterComponent implements OnInit {
   });
   public formPassword: FormGroup = this.fb.group({
     Telefono: ['', [ Validators.minLength(10), Validators.maxLength(10) ]],
-    Password: [],
-    Password2: [],
+    Password: ['', [ Validators.required ]],
+    Password2: ['', [ Validators.required ]],
   });
   public typeDebts: any[] = [];
   public medioContactoDeudorTelefono: any = {};
@@ -165,6 +165,7 @@ export class RegisterComponent implements OnInit {
   //Confirma celular (Envio de clave de activacion)
   confirmPhone(){
     if (true) {
+      this.toastrService.success('Telefono verificado');
       this.paso = 4;
     }
   }
@@ -172,6 +173,13 @@ export class RegisterComponent implements OnInit {
   setPassWord(){
     let pass = this.formPassword.controls['Password'].value;
     let pass_confirm = this.formPassword.controls['Password2'].value;
+    if(this.paso != 4){
+      this.toastrService.info('Por favor confirma tu telefono');
+      return;
+    }
+    if(this.paso == 4 && pass == "" && pass_confirm == ""){
+      return;
+    }
     if(pass != pass_confirm){
       this.toastrService.info('La contraseña no coincide, intentalo de nuevo!');
       this.formPassword.controls['Password'].setErrors({ invalid: true });

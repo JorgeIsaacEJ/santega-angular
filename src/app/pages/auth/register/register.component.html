@@ -131,7 +131,7 @@
                 </div>
 
                 <div class="auth-form-content aviso_privacidad">
-                    <p class="auth-form-label" (click)="openFile(pdfview);">Aviso de privacidad:</p>
+                    <p class="auth-form-label" (click)="openFile(pdfview);" style="color:blue;text-decoration:underline;cursor:pointer;">Descarga nuestro aviso de privacidad:</p>
 
                     Acepto los terminos y condiciones
                     <input
@@ -142,7 +142,7 @@
                 </div>
             </form>
 
-            <form class="auth-form" [formGroup]="formPassword" (ngSubmit)="setPassWord();" *ngIf="paso == 3">
+            <form class="auth-form" [formGroup]="formPassword" (ngSubmit)="setPassWord();" *ngIf="paso == 3 || paso == 4">
                 <div class="auth-form-logo">
                     <img
                         src="assets/santega-logo.png"
@@ -166,12 +166,11 @@
                             formControlName="Telefono"
                         />
 
-                        Validacion por SMS:
-                        <input
-                        class="auth-form-input"
-                        type='checkbox'
-                        (click)="ValidaRegistroPaso2();"
-                    />
+                        <button class="button" 
+                        style="margin-bottom: 60px; "
+                        (click)="confirmPhone()">
+                        Verifica tu telefono
+                        </button>
                     </div>
 
                     <p class="auth-form-label">Contraseña:</p>
