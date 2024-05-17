@@ -15,7 +15,7 @@ import jsPDF from 'jspdf';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['../login/login.component.scss'],
+  styleUrls: ['../login/login.component.scss', './register.component.scss'],
 })
 export class RegisterComponent implements OnInit {
 

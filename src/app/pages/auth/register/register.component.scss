@@ -1,4 +1,10 @@
 .pdf-container {
   width: 612pt;
   max-width: 612pt;
+  position: fixed;
+  z-index: -99999;
+}
+
+.d-none {
+  display: none !important;
 }
