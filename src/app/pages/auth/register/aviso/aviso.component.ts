@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { jsPDF } from 'jspdf';
 
 @Component({
@@ -7,6 +7,8 @@ import { jsPDF } from 'jspdf';
   styleUrls: ['./aviso.component.scss']
 })
 export class AvisoComponent {
+
+  @Input('nombre') usuario : string = 'Usuario del Sitio Web';
 
   exportAllToPDF(htmlView: HTMLElement) {
     const doc = new jsPDF({
