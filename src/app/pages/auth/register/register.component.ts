@@ -10,7 +10,6 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { DebtService } from 'src/app/shared/services/debt.service';
 import { PaymentService } from 'src/app/shared/services/payment.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { AvisoComponent } from './aviso/aviso.component';
 import jsPDF from 'jspdf';
 
 @Component({
@@ -19,7 +18,6 @@ import jsPDF from 'jspdf';
   styleUrls: ['../login/login.component.scss'],
 })
 export class RegisterComponent implements OnInit {
-  @ViewChild(AvisoComponent) avisoComponent: AvisoComponent = new AvisoComponent;
 
     public registerForm: FormGroup = this.fb.group({
     Name: [''],
@@ -153,7 +151,6 @@ export class RegisterComponent implements OnInit {
 
     doc.html(htmlView, {
       callback: (doc: jsPDF) => {
-        doc.deletePage(doc.getNumberOfPages());
         doc.save('Aviso-de-privacidad');
       }
     });

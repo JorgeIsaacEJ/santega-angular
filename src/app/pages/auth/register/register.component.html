@@ -130,12 +130,6 @@
                     <h4>Santega</h4>
                 </div>
 
-                <div style="display: none;">
-                  <div #pdfview>
-                      <app-aviso></app-aviso>
-                  </div>
-                </div>
-
                 <div class="auth-form-content aviso_privacidad">
                     <p class="auth-form-label" (click)="openFile(pdfview);">Aviso de privacidad:</p>
 
@@ -217,4 +211,9 @@
             </form>
         </div>
     </div>
+</div>
+<div class="pdf-container">
+  <div #pdfview>max-width: 512pt;
+    <app-aviso></app-aviso>
+  </div>
 </div>
