@@ -148,7 +148,7 @@
                 </div>
             </form>
 
-            <form class="auth-form" [formGroup]="formPassword" (ngSubmit)="setPassWord();" *ngIf="paso == 3">
+            <form class="auth-form" [formGroup]="formPassword" (ngSubmit)="setPassWord();" *ngIf="paso == 3 || paso == 4">
                 <div class="auth-form-logo">
                     <img
                         src="assets/santega-logo.png"
@@ -172,12 +172,11 @@
                             formControlName="Telefono"
                         />
 
-                        Validacion por SMS:
-                        <input
-                        class="auth-form-input"
-                        type='checkbox'
-                        (click)="ValidaRegistroPaso2();"
-                    />
+                        <button class="button" 
+                        style="margin-bottom: 60px; "
+                        (click)="confirmPhone()">
+                        Verifica tu telefono
+                        </button>
                     </div>
 
                     <p class="auth-form-label">Contraseña:</p>
