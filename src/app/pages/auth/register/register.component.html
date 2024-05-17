@@ -97,7 +97,7 @@
                             'invalid-input': registerForm.controls['Telefono'].invalid && registerForm.controls['Telefono'].touched
                         }"
                         class="auth-form-input"
-                        type='text'  
+                        type='text'
                         mask="(000) 000 00 00"
                         placeholder="5555555555"
                         autocomplete="off"
@@ -130,13 +130,19 @@
                     <h4>Santega</h4>
                 </div>
 
+                <div style="display: none;">
+                  <div #pdfview>
+                      <app-aviso></app-aviso>
+                  </div>
+                </div>
+
                 <div class="auth-form-content">
-                    <p class="auth-form-label" (click)="openFile();">Aviso de privacidad:</p>
+                    <p class="auth-form-label" (click)="openFile(pdfview);">Aviso de privacidad:</p>
 
                     Acepta los terminos y condiciones
                     <input
                     class="auth-form-input"
-                    type='checkbox'  
+                    type='checkbox'
                     (click)="ValidaRegistroPaso2();"
                 />
                 </div>
@@ -157,7 +163,7 @@
                         'invalid-input': formPassword.controls['Telefono'].invalid && formPassword.controls['Telefono'].touched
                     }"
                     class="auth-form-input"
-                    type='text'  
+                    type='text'
                     mask="(000) 000 00 00"
                     placeholder="5555555555"
                     autocomplete="off"

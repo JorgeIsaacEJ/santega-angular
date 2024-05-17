@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -10,7 +10,8 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 import { DebtService } from 'src/app/shared/services/debt.service';
 import { PaymentService } from 'src/app/shared/services/payment.service';
 import { UserService } from 'src/app/shared/services/user.service';
-import { jsPDF } from 'jspdf';
+import { AvisoComponent } from './aviso/aviso.component';
+import jsPDF from 'jspdf';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,7 @@ import { jsPDF } from 'jspdf';
   styleUrls: ['../login/login.component.scss'],
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild(AvisoComponent) avisoComponent: AvisoComponent = new AvisoComponent;
 
     public registerForm: FormGroup = this.fb.group({
     Name: [''],
@@ -55,7 +57,7 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    
+
     window.scrollTo({ top: 0 });
     this.getTypeDebts();
   }
@@ -82,7 +84,7 @@ export class RegisterComponent implements OnInit {
 
           this.toastrService.info('Ha ocurrido un error en el registro, favor de intentarlo mas tarde');
         } else {
-          
+
           this.toastrService.info( value.Error );
         }
         this.registerForm.controls['Username'].setErrors({ invalid: true });
@@ -137,8 +139,20 @@ export class RegisterComponent implements OnInit {
   }
   //REGISTRO PASO 2
   //Decarga el PDF
-  openFile(){
+  openFile(pdfview : HTMLDivElement){
+    const htmlView = pdfview as HTMLElement;
+    // TODO: pasar valores de nombre, link de la pagina, etc al avisoComponent
+    const doc = new jsPDF({
+      unit: 'pt',
+      format: 'letter'
+    });
 
+    doc.html(htmlView, {
+      callback: (doc: jsPDF) => {
+        doc.deletePage(doc.getNumberOfPages());
+        doc.save('Aviso-de-privacidad');
+      }
+    });
   }
   //Acepta datos PDF
   ValidaRegistroPaso2(){
@@ -196,11 +210,11 @@ export class RegisterComponent implements OnInit {
     if(andTelefono == "" && andCorreo == "" && andReferencia == "" && andCredito == "" && andRFC == "" && andNombre == "" && andNacimiento == ""){
       return false;
     }
-    let filtro_Detalle_Medio_Contacto_Deudor = (andTelefono != "" && andCorreo != "") ? `where=${andTelefono} or${andCorreo}`: 
-                                                (andTelefono != "" && andCorreo == "") ? `where=${andTelefono}`: 
+    let filtro_Detalle_Medio_Contacto_Deudor = (andTelefono != "" && andCorreo != "") ? `where=${andTelefono} or${andCorreo}`:
+                                                (andTelefono != "" && andCorreo == "") ? `where=${andTelefono}`:
                                                 (andTelefono == "" && andCorreo != "") ? `where=${andCorreo}`: ``;
-    let filtro_Credito = (andReferencia != "" && andCredito != "") ? `where=${andReferencia} and${andCredito}`: 
-                          (andReferencia != "" && andCredito == "") ? `where=${andReferencia}`: 
+    let filtro_Credito = (andReferencia != "" && andCredito != "") ? `where=${andReferencia} and${andCredito}`:
+                          (andReferencia != "" && andCredito == "") ? `where=${andReferencia}`:
                           (andReferencia == "" &&  andCredito != "") ? `where=${andCredito}`: ``;
     let filtro_Deudor = `where=`;
     if(andRFC != ""){
@@ -248,7 +262,7 @@ export class RegisterComponent implements OnInit {
         return true;
       }
     }
-    //Valido que al menos dos Folios sean iguales 
+    //Valido que al menos dos Folios sean iguales
     if((findUser > 0 && findUser == findCredito) || (findCredito > 0 && findCredito == findDeudor) || (findUser > 0 && findUser == findDeudor)){
       this.folio = (findUser > 0) ? findUser : (findCredito > 0) ? findCredito : findDeudor;
       return true;

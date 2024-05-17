@@ -4,12 +4,14 @@ import { RegisterComponent } from './register.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskDirective, NgxMaskPipe, provideEnvironmentNgxMask } from 'ngx-mask';
+import { AvisoComponent } from './aviso/aviso.component';
 
 
 
 @NgModule({
   declarations: [
-    RegisterComponent
+    RegisterComponent,
+    AvisoComponent
   ],
   imports: [
     CommonModule,
