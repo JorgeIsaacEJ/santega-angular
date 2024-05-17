@@ -123,14 +123,19 @@ export class RegisterComponent implements OnInit {
     let rfc = this.registerForm.controls['Username'].value;
     let referencia = this.registerForm.controls['ReferenciaPaycash'].value;
     let Paso_1 = await this.getFindByFilters(tel,mail,referencia,rfc,credito,name,nacimiento);
+    let Verifica_usuario = await this.getUsuarioSpartane(`where=Spartan_User.Username IN (SELECT TOP 1 RFC  FROM [cobranza].[dbo].[Deudor] WHERE Folio = ${this.folio.toString()})`);
     //Si avanza del paso 1 Solicitamos aviso de privacidad
     if (Paso_1) {
+      if(Verifica_usuario > 0){
+        this.toastrService.info('El usuario ya esta registrado, intentalo de nuevo!');
+        return;
+      }
       this.paso = 2;
       let where1 = "where=Detalle_Medio_Contacto_Deudor.Deudor=" + this.folio.toString();
       let where2 = "where=Credito.Deudor=" + this.folio.toString();
       let where3 = "where=Deudor.Folio=" + this.folio.toString();
-      let resp11 = await this.setUsuario(where1, "telefono");
-      let resp12 = await this.setUsuario(where1, "correo");
+      let resp11 = await this.setUsuario(where1 + " and Detalle_Medio_Contacto_Deudor.Medio_de_Contacto = 3", "telefono");
+      let resp12 = await this.setUsuario(where1 + " and Detalle_Medio_Contacto_Deudor.Medio_de_Contacto = 4", "correo");
       let resp21 = await this.setCredito(where2);
       let resp31 = await this.setDeudor(where3);
       this.toastrService.success('Usuario verificado!');
@@ -277,6 +282,25 @@ export class RegisterComponent implements OnInit {
       return true;
     }
     return false;
+  }
+
+  async getUsuarioSpartane(filtro: string): Promise<number>{
+    return new Promise<number>((resolve, reject) => {
+      this.userService.SpartanUserListaSelAll(0, 1, filtro).subscribe(
+        (User: any) => {
+          let value: number = 0;
+          if (User && User.RowCount === 0) {
+            resolve(0);
+          } else {
+            value = parseInt(User.Spartan_Users[0].Id_User);
+            resolve(value);
+          }
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
   }
 
   async getUsuario(filtro: string): Promise<number>{
