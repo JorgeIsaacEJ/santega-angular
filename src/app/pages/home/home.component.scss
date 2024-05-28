@@ -229,7 +229,7 @@ section.home-section-contact {
 
     div.contact {
         width: 100%;
-        height: 250px;
+        height: 500px;
         position: relative;
 
         div.contact-background {
@@ -254,7 +254,7 @@ section.home-section-contact {
             z-index: 2;
             top: 0;
             left: 0;
-            background-color: rgba(0,0,0,.5);
+            background-color: rgba(0, 0, 0, .5);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -264,7 +264,7 @@ section.home-section-contact {
                 width: 800px;
                 padding: 15px 0;
                 box-sizing: border-box;
-                background-color: rgba(0,0,0,.5);
+                background-color: rgba(0, 0, 0, .5);
                 border-radius: $border-radius;
                 display: flex;
                 flex-wrap: wrap;
@@ -281,7 +281,7 @@ section.home-section-contact {
                     text-align: center;
                 }
 
-                p { 
+                p {
                     width: 100%;
                     font-size: 20px;
                     letter-spacing: .5px;
@@ -308,7 +308,83 @@ section.home-section-contact {
                     color: $font-white;
                     font-weight: 900;
                     text-shadow: 1px 1px 1px #000;
+                    width: 100%;
+
+                    &:disabled {
+                        background-color: $gray;
+                    }
+
                 }
+            }
+        }
+    }
+}
+
+form.contact-form {
+    width: 80%;
+    height: 80%;
+
+    div.contact-form-content {
+        width: 100%;
+        margin-top: 15px;
+        height: calc(100% - 110px);
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        p.contact-form-label {
+            width: 100%;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: .5px;
+            color: $font-dark;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 48%;
+            height: 45px;
+            padding: 0 15px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 15px 15px;
+        }
+
+        .contact-form-input {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            outline: none;
+            border: 1px solid $border-light;
+            border-radius: $border-radius;
+            box-sizing: border-box;
+            transition: $transition;
+
+            &:focus {
+                border-color: $action;
+            }
+
+            &.ng-invalid.ng-touched {
+                border: 1px solid $red;
+            }
+        }
+
+
+        p.contact-form-paragraph {
+            width: 100%;
+            font-size: 13px;
+            font-weight: bold;
+            letter-spacing: .5px;
+            color: $font-gray;
+            margin-bottom: 10px;
+
+            span {
+                float: right;
+                text-decoration: underline;
+                color: $main;
+                cursor: pointer;
             }
         }
     }
