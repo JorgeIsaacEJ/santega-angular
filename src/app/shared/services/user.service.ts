@@ -7,6 +7,7 @@ import { LocalStorageService } from "./local-storage.service";
 import { LoginModel } from "../models/login.model";
 import { DetalleMedioContactoDeudor } from '../models/user.model'
 import { SpartanUsers } from "../models/user-spartan.model";
+import { MailModels, MessageModels } from "../models/message.model";
 
 @Injectable({
     providedIn: 'root'
@@ -37,6 +38,28 @@ export class UserService {
     SpartanUserListaSelAll( startRowIndex: number, maximumRows: number, where: string ): Observable<SpartanUsers> {
 
         return this.http.get<SpartanUsers>(`${ this.apiUrl }/api/Spartan_User/ListaSelAll?startRowIndex=${startRowIndex}&maximumRows=${maximumRows}&${where}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
+    }
+
+    //Envio de Correo Generico
+    PostMail( messageModels: MessageModels ): Observable<any> {
+
+        return this.http.post<string>(`${ this.apiUrl }/api/Spartan_Settings/PostMail`, messageModels, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
+    }
+
+    //Envio de Correo Generico
+    SantegaMail( mailModels: MailModels ): Observable<any> {
+
+        return this.http.post<string>(`${ this.apiUrl }/api/Spartan_Settings/SantegaMail`, mailModels, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`

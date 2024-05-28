@@ -1,8 +1,11 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { MailModels } from 'src/app/shared/models/message.model';
 import { AnimateService } from 'src/app/shared/services/animate.service';
 import { EventsService } from 'src/app/shared/services/events.service';
+import { UserService } from 'src/app/shared/services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-home',
@@ -23,6 +26,8 @@ export class HomeComponent implements OnInit, AfterViewInit {
   });
 
   constructor(
+    private readonly userService: UserService,
+    private readonly toastrService: ToastrService,
     private readonly animateService: AnimateService,
     private readonly eventsService: EventsService,
     private readonly route: ActivatedRoute,
@@ -74,7 +79,17 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   submit(): void {
-
+    let model: MailModels ={
+      nombre: this.contactForm.controls['nombre'].value,
+      correo: this.contactForm.controls['email'].value,
+      telefono: this.contactForm.controls['tel'].value,
+      mensaje: this.contactForm.controls['mensaje'].value,
+    }
+    this.userService.SantegaMail(model).subscribe(( resp ) => {
+      if ( resp !== '' ){
+        this.toastrService.success(`Tu correo se envio correctamente`);
+      }
+    })
     // this.authService.login(
     //   this.loginForm.getRawValue()
     // ).subscribe(( value: any ) => {
