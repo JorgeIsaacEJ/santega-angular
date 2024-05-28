@@ -90,17 +90,5 @@ export class HomeComponent implements OnInit, AfterViewInit {
         this.toastrService.success(`Tu correo se envio correctamente`);
       }
     })
-    // this.authService.login(
-    //   this.loginForm.getRawValue()
-    // ).subscribe(( value: any ) => {
-
-    //   if ( value && value.Error !== '' ) {
-
-    //     this.toastrService.info( value.Error );
-    //     return;
-    //   }
-
-    //   this.getUserData( value.UserId );
-    // });
   }
 }

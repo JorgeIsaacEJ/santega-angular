@@ -6,16 +6,16 @@
 @import './app/app.component.scss';
 @import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap');
 // font-family: 'Concert One', cursive;
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200&display=swap%27');
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@200&display=swap');
 // font-family: 'Josefin Sans', sans-serif;
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap%27');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap');
 // font-family: 'Quicksand', sans-serif;
 @import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
 // font-family: 'Archivo Black', sans-serif;
 
 *, html, body {
   margin: 0;
-  padding: 0; 
+  padding: 0;
   font-family: 'Quicksand', sans-serif;
 }
 
@@ -36,7 +36,7 @@ html {
   &::-webkit-scrollbar-thumb {
     background: $main;
   }
-  
+
   &::-webkit-scrollbar-thumb:hover {
     background: $main-light;
   }
@@ -71,17 +71,17 @@ html {
       display: block;
       background: $ripple-background;
       border-radius: 50%;
-      pointer-events: none; 
-      
-      //  position and size 
+      pointer-events: none;
+
+      //  position and size
       top: calc(var(--y) * 1px);
       left: calc(var(--x) * 1px);
       width:  calc(var(--d) * 1px);
       height: calc(var(--d) * 1px);
 
       //  animated properties
-      opacity: calc(var(--o, 1) * var(--ripple-opacity, 0.3));                
-      transition: calc(var(--t, 0) * var(--ripple-duration, 600ms)) var(--ripple-easing,linear);   
+      opacity: calc(var(--o, 1) * var(--ripple-opacity, 0.3));
+      transition: calc(var(--t, 0) * var(--ripple-duration, 600ms)) var(--ripple-easing,linear);
       transform: translate(-50%, -50%) scale(var(--s, 1));
       transform-origin: center;
   }
@@ -91,10 +91,10 @@ html {
 .skeleton {
 	background-color: $bg-skeleton !important;
 	// The shine that's going to move across the skeleton:
-	background-image:			
+	background-image:
 		linear-gradient(
-			90deg, 
-			rgba(#fff, 0), 
+			90deg,
+			rgba(#fff, 0),
 			rgba(#fff, 0.5),
 			rgba(#fff, 0)
 		);
