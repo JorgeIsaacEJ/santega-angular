@@ -3,20 +3,20 @@
         <ul class="footer-top-content">
             <li class="footer-top-content-section">
                 <ul class="footer-privacity">
-                    <li>
+                    <li (click)="setSection('aboutUs');">
                         Acerca de nosotros.
                     </li>
-                    <li>
+                    <li (click)="setSection('services');">
                         Nuestros servicios.
                     </li>
-                    <li>
+                    <li (click)="setSection('contact');">
                         Contacto.
                     </li>
                     <li>
                         Aviso legal.
                     </li>
                     <li>
-                        Términos y condiciones.
+                        <a href="assets/aviso2.html" target="_blank" style="color: unset;text-decoration: none;">Términos y condiciones.</a>
                     </li>
                 </ul>
             </li>

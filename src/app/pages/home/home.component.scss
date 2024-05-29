@@ -68,7 +68,7 @@ section.home-section-about {
                         div.item-left-content {
                             width: 90px;
                             height: 90px;
-                            // background-color: $main;
+                            background-color: #000E49;
                             border-radius: $border-radius;
                             display: flex;
                             align-items: center;
@@ -87,7 +87,8 @@ section.home-section-about {
                         flex: 0 0 75%;
                         height: 100%;
                         box-sizing: border-box;
-                        padding: 40px 10px;
+                        padding: 15px 10px;
+                        height: 220px;
 
                         h4 {
                             font-size: 18px;
@@ -138,7 +139,7 @@ section.home-section-about {
                         div.item-left-content {
                             width: 90px;
                             height: 90px;
-                            // background-color: $main;
+                            background-color: #000E49;
                             border-radius: $border-radius;
                             display: flex;
                             align-items: center;
@@ -158,7 +159,8 @@ section.home-section-about {
                         height: 100%;
                         box-sizing: border-box;
                         padding: 15px 10px;
-
+                        height: 220px;
+                        
                         h4 {
                             font-size: 18px;
                             letter-spacing: .5px;
