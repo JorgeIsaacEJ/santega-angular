@@ -9,7 +9,7 @@
             <div class="auth-content-left-rgba"></div>
         </div>
         <div class="auth-content-right">
-            <form class="auth-form auth-form-forgot-password">
+            <form class="auth-form auth-form-forgot-password" [formGroup]="registerForm" (ngSubmit)="ChangePassword();">
                 <div class="auth-form-logo">
                     <img 
                         src="assets/santega-logo.png"
@@ -25,6 +25,7 @@
                         type="email" 
                         placeholder="example@email.com" 
                         autocomplete="off"
+                        formControlName="Email"
                     />
 
                     <p class="auth-form-paragraph">

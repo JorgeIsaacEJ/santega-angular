@@ -44,7 +44,8 @@ export class NewPasswordComponent {
     async ChangePassword(){
       let password = this.formPassword.controls['Password'].value;
       let password2 = this.formPassword.controls['Password2'].value;
-      let findUser: SpartanUsers = await this.getUsuarioSpartane(`where=Spartan_User.Username IN (SELECT TOP 1 RFC FROM [cobranza].[dbo].[Deudor] WHERE Folio = ${this.folio.toString()})`);
+      // let findUser: SpartanUsers = await this.getUsuarioSpartane(`where=Spartan_User.Username IN (SELECT TOP 1 RFC FROM [cobranza].[dbo].[Deudor] WHERE Folio = ${this.folio.toString()})`);
+      let findUser: SpartanUsers = await this.getUsuarioSpartane(`where=Spartan_User.Id_User= ${this.folio.toString()}`);
       if(findUser != null && findUser.RowCount > 0){
         if(password != password2){
           this.toastrService.info(`La contraseña no es igual, por favor verifique su contraseña`);

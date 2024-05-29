@@ -24,7 +24,7 @@ const routes: Route[] = [
       .then(m => m.ForgotModule),
   },
   {
-    path: 'crear-contraseña',
+    path: 'crear-contrasenia',
     loadChildren: () => import('./new-password/new-password.module')
       .then(m => m.NewPasswordModule),
   },

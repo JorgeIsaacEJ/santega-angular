@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MessageModels } from 'src/app/shared/models/message.model';
 import { SpartanUsers } from 'src/app/shared/models/user-spartan.model';
 import { LocalStorageService } from 'src/app/shared/services/local-storage.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-forgot',
@@ -21,6 +23,7 @@ export class ForgotComponent implements OnInit {
               private readonly router: Router, 
               private route: ActivatedRoute, 
               private readonly fb: FormBuilder,
+              private readonly toastrService: ToastrService,
               private readonly localStorageService: LocalStorageService,) {}
 
   ngOnInit(): void {
@@ -28,12 +31,19 @@ export class ForgotComponent implements OnInit {
   }
 
   async ChangePassword(){
-    let email = (<HTMLInputElement>document.getElementById('email')).value;
-    let findUser: SpartanUsers = await this.getUsuarioSpartane(`where=Spartan_User.Email ${email}`);
+    let email = this.registerForm.controls['Email'].value;
+    let findUser: SpartanUsers = await this.getUsuarioSpartane(`where=Spartan_User.Email='${email}'`);
     if(findUser != null && findUser.RowCount > 0){
-      findUser.Spartan_Users[0].Password;
+      const base64String = btoa(findUser.Spartan_Users[0].Id_User.toString());
+      const relativePath = 'crear-contrasenia';
+      const URL = this.getFullUrl();
+      const Path = URL.split('/')[URL.split('/').length - 1];
+      const message = `${URL.replace(Path, relativePath)}${(base64String) ? `?folio=${base64String}` : ''}`;
+      this.sendMail(email, message);  	
     }
-
+    else{
+      this.toastrService.error(`No se encontro ningun correo, por favor verifica!`);
+    }
   }
 
   async getUsuarioSpartane(filtro: string): Promise<SpartanUsers>{
@@ -41,13 +51,13 @@ export class ForgotComponent implements OnInit {
       this.userService.SpartanUserListaSelAll(0, 1, filtro).subscribe(
         (User: any) => {
           let value: SpartanUsers = {
-            Spartan_Users: [],
+            Spartan_Users: User.Spartan_Users,
             RowCount: 0
           };
           if (User && User.RowCount === 0) {
             resolve(value);
           } else {
-            resolve(value);
+            resolve(User);
           }
         },
         (error) => {
@@ -55,6 +65,25 @@ export class ForgotComponent implements OnInit {
         }
       );
     });
+  }
+
+  sendMail(_mail: string, _contenido: string){
+    let model: MessageModels = {
+      mail: _mail,
+      typeMail: "Notificaciones Plantilla Recuperar",
+      codigo: _contenido
+    }
+    this.userService.PostMail(model).subscribe(( resp ) => {
+      if ( resp !== '' ){
+        this.toastrService.success(`Tu correo se envio correctamente`);
+      } else {
+        this.toastrService.error(`Error al enviar correo`);
+      }
+    });
+  }
+
+  getFullUrl(): string {
+    return window.location.href;
   }
 
 }
