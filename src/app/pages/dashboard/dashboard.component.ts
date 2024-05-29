@@ -60,7 +60,6 @@ export class DashboardComponent implements OnInit {
 
     this.route.queryParams
       .subscribe(( queries: Partial<NuveiQueryParamsResponse> ) => {
-        console.log( queries )
         if ( Object.keys( queries ).length !== 0 ) {
 
           this.showPaymentModalStatus( queries );

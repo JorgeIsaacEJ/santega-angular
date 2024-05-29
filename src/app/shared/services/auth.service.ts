@@ -32,8 +32,8 @@ export class AuthService {
             .set('username', 'demo')
             .set('password', 'demo')
             .set('grant_type', 'password');
-        
-        return this.http.post<Observable<string>>(`${ this.apiUrl }/${ this.oauthRoute }`, 
+
+        return this.http.post<Observable<string>>(`${ this.apiUrl }/${ this.oauthRoute }`,
             body.toString(),
             {
                 headers: new HttpHeaders()
@@ -42,7 +42,6 @@ export class AuthService {
         ).pipe(
             map(( response: any ) => {
 
-                console.log( response )
                 if ( !response.access_token ) {
 
                     this.toastrService.info('No se ha podido validar su identificación, vuelve a intentarlo');
@@ -50,7 +49,7 @@ export class AuthService {
                 }
 
                 this.localStorageService.saveData( 'access_token', response.access_token );
-                return response.access_token; 
+                return response.access_token;
             }),
         );
     }
@@ -73,8 +72,6 @@ export class AuthService {
             Password: md5( form.Password ),
         }
 
-        console.log({ form })
-
         return this.http.post(
             `${ this.apiUrl }/${ this.registerRoutePost }`, form, {
                 headers: {
@@ -90,8 +87,6 @@ export class AuthService {
             ...form,
             Password: md5( form.Password ),
         }
-
-        console.log({ form })
 
         return this.http.post(
             `${ this.apiUrl }/${ this.registerRoute }`, form, {
