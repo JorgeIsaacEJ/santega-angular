@@ -19,10 +19,10 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('contact') contact!: ElementRef;
 
   public contactForm: FormGroup = this.fb.group({
-    nombre: ['', [ Validators.required ]],
-    email: ['', [ Validators.required, Validators.email ]],
-    tel: [''],
-    mensaje: ['', [ Validators.required ]],
+    nombre: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    telefono: [''],
+    mensaje: ['', [Validators.required]],
   });
 
   constructor(
@@ -79,15 +79,31 @@ export class HomeComponent implements OnInit, AfterViewInit {
   }
 
   submit(): void {
+    if (this.contactForm.invalid) {
+      const controls = this.contactForm.controls;
+      for (const name in controls) {
+        if (controls[name].hasError('required')) {
+          this.toastrService.error(`Campo ${name} requerido`);
+          return;
+        }
+        if (controls[name].invalid) {
+          this.toastrService.error(`Campo ${name} inválido, por favor verifica`);
+          return;
+        }
+      }
+      return;
+    }
     let model: MailModels ={
       nombre: this.contactForm.controls['nombre'].value,
       correo: this.contactForm.controls['email'].value,
-      telefono: this.contactForm.controls['tel'].value,
+      telefono: this.contactForm.controls['telefono'].value,
       mensaje: this.contactForm.controls['mensaje'].value,
     }
     this.userService.SantegaMail(model).subscribe(( resp ) => {
       if ( resp !== '' ){
         this.toastrService.success(`Tu correo se envio correctamente`);
+      } else {
+        this.toastrService.error(`Error al enviar correo`);
       }
     })
   }

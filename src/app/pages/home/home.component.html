@@ -120,31 +120,30 @@
                         <input
                             class="contact-form-input"
                             type="text"
-                            placeholder="Nombre"
+                            placeholder="Nombre *"
                             formControlName="nombre"
+                            name="nombre"
                         />
                         <input
                             class="contact-form-input"
                             type="text"
-                            placeholder="Email"
+                            placeholder="Email *"
                             formControlName="email"
                         />
                         <input
                             class="contact-form-input"
                             type="text"
-                            placeholder="Teléfono"
-                            formControlName="tel"
+                            placeholder="Teléfono (opcional)"
+                            formControlName="telefono"
                         />
                         <textarea
                             class="contact-form-input"
-                            placeholder="Escribe tu mensaje aquí"
+                            placeholder="Mensaje *"
                             formControlName="mensaje"
                         ></textarea>
-
                         <button
                             type="submit"
                             anim="ripple"
-                            [disabled]="contactForm.invalid"
                         >Contáctanos</button>
                     </div>
                 </form>
