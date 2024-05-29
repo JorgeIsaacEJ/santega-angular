@@ -21,7 +21,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   public contactForm: FormGroup = this.fb.group({
     nombre: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    telefono: [''],
+    telefono: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
     mensaje: ['', [Validators.required]],
   });
 
