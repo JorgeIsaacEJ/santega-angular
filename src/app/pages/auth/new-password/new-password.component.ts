@@ -102,7 +102,7 @@ export class NewPasswordComponent {
               RowCount: 0
             };
             if (User && User.RowCount === 0) {
-              resolve(User);
+              resolve(value);
             } else {
               resolve(User);
             }

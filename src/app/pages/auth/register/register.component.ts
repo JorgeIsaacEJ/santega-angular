@@ -11,6 +11,7 @@ import { DebtService } from 'src/app/shared/services/debt.service';
 import { PaymentService } from 'src/app/shared/services/payment.service';
 import { UserService } from 'src/app/shared/services/user.service';
 import jsPDF from 'jspdf';
+import { MailModels, SMSModels } from 'src/app/shared/models/message.model';
 
 @Component({
   selector: 'app-register',
@@ -168,10 +169,15 @@ export class RegisterComponent implements OnInit {
   }
   //REGISTRO PASO 3
   //Confirma celular (Envio de clave de activacion)
-  confirmPhone(){
-    if (true) {
+  async confirmPhone(){
+    let sms_response = await this.sendSMSValidation();
+
+    if (sms_response) {
       this.toastrService.success('Telefono verificado');
       this.paso = 4;
+    }
+    else{
+      this.toastrService.error("Hubo un error al enviar el SMS, por favor intentelo mas tarde!"); 
     }
   }
   //Setea cuanta para acceso
@@ -425,6 +431,28 @@ export class RegisterComponent implements OnInit {
         },
         (error) => {
           reject(error);
+        }
+      );
+    });
+  }
+
+  async sendSMSValidation(): Promise<boolean>{
+    let model: SMSModels ={
+      sms: "Sistema Santega: Su numero ha sido verificado!",
+      telefono: this.formPassword.controls['Telefono'].value
+    }
+    return new Promise<any>((resolve, reject) => {
+      this.userService.PostSMS(model).subscribe(
+        (sms: any) => {
+          //Aqui hago el envio??
+          if (sms != "") {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        },
+        (error) => {
+          resolve(false);
         }
       );
     });

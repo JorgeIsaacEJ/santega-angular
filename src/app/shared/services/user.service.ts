@@ -7,7 +7,7 @@ import { LocalStorageService } from "./local-storage.service";
 import { LoginModel } from "../models/login.model";
 import { DetalleMedioContactoDeudor } from '../models/user.model'
 import { SpartanUsers } from "../models/user-spartan.model";
-import { MailModels, MessageModels } from "../models/message.model";
+import { MailModels, MessageModels, SMSModels } from "../models/message.model";
 
 @Injectable({
     providedIn: 'root'
@@ -60,6 +60,17 @@ export class UserService {
     SantegaMail( mailModels: MailModels ): Observable<any> {
 
         return this.http.post<string>(`${ this.apiUrl }/api/Spartan_Settings/SantegaMail`, mailModels, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
+            }
+        });
+    }
+
+    //Envio de SMS Generico
+    PostSMS( smsModels: SMSModels ): Observable<any> {
+
+        return this.http.post<string>(`${ this.apiUrl }/api/Spartan_Settings/PostSMS`, smsModels, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${ this.localStorageService.getData('access_token') }`
