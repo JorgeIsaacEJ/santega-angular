@@ -139,6 +139,7 @@ export class RegisterComponent implements OnInit {
       let resp12 = await this.setUsuario(where1 + " and Detalle_Medio_Contacto_Deudor.Medio_de_Contacto = 4", "correo");
       let resp21 = await this.setCredito(where2);
       let resp31 = await this.setDeudor(where3);
+      this.formPassword.controls['Telefono'].setValue((tel != '') ? tel : '');
       this.toastrService.success('Usuario verificado!');
     }
     else{
@@ -438,13 +439,12 @@ export class RegisterComponent implements OnInit {
 
   async sendSMSValidation(): Promise<boolean>{
     let model: SMSModels ={
-      sms: "Sistema Santega: Su numero ha sido verificado!",
+      sms: "Santega: Su numero ha sido verificado!",
       telefono: this.formPassword.controls['Telefono'].value
     }
     return new Promise<any>((resolve, reject) => {
       this.userService.PostSMS(model).subscribe(
         (sms: any) => {
-          //Aqui hago el envio??
           if (sms != "") {
             resolve(true);
           } else {
