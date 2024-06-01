@@ -44,6 +44,7 @@ export class RegisterComponent implements OnInit {
   public medioContactoDeudorCorreo: any = {};
   public folio: number = 0;
   public paso: number = 1;
+  public cel_validate: boolean = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -171,50 +172,53 @@ export class RegisterComponent implements OnInit {
   //REGISTRO PASO 3
   //Confirma celular (Envio de clave de activacion)
   async confirmPhone(){
-    let sms_response = await this.sendSMSValidation();
-
-    if (sms_response) {
-      this.toastrService.success('Telefono verificado');
-      this.paso = 4;
-    }
-    else{
-      this.toastrService.error("Hubo un error al enviar el SMS, por favor intentelo mas tarde!"); 
+    if(!this.cel_validate){
+      this.cel_validate = await this.sendSMSValidation();
+      if (this.cel_validate) {
+        this.toastrService.success('Telefono verificado');
+        this.paso = 4;
+      }
+      else{
+        this.toastrService.error("Hubo un error al enviar el SMS, por favor intentelo mas tarde!"); 
+      }
     }
   }
   //Setea cuanta para acceso
   setPassWord(){
-    let pass = this.formPassword.controls['Password'].value;
-    let pass_confirm = this.formPassword.controls['Password2'].value;
-    if(this.paso != 4){
-      this.toastrService.info('Por favor confirma tu telefono');
-      return;
+    if(this.cel_validate){
+      let pass = this.formPassword.controls['Password'].value;
+      let pass_confirm = this.formPassword.controls['Password2'].value;
+      if(this.paso != 4){
+        this.toastrService.info('Por favor verifica tu telefono');
+        return;
+      }
+      if(this.paso == 4 && pass == "" && pass_confirm == ""){
+        return;
+      }
+      if(pass != pass_confirm){
+        this.toastrService.info('La contraseña no coincide, intentalo de nuevo!');
+        this.formPassword.controls['Password'].setErrors({ invalid: true });
+        this.formPassword.controls['Password2'].setErrors({ invalid: true });
+        return;
+      }
+      this.registerForm.controls['Password'].setValue(pass);
+      this.registerForm.controls['Password2'].setErrors(pass_confirm);
+        //Medio de contacto
+        this.medioContactoDeudorTelefono = {
+          Folio: 0,
+          Deudor: this.folio,
+          Medio_de_Contacto: 3,
+          Referencia: this.formPassword.controls['Telefono'].value //Siempre toma el segundo numero
+        };
+        this.medioContactoDeudorCorreo = {
+          Folio: 0,
+          Deudor: this.folio,
+          Medio_de_Contacto: 4,
+          Referencia: this.registerForm.controls['Email'].value
+        };
+        //Registro
+        this.register();
     }
-    if(this.paso == 4 && pass == "" && pass_confirm == ""){
-      return;
-    }
-    if(pass != pass_confirm){
-      this.toastrService.info('La contraseña no coincide, intentalo de nuevo!');
-      this.formPassword.controls['Password'].setErrors({ invalid: true });
-      this.formPassword.controls['Password2'].setErrors({ invalid: true });
-      return;
-    }
-    this.registerForm.controls['Password'].setValue(pass);
-    this.registerForm.controls['Password2'].setErrors(pass_confirm);
-      //Medio de contacto
-      this.medioContactoDeudorTelefono = {
-        Folio: 0,
-        Deudor: this.folio,
-        Medio_de_Contacto: 3,
-        Referencia: this.formPassword.controls['Telefono'].value //Siempre toma el segundo numero
-      };
-      this.medioContactoDeudorCorreo = {
-        Folio: 0,
-        Deudor: this.folio,
-        Medio_de_Contacto: 4,
-        Referencia: this.registerForm.controls['Email'].value
-      };
-      //Registro
-      this.register();
   }
 
   async getFindByFilters(telefono: string, correo: string, referencia: string, rfc: string, credito: string, nombre: string,  fecnacimiento: string): Promise<boolean>{
@@ -445,7 +449,7 @@ export class RegisterComponent implements OnInit {
     return new Promise<any>((resolve, reject) => {
       this.userService.PostSMS(model).subscribe(
         (sms: any) => {
-          if (sms != "") {
+          if (sms.success != "") {
             resolve(true);
           } else {
             resolve(false);
